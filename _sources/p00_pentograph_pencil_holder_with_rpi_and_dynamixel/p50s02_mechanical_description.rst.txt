@@ -53,7 +53,7 @@ Nous fixons :
    L = 2l_2(l_1c_1 - l_0 - l_4c_4) \\
    K = 2l_2(l_1s_1 - l_4s_4)\\
 
- Nous obtenons donc l'équation suivante, qui ne dépend que de :math:`\theta_2` :
+Nous obtenons donc l'équation suivante, qui ne dépend que de :math:`\theta_2` :
 
  .. math::
 
