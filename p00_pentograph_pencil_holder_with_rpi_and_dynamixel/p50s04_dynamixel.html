@@ -159,7 +159,8 @@
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>whoami
 </pre></div>
 </div>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>chmod<span class="w"> </span><span class="m">666</span>/dev/ttyUSB&lt;n°USB&gt;
+<p>Ouvrir et autoriser l’accès en écriture du port USB</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>chmod<span class="w"> </span><span class="m">666</span><span class="w"> </span>/dev/ttyUSB&lt;n°USB&gt;
 </pre></div>
 </div>
 <div class="admonition note">
@@ -173,9 +174,9 @@
 </section>
 <section id="adaptation-du-code">
 <h2>Adaptation du code<a class="headerlink" href="#adaptation-du-code" title="Lien vers cette rubrique"></a></h2>
-<p>Le code récupéré sur github est adapté aux moteurs XL430-W250. Pour les adapter aux moteurs AX-12 que nous avons, nous devons adapter un peu le code.</p>
-<p>Il faut modifier le fichier <strong>read_write_node.cpp</strong> qui se trouve dans le dossier <cite>~/robotis_ws/src/DynamixelSDK/dynamixel_sdk_examples/src</cite> si vous avez suivi la nomenclature précédente.</p>
-<p>Dans ce fichier il faut changer les lignes 42 à 46 aveec le code suivant :</p>
+<p>Le code récupéré sur github est adapté aux moteurs XL430-W250. Pour les adapter aux moteurs AX-12 que nous avons, nous devons adapter le code.</p>
+<p>Il faut modifier le fichier <strong>read_write_node.cpp</strong> qui se trouve dans le dossier <cite>~/robotis_ws/src/DynamixelSDK/dynamixel_sdk_examples/src</cite>.</p>
+<p>Dans ce fichier il faut changer les lignes 42 à 46 avec le code suivant :</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Control table address for X series (except XL-320)</span>
 <span class="cp">#define ADDR_OPERATING_MODE 255</span>
 <span class="cp">#define ADDR_TORQUE_ENABLE 24</span>

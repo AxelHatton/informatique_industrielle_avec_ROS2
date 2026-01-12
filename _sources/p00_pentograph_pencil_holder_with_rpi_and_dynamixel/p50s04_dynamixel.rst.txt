@@ -69,9 +69,11 @@ Une fois les moteurs et l'U2D2 branchés, il faut préparer les fichiers nécess
 
    whoami
 
+Ouvrir et autoriser l'accès en écriture du port USB
+
 .. code-block:: bash
 
-   sudo chmod 666/dev/ttyUSB<n°USB>
+   sudo chmod 666 /dev/ttyUSB<n°USB>
 
 .. note::
 
@@ -86,11 +88,11 @@ Une fois les moteurs et l'U2D2 branchés, il faut préparer les fichiers nécess
 Adaptation du code
 ********************************************************
 
-Le code récupéré sur github est adapté aux moteurs XL430-W250. Pour les adapter aux moteurs AX-12 que nous avons, nous devons adapter un peu le code.
+Le code récupéré sur github est adapté aux moteurs XL430-W250. Pour les adapter aux moteurs AX-12 que nous avons, nous devons adapter le code.
 
-Il faut modifier le fichier **read_write_node.cpp** qui se trouve dans le dossier `~/robotis_ws/src/DynamixelSDK/dynamixel_sdk_examples/src` si vous avez suivi la nomenclature précédente.
+Il faut modifier le fichier **read_write_node.cpp** qui se trouve dans le dossier `~/robotis_ws/src/DynamixelSDK/dynamixel_sdk_examples/src`.
 
-Dans ce fichier il faut changer les lignes 42 à 46 aveec le code suivant :
+Dans ce fichier il faut changer les lignes 42 à 46 avec le code suivant :
 
 .. code-block:: cpp
 
