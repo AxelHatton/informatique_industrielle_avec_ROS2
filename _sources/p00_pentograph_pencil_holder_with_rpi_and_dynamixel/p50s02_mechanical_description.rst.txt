@@ -17,7 +17,7 @@ Modèle géométrique
 Nous avons :
 
 .. math:: 
-   \overrightarrow{A_1A_2} + \overrightarrow{A_2A_3} + \overrightarrow{A_3A_4} = \overrightarrow{A_1A_4} + \overrightarrow{A_4A_5}
+   \overrightarrow{A_1A_2} + \overrightarrow{A_2A_3} + \overrightarrow{A_3A_4} = \overrightarrow{A_1A_5} + \overrightarrow{A_5A_4}
 
 En projetant sur l'axe :math:`\overrightarrow{x}` et :math:`\overrightarrow{y}`, nous obtenons :
 
@@ -31,7 +31,7 @@ En projetant sur l'axe :math:`\overrightarrow{x}` et :math:`\overrightarrow{y}`,
       \quad \Longleftrightarrow \quad
       \begin{cases}
          l_1 c_1 + l_2 c_2 - l_0 - l_4 c_4 = -l_3 c_3  \\
-         l_1 s_1 + l_2 s_2 - l_4 s_4 = - + l_3 s_3
+         l_1 s_1 + l_2 s_2 - l_4 s_4 = - l_3 s_3
       \end{cases}
    \end{aligned}
 
@@ -81,7 +81,7 @@ Nous avons une équation de polynomiale de degré 2, nous pouvons donc calculer 
 
 .. math::
 
-   t = \frac{-2K \pm \sqrt{(2K)^2-4(M-L)(M+L)} - 2K}{2(M - L)}\\
+   t = \frac{-2K \pm \sqrt{(2K)^2-4(M-L)(M+L)}}{2(M - L)}\\
 
 Ainsi :
 
