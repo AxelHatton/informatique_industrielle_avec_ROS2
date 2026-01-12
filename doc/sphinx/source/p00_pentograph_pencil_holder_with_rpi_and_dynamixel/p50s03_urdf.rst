@@ -46,6 +46,22 @@ Pour convertir les modèles 3D en collada (dae), vous pouvez utiliser le logicie
    #. :download:`link3.dae <resources/cad/link3.dae>`
    #. :download:`link4.dae <resources/cad/link4.dae>`
 
+===================
+Création du package
+===================
+
+Tout d'abord créer le package du pantographe.
+.. code-block:: bash
+ ros2 pkg create panto_description --build-type ament_cmake
+
+on devrait obtenir une arborescence de ce type
+
+.. code-block:: bash
+ panto_description/
+ |__CMakeLists.txt
+ |__package.xml
+ |__src/
+
 =========================
 Création du fichier URDF
 =========================
