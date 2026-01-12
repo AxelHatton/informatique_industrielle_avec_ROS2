@@ -66,6 +66,7 @@
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Génération de la description URDF du pantographe</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#extraction-des-modeles-3d-en-step">Extraction des modèles 3D en step</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#conversion-des-modeles-3d-en-collada">Conversion des modèles 3D en collada</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#creation-du-package">Création du package</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#creation-du-fichier-urdf">Création du fichier URDF</a></li>
 </ul>
 </li>
@@ -145,6 +146,15 @@ Il va donc falloir convertir notre modèle 3D au format step en un ensemble de 5
 <li><p><a class="reference download internal" download="" href="../_downloads/b511058d540119e2d5db4567de9fd29b/link4.dae"><code class="xref download docutils literal notranslate"><span class="pre">link4.dae</span></code></a></p></li>
 </ol>
 </div></blockquote>
+</section>
+<section id="creation-du-package">
+<h2>Création du package<a class="headerlink" href="#creation-du-package" title="Lien vers cette rubrique"></a></h2>
+<p>Tout d’abord créer le package du pantographe.
+.. code-block:: bash</p>
+<blockquote>
+<div><p>ros2 pkg create panto_description –build-type ament_cmake</p>
+</div></blockquote>
+<p>on devrait obtenir une arborescence de ce type</p>
 </section>
 <section id="creation-du-fichier-urdf">
 <h2>Création du fichier URDF<a class="headerlink" href="#creation-du-fichier-urdf" title="Lien vers cette rubrique"></a></h2>
