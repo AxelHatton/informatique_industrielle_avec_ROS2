@@ -266,7 +266,7 @@ Un en-tête</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>&lt;link<span class="w"> </span><span class="nv">name</span><span class="o">=</span><span class="s2">&quot;world&quot;</span>/&gt;
 </pre></div>
 </div>
-<p>De links qui seront les parts de votre système</p>
+<p>De <a class="reference external" href="https://wiki.ros.org/urdf/XML/link">links</a> qui seront les parts de votre système</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>&lt;link<span class="w"> </span><span class="nv">name</span><span class="o">=</span><span class="s2">&quot;base_link&quot;</span>&gt;
 <span class="w">    </span>&lt;visual&gt;
 <span class="w">        </span>&lt;geometry&gt;
@@ -281,7 +281,7 @@ Un en-tête</p>
 <p class="admonition-title">Note</p>
 <p>Dans un fichier URDF les modèles 3D sont référencés par des balises <code class="docutils literal notranslate"><span class="pre">&lt;mesh&gt;</span></code>. Le filename sera le chemin relatif au package et non relatif à la position du fichier urdf</p>
 </div>
-<p>De joints qui vont lier les links entre eux. Il existe différents types de joints</p>
+<p>De joints qui vont lier les <a class="reference external" href="https://wiki.ros.org/urdf/XML/link">links</a> entre eux. Il existe différents types de <a class="reference external" href="https://wiki.ros.org/urdf/XML/joint">joints</a></p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>&lt;joint<span class="w"> </span><span class="nv">name</span><span class="o">=</span><span class="s2">&quot;base2world&quot;</span><span class="w"> </span><span class="nv">type</span><span class="o">=</span><span class="s2">&quot;fixed&quot;</span>&gt;
 <span class="w">    </span>&lt;parent<span class="w"> </span><span class="nv">link</span><span class="o">=</span><span class="s2">&quot;world&quot;</span>/&gt;
 <span class="w">    </span>&lt;child<span class="w"> </span><span class="nv">link</span><span class="o">=</span><span class="s2">&quot;base_link&quot;</span>/&gt;
