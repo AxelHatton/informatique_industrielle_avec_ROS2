@@ -454,59 +454,29 @@ Un en-tête</p>
 &lt;robot<span class="w"> </span><span class="nv">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;panto&quot;</span><span class="w"> </span>xmlns:xacro<span class="o">=</span><span class="s2">&quot;http://www.ros.org/wiki/xacro&quot;</span>&gt;
 
 <span class="w">    </span>&lt;ros2_control<span class="w"> </span><span class="nv">name</span><span class="o">=</span><span class="s2">&quot;panto&quot;</span><span class="w"> </span><span class="nv">type</span><span class="o">=</span><span class="s2">&quot;system&quot;</span>&gt;
-
 <span class="w">        </span>&lt;hardware&gt;
-<span class="w">            </span>&lt;plugin&gt;mock_components/GenericSystem&lt;/plugin&gt;
-<span class="w">            </span>&lt;!--<span class="w"> </span>&lt;plugin&gt;scara_hardware/ScaraRobot&lt;/plugin&gt;<span class="w"> </span>--&gt;
-<span class="w">            </span>&lt;!--<span class="w"> </span>&lt;plugin&gt;gazebo_ros2_control/GazeboSystem&lt;/plugin&gt;<span class="w"> </span>--&gt;
+<span class="w">        </span>&lt;plugin&gt;mock_components/GenericSystem&lt;/plugin&gt;
 <span class="w">        </span>&lt;/hardware&gt;
 
 <span class="w">        </span>&lt;joint<span class="w"> </span><span class="nv">name</span><span class="o">=</span><span class="s2">&quot;base_link_link1_joint&quot;</span>&gt;
-<span class="w">            </span>&lt;command_interface<span class="w"> </span><span class="nv">name</span><span class="o">=</span><span class="s2">&quot;position&quot;</span><span class="w"> </span>/&gt;
-<span class="w">            </span>&lt;state_interface<span class="w"> </span><span class="nv">name</span><span class="o">=</span><span class="s2">&quot;position&quot;</span>&gt;
-<span class="w">                </span>&lt;param<span class="w"> </span><span class="nv">name</span><span class="o">=</span><span class="s2">&quot;initial_value&quot;</span>&gt;0.0&lt;/param&gt;
-<span class="w">                </span>&lt;param<span class="w"> </span><span class="nv">name</span><span class="o">=</span><span class="s2">&quot;min&quot;</span>&gt;-1.57&lt;/param&gt;
-<span class="w">                </span>&lt;param<span class="w"> </span><span class="nv">name</span><span class="o">=</span><span class="s2">&quot;max&quot;</span>&gt;1.57&lt;/param&gt;
-<span class="w">            </span>&lt;/state_interface&gt;
-<span class="w">            </span>&lt;state_interface<span class="w"> </span><span class="nv">name</span><span class="o">=</span><span class="s2">&quot;velocity&quot;</span>&gt;
-<span class="w">                </span>&lt;param<span class="w"> </span><span class="nv">name</span><span class="o">=</span><span class="s2">&quot;initial_value&quot;</span>&gt;0.0&lt;/param&gt;
-<span class="w">            </span>&lt;/state_interface&gt;
-<span class="w">        </span>&lt;/joint&gt;
-<span class="w">        </span>&lt;joint<span class="w"> </span><span class="nv">name</span><span class="o">=</span><span class="s2">&quot;link1_link2_joint&quot;</span>&gt;
-<span class="w">            </span>&lt;command_interface<span class="w"> </span><span class="nv">name</span><span class="o">=</span><span class="s2">&quot;position&quot;</span>/&gt;
-<span class="w">            </span>&lt;state_interface<span class="w"> </span><span class="nv">name</span><span class="o">=</span><span class="s2">&quot;position&quot;</span>&gt;
-<span class="w">                </span>&lt;param<span class="w"> </span><span class="nv">name</span><span class="o">=</span><span class="s2">&quot;initial_value&quot;</span>&gt;0.0&lt;/param&gt;
-<span class="w">                </span>&lt;param<span class="w"> </span><span class="nv">name</span><span class="o">=</span><span class="s2">&quot;min&quot;</span>&gt;-1.57&lt;/param&gt;
-<span class="w">                </span>&lt;param<span class="w"> </span><span class="nv">name</span><span class="o">=</span><span class="s2">&quot;max&quot;</span>&gt;1.57&lt;/param&gt;
-<span class="w">            </span>&lt;/state_interface&gt;
-<span class="w">            </span>&lt;state_interface<span class="w"> </span><span class="nv">name</span><span class="o">=</span><span class="s2">&quot;velocity&quot;</span>&gt;
-<span class="w">                </span>&lt;param<span class="w"> </span><span class="nv">name</span><span class="o">=</span><span class="s2">&quot;initial_value&quot;</span>&gt;0.0&lt;/param&gt;
-<span class="w">            </span>&lt;/state_interface&gt;
+<span class="w">        </span>&lt;command_interface<span class="w"> </span><span class="nv">name</span><span class="o">=</span><span class="s2">&quot;position&quot;</span>/&gt;
+<span class="w">        </span>&lt;state_interface<span class="w"> </span><span class="nv">name</span><span class="o">=</span><span class="s2">&quot;position&quot;</span>/&gt;
 <span class="w">        </span>&lt;/joint&gt;
 <span class="w">        </span>&lt;joint<span class="w"> </span><span class="nv">name</span><span class="o">=</span><span class="s2">&quot;base_link_link4_joint&quot;</span>&gt;
-<span class="w">            </span>&lt;command_interface<span class="w"> </span><span class="nv">name</span><span class="o">=</span><span class="s2">&quot;position&quot;</span>/&gt;
-<span class="w">            </span>&lt;state_interface<span class="w"> </span><span class="nv">name</span><span class="o">=</span><span class="s2">&quot;position&quot;</span>&gt;
-<span class="w">                </span>&lt;param<span class="w"> </span><span class="nv">name</span><span class="o">=</span><span class="s2">&quot;initial_value&quot;</span>&gt;0.0&lt;/param&gt;
-<span class="w">                </span>&lt;param<span class="w"> </span><span class="nv">name</span><span class="o">=</span><span class="s2">&quot;min&quot;</span>&gt;-1.57&lt;/param&gt;
-<span class="w">                </span>&lt;param<span class="w"> </span><span class="nv">name</span><span class="o">=</span><span class="s2">&quot;max&quot;</span>&gt;1.57&lt;/param&gt;
-<span class="w">            </span>&lt;/state_interface&gt;
-<span class="w">            </span>&lt;state_interface<span class="w"> </span><span class="nv">name</span><span class="o">=</span><span class="s2">&quot;velocity&quot;</span>&gt;
-<span class="w">                </span>&lt;param<span class="w"> </span><span class="nv">name</span><span class="o">=</span><span class="s2">&quot;initial_value&quot;</span>&gt;0.0&lt;/param&gt;
-<span class="w">            </span>&lt;/state_interface&gt;
+<span class="w">        </span>&lt;command_interface<span class="w"> </span><span class="nv">name</span><span class="o">=</span><span class="s2">&quot;position&quot;</span>/&gt;
+<span class="w">        </span>&lt;state_interface<span class="w"> </span><span class="nv">name</span><span class="o">=</span><span class="s2">&quot;position&quot;</span>/&gt;
+<span class="w">        </span>&lt;/joint&gt;
+
+
+<span class="w">        </span>&lt;joint<span class="w"> </span><span class="nv">name</span><span class="o">=</span><span class="s2">&quot;link1_link2_joint&quot;</span>&gt;
+<span class="w">        </span>&lt;command_interface<span class="w"> </span><span class="nv">name</span><span class="o">=</span><span class="s2">&quot;position&quot;</span>/&gt;
+<span class="w">        </span>&lt;state_interface<span class="w"> </span><span class="nv">name</span><span class="o">=</span><span class="s2">&quot;position&quot;</span>/&gt;
 <span class="w">        </span>&lt;/joint&gt;
 
 <span class="w">        </span>&lt;joint<span class="w"> </span><span class="nv">name</span><span class="o">=</span><span class="s2">&quot;link4_link3_joint&quot;</span>&gt;
-<span class="w">            </span>&lt;command_interface<span class="w"> </span><span class="nv">name</span><span class="o">=</span><span class="s2">&quot;position&quot;</span>/&gt;
-<span class="w">            </span>&lt;state_interface<span class="w"> </span><span class="nv">name</span><span class="o">=</span><span class="s2">&quot;position&quot;</span>&gt;
-<span class="w">                </span>&lt;param<span class="w"> </span><span class="nv">name</span><span class="o">=</span><span class="s2">&quot;initial_value&quot;</span>&gt;0.0&lt;/param&gt;
-<span class="w">                </span>&lt;param<span class="w"> </span><span class="nv">name</span><span class="o">=</span><span class="s2">&quot;min&quot;</span>&gt;-1.57&lt;/param&gt;
-<span class="w">                </span>&lt;param<span class="w"> </span><span class="nv">name</span><span class="o">=</span><span class="s2">&quot;max&quot;</span>&gt;1.57&lt;/param&gt;
-<span class="w">            </span>&lt;/state_interface&gt;
-<span class="w">            </span>&lt;state_interface<span class="w"> </span><span class="nv">name</span><span class="o">=</span><span class="s2">&quot;velocity&quot;</span>&gt;
-<span class="w">                </span>&lt;param<span class="w"> </span><span class="nv">name</span><span class="o">=</span><span class="s2">&quot;initial_value&quot;</span>&gt;0.0&lt;/param&gt;
-<span class="w">            </span>&lt;/state_interface&gt;
+<span class="w">        </span>&lt;command_interface<span class="w"> </span><span class="nv">name</span><span class="o">=</span><span class="s2">&quot;position&quot;</span>/&gt;
+<span class="w">        </span>&lt;state_interface<span class="w"> </span><span class="nv">name</span><span class="o">=</span><span class="s2">&quot;position&quot;</span>/&gt;
 <span class="w">        </span>&lt;/joint&gt;
-
 <span class="w">    </span>&lt;/ros2_control&gt;
 
 &lt;/robot&gt;
