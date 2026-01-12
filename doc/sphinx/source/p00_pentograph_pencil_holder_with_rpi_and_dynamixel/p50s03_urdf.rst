@@ -418,62 +418,34 @@ Copier le code suivant dans le fichier panto.ros2_control.urdf
 
     <?xml version="1.0"?>
     <robot name = "panto" xmlns:xacro="http://www.ros.org/wiki/xacro">
-
+    
         <ros2_control name="panto" type="system">
-
             <hardware>
-                <plugin>mock_components/GenericSystem</plugin>
-                <!-- <plugin>scara_hardware/ScaraRobot</plugin> -->
-                <!-- <plugin>gazebo_ros2_control/GazeboSystem</plugin> -->
+            <plugin>mock_components/GenericSystem</plugin>
             </hardware>
-
+    
             <joint name="base_link_link1_joint">
-                <command_interface name="position" />
-                <state_interface name="position">
-                    <param name="initial_value">0.0</param>
-                    <param name="min">-1.57</param>
-                    <param name="max">1.57</param>
-                </state_interface>
-                <state_interface name="velocity"> 
-                    <param name="initial_value">0.0</param> 
-                </state_interface>
-            </joint>
-            <joint name="link1_link2_joint">
-                <command_interface name="position"/>
-                <state_interface name="position">
-                    <param name="initial_value">0.0</param>
-                    <param name="min">-1.57</param>
-                    <param name="max">1.57</param>
-                </state_interface>
-                <state_interface name="velocity"> 
-                    <param name="initial_value">0.0</param> 
-                </state_interface>
+            <command_interface name="position"/>
+            <state_interface name="position"/>
             </joint>
             <joint name="base_link_link4_joint">
-                <command_interface name="position"/>
-                <state_interface name="position">
-                    <param name="initial_value">0.0</param>
-                    <param name="min">-1.57</param>
-                    <param name="max">1.57</param>
-                </state_interface>
-                <state_interface name="velocity"> 
-                    <param name="initial_value">0.0</param> 
-                </state_interface>
+            <command_interface name="position"/>
+            <state_interface name="position"/>
             </joint>
-
+    
+    
+            <joint name="link1_link2_joint">
+            <command_interface name="position"/>
+            <state_interface name="position"/>
+            </joint>
+    
             <joint name="link4_link3_joint">
-                <command_interface name="position"/>
-                <state_interface name="position">
-                    <param name="initial_value">0.0</param>
-                    <param name="min">-1.57</param>
-                    <param name="max">1.57</param>
-                </state_interface>
-                <state_interface name="velocity"> 
-                    <param name="initial_value">0.0</param> 
-                </state_interface>
+            <command_interface name="position"/>
+            <state_interface name="position"/>
             </joint>
-
         </ros2_control>
-
+    
     </robot>
+
+
 
