@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>&lt;no title&gt; &mdash; Documentation Cours d&#39;Informatique Industrielle avec ROS2 1.0.0</title>
+  <title>Fonctionnement des Dynamixels &mdash; Documentation Cours d&#39;Informatique Industrielle avec ROS2 1.0.0</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
@@ -59,8 +59,21 @@
 <li class="toctree-l1"><a class="reference internal" href="../c04_collaborate_with_coders/p04s00_index.html">Les outils nécessaires pour collaborer entre codeurs</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Travaux Pratiques (Projet Binder, Hatton, Hoang)</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="p50s00_index.html">Pantographe de dessin robotisé avec Raspberry Pi et ROS2</a></li>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="p50s00_index.html">Pantographe de dessin robotisé avec Raspberry Pi et ROS2</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="p50s01_material_description.html">Description du matériel de la plateforme pantographe</a></li>
+<li class="toctree-l2"><a class="reference internal" href="p50s02_mechanical_description.html">Description mécanique de la plateforme pantographe</a></li>
+<li class="toctree-l2"><a class="reference internal" href="p50s03_urdf.html">Génération de la description URDF du pantographe</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Fonctionnement des Dynamixels</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#branchement-des-moteurs">Branchement des moteurs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#preparation-des-fichiers">Préparation des fichiers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#adaptation-du-code">Adaptation du code</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mise-en-route-du-code">Mise en route du code</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="p50s00_index.html#description-du-projet">Description du projet</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../p01_rpi_ubuntu_as_a_ros2_robotic_platform/p51s00_index.html">Ubuntu &amp; RPi &amp; ROS2</a></li>
 </ul>
 
@@ -79,7 +92,7 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="p50s00_index.html">Pantographe de dessin robotisé avec Raspberry Pi et ROS2</a></li>
-      <li class="breadcrumb-item active">&lt;no title&gt;</li>
+      <li class="breadcrumb-item active">Fonctionnement des Dynamixels</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/p00_pentograph_pencil_holder_with_rpi_and_dynamixel/p50s04_dynamixel.rst.txt" rel="nofollow"> Afficher la source de la page</a>
       </li>
@@ -89,7 +102,120 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  
+  <section id="fonctionnement-des-dynamixels">
+<h1>Fonctionnement des Dynamixels<a class="headerlink" href="#fonctionnement-des-dynamixels" title="Lien vers cette rubrique"></a></h1>
+<section id="branchement-des-moteurs">
+<h2>Branchement des moteurs<a class="headerlink" href="#branchement-des-moteurs" title="Lien vers cette rubrique"></a></h2>
+<p>Les moteurs sont connectés en série. Chaque moteur a une adresse unique qui lui permet d’être contrôlé individuellement par le contrôleur principal. Les câbles de données et d’alimentation doivent être correctement branchés pour assurer le bon fonctionnement des moteurs. Le convertisseur de communication USB U2D2 permet la communication entre la Raspberry et les moteurs.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Des informations sur le branchement et une description plus détaillé de l’U2D2 sont trouvable dans cette <a class="reference external" href="https://emanual.robotis.com/docs/en/parts/interface/u2d2/">documentation</a>.</p>
+</div>
+</section>
+<section id="preparation-des-fichiers">
+<h2>Préparation des fichiers<a class="headerlink" href="#preparation-des-fichiers" title="Lien vers cette rubrique"></a></h2>
+<p>Une fois les moteurs et l’U2D2 branchés, il faut préparer les fichiers nécessaires pour contrôler les moteurs. Voici les étapes à suivre :</p>
+<ol class="arabic simple">
+<li><p>Créez un répertoire pour votre projet :</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mkdir<span class="w"> </span>-p<span class="w"> </span>~/ros2_ws/src
+</pre></div>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>~/ros2_ws/src
+</pre></div>
+</div>
+<ol class="arabic simple">
+<li><p>Clonez le dépôt contenant les fichiers de configuration et les scripts nécessaires :</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>-b<span class="w"> </span><span class="nv">$ROS_DISTRO</span><span class="w"> </span>https://github.com/ROBOTIS-GIT/DynamixelSDK
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Si jamais il y a un problème avec la commande précédente, il faut peut être remplacer « $ROS_DISTRO » par votre version de ROS2 qui est installé (jazzy, humble, …)</p>
+</div>
+<ol class="arabic simple">
+<li><p>Compilez le workspace ROS 2 :</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>~/ros2_ws
+</pre></div>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ros2_build
+</pre></div>
+</div>
+<ol class="arabic simple">
+<li><p>Vérifier la connection au port USB et ajouter la permission</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ls<span class="w"> </span>/dev/tty*
+</pre></div>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>usermod<span class="w"> </span>-aG<span class="w"> </span>dialout<span class="w"> </span>&lt;compte_linux&gt;
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Pour trouver votre compte linux vous pouvez utiliser la commande :</p>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>whoami
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Les commandes précédentes proviennent de ce <a class="reference external" href="https://www.youtube.com/watch?v=E8XPqDjof4U">tutoriel</a> vidéo</p>
+</div>
+</section>
+<section id="adaptation-du-code">
+<h2>Adaptation du code<a class="headerlink" href="#adaptation-du-code" title="Lien vers cette rubrique"></a></h2>
+<p>Le code récupéré sur github est adapté aux moteurs XL430-W250. Pour les adapter aux moteurs AX-12 que nous avons, nous devons adapter un peu le code.</p>
+<p>Il faut modifier le fichier <strong>read_write_node.cpp</strong> qui se trouve dans le dossier <cite>~/robotis_ws/src/DynamixelSDK/dynamixel_sdk_examples/src</cite> si vous avez suivi la nomenclature précédente.</p>
+<p>Dans ce fichier il faut changer les lignes 42 à 46 aveec le code suivant :</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Control table address for X series (except XL-320)</span>
+<span class="cp">#define ADDR_OPERATING_MODE 255</span>
+<span class="cp">#define ADDR_TORQUE_ENABLE 24</span>
+<span class="cp">#define ADDR_GOAL_POSITION 30</span>
+<span class="cp">#define ADDR_PRESENT_POSITION 36</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Les adresses à mettre peuvent se trouver dans le tableau <cite>Control Table of RAM Area</cite> de la <a class="reference external" href="https://emanual.robotis.com/docs/en/dxl/ax/ax-12a/">datasheet</a></p>
+</div>
+<p>Il faut aussi changer le Protocole de communication en 1.0 et non 2.0 (ligne 49) :</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#define PROTOCOL_VERSION 1.0</span>
+</pre></div>
+</div>
+<p>Enfin il faut mettre à jour le <cite>baudrate</cite>. Ce dernier peut être trouvé avec ce <a class="reference external" href="https://emanual.robotis.com/docs/en/software/dynamixel/dynamixel_wizard2/">logiciel</a> et le changé à la ligne 52:</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Si l’installation ne fonctionne pas vous pouvez essayer avec un <cite>baudrate</cite> de 115200</p>
+</div>
+</section>
+<section id="mise-en-route-du-code">
+<h2>Mise en route du code<a class="headerlink" href="#mise-en-route-du-code" title="Lien vers cette rubrique"></a></h2>
+<p>Si ce n’est pas fait il faut d’abord sourcer le projet et le rebuild  :</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span><span class="w"> </span>install/setup.bash
+</pre></div>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ros2_build
+</pre></div>
+</div>
+<p>Ensuite il faut faire la fin du <a class="reference external" href="https://www.youtube.com/watch?v=E8XPqDjof4U">tutoriel</a> (les commandes sont écrite en dessous )</p>
+<p>Lancer la node :</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ros2<span class="w"> </span>run<span class="w"> </span>dynamixel_sdk_examples<span class="w"> </span>read_write_node
+</pre></div>
+</div>
+<p>Dans un autre terminal on peut communiquer avec les moteurs en utilisant les commandes suivantes :</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># commande le moteur 1 à la position 1000</span>
+ros2<span class="w"> </span>topic<span class="w"> </span>pub<span class="w"> </span>-1<span class="w"> </span>/set_position<span class="w"> </span>dynamixel_sdk_custom_interfaces/SetPosition<span class="w"> </span><span class="s2">&quot;{id: 1, position: 1000}&quot;</span>
+</pre></div>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># récupérer la position du moteur 2</span>
+ros2<span class="w"> </span>service<span class="w"> </span>call<span class="w"> </span>/get_position<span class="w"> </span>dynamixel_sdk_custom_interfaces/srv/GetPosition<span class="w"> </span><span class="s2">&quot;id: 2&quot;</span>
+</pre></div>
+</div>
+</section>
+</section>
+
 
            </div>
           </div>
