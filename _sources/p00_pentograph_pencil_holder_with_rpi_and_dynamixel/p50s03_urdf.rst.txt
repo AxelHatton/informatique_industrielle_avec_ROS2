@@ -65,6 +65,33 @@ on devrait obtenir une arborescence de ce type
    |__package.xml
    |__src/
 
+===============================
+Création des dossiers standards
+===============================
+
+Créer les dossiers standards launch, meshes et urdf
+
+.. code-block:: bash
+
+   cd panto_description
+
+.. code-block:: bash
+   mkdir urdf meshes launch
+
+Vous devriez obtenir l'arborescence suivante
+
+.. code-block:: bash
+   
+   panto_description/
+   |__CMakeLists.txt
+   |__package.xml
+   |__src/
+   |__launch/
+   |__urdf/
+   |__meshes/
+
+Copier les fichiers collada dans le répertoire panto_description/meshes/
+
 =========================
 Création du fichier URDF
 =========================

@@ -67,6 +67,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#extraction-des-modeles-3d-en-step">Extraction des modèles 3D en step</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#conversion-des-modeles-3d-en-collada">Conversion des modèles 3D en collada</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#creation-du-package">Création du package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#creation-des-dossiers-standards">Création des dossiers standards</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#creation-du-fichier-urdf">Création du fichier URDF</a></li>
 </ul>
 </li>
@@ -160,6 +161,24 @@ Il va donc falloir convertir notre modèle 3D au format step en un ensemble de 5
 <span class="p">|</span>__src/
 </pre></div>
 </div>
+</section>
+<section id="creation-des-dossiers-standards">
+<h2>Création des dossiers standards<a class="headerlink" href="#creation-des-dossiers-standards" title="Lien vers cette rubrique"></a></h2>
+<p>Créer les dossiers standards launch, meshes et urdf</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>panto_description
+</pre></div>
+</div>
+<p>Vous devriez obtenir l’arborescence suivante</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>panto_description/
+<span class="p">|</span>__CMakeLists.txt
+<span class="p">|</span>__package.xml
+<span class="p">|</span>__src/
+<span class="p">|</span>__launch/
+<span class="p">|</span>__urdf/
+<span class="p">|</span>__meshes/
+</pre></div>
+</div>
+<p>Copier les fichiers collada dans le répertoire panto_description/meshes/</p>
 </section>
 <section id="creation-du-fichier-urdf">
 <h2>Création du fichier URDF<a class="headerlink" href="#creation-du-fichier-urdf" title="Lien vers cette rubrique"></a></h2>
