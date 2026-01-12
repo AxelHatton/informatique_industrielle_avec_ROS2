@@ -200,6 +200,20 @@ install<span class="o">(</span>
 ament_package<span class="o">()</span>
 </pre></div>
 </div>
+<p>On va ensuite installer un package permettant la visualisation rapide du fichier urdf pour aider à sa construction.</p>
+<p>Déplacez-vous à la racine de la machine</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>~
+</pre></div>
+</div>
+<p>Installer le package ros-$ROS_DISTRO-urdf-tutorial</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Si la commande précédente ne fonctionne pas remplacer $ROS_DISTRO par votre distribution (Humble, Jazzy, …)</p>
+</div>
+<p>Sourcer la distribution ros</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span><span class="w"> </span>/opt/ros/<span class="nv">$ROS_DISTRIB</span>/setup.bash
+</pre></div>
+</div>
 </section>
 <section id="creation-du-fichier-urdf">
 <h2>Création du fichier URDF<a class="headerlink" href="#creation-du-fichier-urdf" title="Lien vers cette rubrique"></a></h2>
@@ -210,7 +224,46 @@ ament_package<span class="o">()</span>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>touch<span class="w"> </span>panto.urdf
 </pre></div>
 </div>
-<p>Dans un fichier URDF les modèles 3D sont référencés par des balises <code class="docutils literal notranslate"><span class="pre">&lt;mesh&gt;</span></code>.</p>
+<p>Le fichier urdf va se structurer de la manière suivante
+Un en-tête</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>&lt;?xml<span class="w"> </span><span class="nv">version</span><span class="o">=</span><span class="s2">&quot;1.0&quot;</span>?&gt;
+&lt;robot<span class="w"> </span><span class="nv">name</span><span class="o">=</span><span class="s2">&quot;panto&quot;</span><span class="w"> </span>xmlns:xacro<span class="o">=</span><span class="s2">&quot;http://www.ros.org/wiki/xacro&quot;</span>&gt;
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Pour modifier le nom du robot modifier la variable robot name (ligne 2)</p>
+</div>
+<p>Un link fixe qui servira de référentiel.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>&lt;link<span class="w"> </span><span class="nv">name</span><span class="o">=</span><span class="s2">&quot;world&quot;</span>/&gt;
+</pre></div>
+</div>
+<p>De links qui seront les parts de votre système</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>&lt;link<span class="w"> </span><span class="nv">name</span><span class="o">=</span><span class="s2">&quot;base_link&quot;</span>&gt;
+<span class="w">    </span>&lt;visual&gt;
+<span class="w">        </span>&lt;geometry&gt;
+<span class="w">            </span>&lt;mesh<span class="w"> </span><span class="nv">filename</span><span class="o">=</span><span class="s2">&quot;package://panto_description/meshes/base.dae&quot;</span><span class="w"> </span><span class="nv">scale</span><span class="o">=</span><span class="s2">&quot;1 1 1&quot;</span>/&gt;
+<span class="w">        </span>&lt;/geometry&gt;
+<span class="w">        </span>&lt;origin<span class="w"> </span><span class="nv">xyz</span><span class="o">=</span><span class="s2">&quot;0 0 0&quot;</span><span class="w"> </span><span class="nv">rpy</span><span class="o">=</span><span class="s2">&quot;0 0 0&quot;</span><span class="w"> </span>/&gt;
+<span class="w">    </span>&lt;/visual&gt;
+&lt;/link&gt;
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Dans un fichier URDF les modèles 3D sont référencés par des balises <code class="docutils literal notranslate"><span class="pre">&lt;mesh&gt;</span></code>. Le filename sera le chemin relatif au package et non relatif à la position du fichier urdf</p>
+</div>
+<p>De joints qui vont lier les links entre eux. Il existe différents types de joints</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>&lt;joint<span class="w"> </span><span class="nv">name</span><span class="o">=</span><span class="s2">&quot;base2world&quot;</span><span class="w"> </span><span class="nv">type</span><span class="o">=</span><span class="s2">&quot;fixed&quot;</span>&gt;
+<span class="w">    </span>&lt;parent<span class="w"> </span><span class="nv">link</span><span class="o">=</span><span class="s2">&quot;world&quot;</span>/&gt;
+<span class="w">    </span>&lt;child<span class="w"> </span><span class="nv">link</span><span class="o">=</span><span class="s2">&quot;base_link&quot;</span>/&gt;
+&lt;/joint&gt;
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Un fichier urdf n’admet pas de boucle cinématique. Il faut alors créer 2 branches ouvertes que nous lieront par contrainte géométrique plus tard.</p>
+</div>
 <p>Copier le code urdf suivant dans le fichier panto.urdf</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>&lt;?xml<span class="w"> </span><span class="nv">version</span><span class="o">=</span><span class="s2">&quot;1.0&quot;</span>?&gt;
 &lt;robot<span class="w"> </span><span class="nv">name</span><span class="o">=</span><span class="s2">&quot;panto&quot;</span><span class="w"> </span>xmlns:xacro<span class="o">=</span><span class="s2">&quot;http://www.ros.org/wiki/xacro&quot;</span>&gt;
