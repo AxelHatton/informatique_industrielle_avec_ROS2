@@ -155,10 +155,10 @@ Il va donc falloir convertir notre modèle 3D au format step en un ensemble de 5
 </pre></div>
 </div>
 <p>on devrait obtenir une arborescence de ce type</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>panto_description/
-<span class="p">|</span>__CMakeLists.txt
-<span class="p">|</span>__package.xml
-<span class="p">|</span>__src/
+<div class="highlight-txt notranslate"><div class="highlight"><pre><span></span>panto_description/
+|__CMakeLists.txt
+|__package.xml
+|__src/
 </pre></div>
 </div>
 </section>
@@ -169,33 +169,21 @@ Il va donc falloir convertir notre modèle 3D au format step en un ensemble de 5
 </pre></div>
 </div>
 <p>Vous devriez obtenir l’arborescence suivante</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>panto_description/
-<span class="p">|</span>__CMakeLists.txt
-<span class="p">|</span>__package.xml
-<span class="p">|</span>__src/
-<span class="p">|</span>__launch/
-<span class="p">|</span>__urdf/
-<span class="p">|</span>__meshes/
-<span class="p">|</span>__ros2_control/
-<span class="p">|</span>__config/
-<span class="p">|</span>__rviz/
-<span class="p">|</span>__gazebo/
+<div class="highlight-txt notranslate"><div class="highlight"><pre><span></span>panto_description/
+|__CMakeLists.txt
+|__package.xml
+|__src/
+|__launch/
+|__urdf/
+|__meshes/
+|__ros2_control/
+|__config/
+|__rviz/
+|__gazebo/
 </pre></div>
 </div>
 <p>Copier les fichiers collada dans le répertoire panto_description/meshes/</p>
 <p>Ouvrir le fichier CMakeLists.txt et remplacer par</p>
-<p><a href="#id1"><span class="problematic" id="id2">``</span></a><a href="#id3"><span class="problematic" id="id4">`</span></a></p>
-<p>cmake_minimum_required(VERSION 3.8)
-project(panto_description)</p>
-<p>find_package(ament_cmake REQUIRED)</p>
-<dl class="simple">
-<dt>install(</dt><dd><p>DIRECTORY urdf meshes launch ros2_control config rviz gazebo
-DESTINATION share/${PROJECT_NAME}</p>
-</dd>
-</dl>
-<p>)
-ament_package()</p>
-<p><a href="#id5"><span class="problematic" id="id6">``</span></a><a href="#id7"><span class="problematic" id="id8">`</span></a></p>
 </section>
 <section id="creation-du-fichier-urdf">
 <h2>Création du fichier URDF<a class="headerlink" href="#creation-du-fichier-urdf" title="Lien vers cette rubrique"></a></h2>

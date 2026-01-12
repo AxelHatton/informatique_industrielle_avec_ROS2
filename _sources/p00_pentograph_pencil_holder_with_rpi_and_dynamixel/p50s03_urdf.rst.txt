@@ -58,7 +58,7 @@ Tout d'abord créer le package du pantographe.
 
 on devrait obtenir une arborescence de ce type
 
-.. code-block:: bash
+.. code-block:: txt
    
    panto_description/
    |__CMakeLists.txt
@@ -80,7 +80,7 @@ Créer les dossiers standards launch, meshes et urdf
 
 Vous devriez obtenir l'arborescence suivante
 
-.. code-block:: bash
+.. code-block:: txt
    
    panto_description/
    |__CMakeLists.txt
@@ -98,20 +98,18 @@ Copier les fichiers collada dans le répertoire panto_description/meshes/
 
 Ouvrir le fichier CMakeLists.txt et remplacer par
 
-```
+.. code_blocks:: txt
 
-cmake_minimum_required(VERSION 3.8)
-project(panto_description)
-
-find_package(ament_cmake REQUIRED)
-
-install(
-   DIRECTORY urdf meshes launch ros2_control config rviz gazebo
-   DESTINATION share/${PROJECT_NAME}
-)
-ament_package()
-
-```
+   cmake_minimum_required(VERSION 3.8)
+   project(panto_description)
+   
+   find_package(ament_cmake REQUIRED)
+   
+   install(
+      DIRECTORY urdf meshes launch ros2_control config rviz gazebo
+      DESTINATION share/${PROJECT_NAME}
+   )
+   ament_package()
 
 =========================
 Création du fichier URDF
