@@ -149,11 +149,10 @@ Il va donc falloir convertir notre modèle 3D au format step en un ensemble de 5
 </section>
 <section id="creation-du-package">
 <h2>Création du package<a class="headerlink" href="#creation-du-package" title="Lien vers cette rubrique"></a></h2>
-<p>Tout d’abord créer le package du pantographe.
-.. code-block:: bash</p>
-<blockquote>
-<div><p>ros2 pkg create panto_description –build-type ament_cmake</p>
-</div></blockquote>
+<p>Tout d’abord créer le package du pantographe.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ros2<span class="w"> </span>pkg<span class="w"> </span>create<span class="w"> </span>panto_description<span class="w"> </span>--build-type<span class="w"> </span>ament_cmake
+</pre></div>
+</div>
 <p>on devrait obtenir une arborescence de ce type</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>panto_description/
 <span class="p">|</span>__CMakeLists.txt
