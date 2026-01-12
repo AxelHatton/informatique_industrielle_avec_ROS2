@@ -132,8 +132,8 @@ Copier le code urdf suivant dans le fichier panto.urdf
 
 .. code-block:: bash
    
-   <?xml version="1.0"?>
-   <robot name="panto" xmlns:xacro="http://www.ros.org/wiki/xacro">
+       <?xml version="1.0"?>
+    <robot name="panto" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
         <!-- Link pour fixer la base -->
         <link name="world"/>
