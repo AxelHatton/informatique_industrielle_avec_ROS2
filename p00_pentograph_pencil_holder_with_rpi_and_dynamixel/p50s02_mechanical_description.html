@@ -107,34 +107,28 @@
 </figure>
 <section id="modele-geometrique">
 <h2>Modèle géométrique<a class="headerlink" href="#modele-geometrique" title="Lien vers cette rubrique"></a></h2>
-<p>Nous avons :
-.. math:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>\<span class="n">overrightarrow</span><span class="p">{</span><span class="n">A_1A_2</span><span class="p">}</span> <span class="o">+</span> \<span class="n">overrightarrow</span><span class="p">{</span><span class="n">A_2A_3</span><span class="p">}</span> <span class="o">+</span> \<span class="n">overrightarrow</span><span class="p">{</span><span class="n">A_3A_4</span><span class="p">}</span> <span class="o">=</span> \<span class="n">overrightarrow</span><span class="p">{</span><span class="n">A_1A_4</span><span class="p">}</span> <span class="o">+</span> \<span class="n">overrightarrow</span><span class="p">{</span><span class="n">A_4A_5</span><span class="p">}</span>
-</pre></div>
-</div>
-<p>En projetant sur l’axe <span class="math notranslate nohighlight">\(\overrightarrow{x}\)</span> et <span class="math notranslate nohighlight">\(\overrightarrow{y}\)</span>, nous obtenons :
-.. math:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>\<span class="n">begin</span><span class="p">{</span><span class="n">aligned</span><span class="p">}</span>
-   \<span class="n">begin</span><span class="p">{</span><span class="n">cases</span><span class="p">}</span>
-      <span class="n">l_1</span> <span class="n">c_1</span> <span class="o">+</span> <span class="n">l_2</span> <span class="n">c_2</span> <span class="o">+</span> <span class="n">l_3</span> <span class="n">c_3</span> <span class="o">=</span> <span class="n">l_0</span> <span class="o">+</span> <span class="n">l_4</span> <span class="n">c_4</span> \\
-      <span class="n">l_1</span> <span class="n">s_1</span> <span class="o">+</span> <span class="n">l_2</span> <span class="n">s_2</span> <span class="o">+</span> <span class="n">l_3</span> <span class="n">s_3</span> <span class="o">=</span> <span class="n">l_4</span> <span class="n">s_4</span>
-   \<span class="n">end</span><span class="p">{</span><span class="n">cases</span><span class="p">}</span>
-   \<span class="n">quad</span> \<span class="n">Longleftrightarrow</span> \<span class="n">quad</span>
-   \<span class="n">begin</span><span class="p">{</span><span class="n">cases</span><span class="p">}</span>
-      <span class="n">l_1</span> <span class="n">c_1</span> <span class="o">+</span> <span class="n">l_2</span> <span class="n">c_2</span> <span class="o">-</span> <span class="n">l_0</span> <span class="o">-</span> <span class="n">l_4</span> <span class="n">c_4</span> <span class="o">=</span> <span class="o">-</span><span class="n">l_3</span> <span class="n">c_3</span>  \\
-      <span class="n">l_1</span> <span class="n">s_1</span> <span class="o">+</span> <span class="n">l_2</span> <span class="n">s_2</span> <span class="o">-</span> <span class="n">l_4</span> <span class="n">s_4</span> <span class="o">=</span> <span class="o">-</span> <span class="o">+</span> <span class="n">l_3</span> <span class="n">s_3</span>
-   \<span class="n">end</span><span class="p">{</span><span class="n">cases</span><span class="p">}</span>
-\<span class="n">end</span><span class="p">{</span><span class="n">aligned</span><span class="p">}</span>
-</pre></div>
-</div>
+<p>Nous avons :</p>
+<div class="math notranslate nohighlight">
+\[\overrightarrow{A_1A_2} + \overrightarrow{A_2A_3} + \overrightarrow{A_3A_4} = \overrightarrow{A_1A_4} + \overrightarrow{A_4A_5}\]</div>
+<p>En projetant sur l’axe <span class="math notranslate nohighlight">\(\overrightarrow{x}\)</span> et <span class="math notranslate nohighlight">\(\overrightarrow{y}\)</span>, nous obtenons :</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+   \begin{cases}
+      l_1 c_1 + l_2 c_2 + l_3 c_3 = l_0 + l_4 c_4 \\
+      l_1 s_1 + l_2 s_2 + l_3 s_3 = l_4 s_4
+   \end{cases}
+   \quad \Longleftrightarrow \quad
+   \begin{cases}
+      l_1 c_1 + l_2 c_2 - l_0 - l_4 c_4 = -l_3 c_3  \\
+      l_1 s_1 + l_2 s_2 - l_4 s_4 = - + l_3 s_3
+   \end{cases}
+\end{aligned}\end{split}\]</div>
 <p>Nous avons donc deux équation pour deux inconnues : <span class="math notranslate nohighlight">\(\theta_2\)</span> et <span class="math notranslate nohighlight">\(\theta_3\)</span>. <span class="math notranslate nohighlight">\(\theta_1\)</span> et <span class="math notranslate nohighlight">\(\theta_4\)</span> sont les variables d’entrées du mécanisme.</p>
-<p>En additionnant les deux équations au carré, nous obtenons une équation sans <span class="math notranslate nohighlight">\(\theta_3\)</span> :
-.. math:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">l_1</span> <span class="n">c_1</span> <span class="o">+</span> <span class="n">l_2</span> <span class="n">c_2</span> <span class="o">-</span> <span class="n">l_0</span> <span class="o">-</span> <span class="n">l_4</span> <span class="n">c_4</span><span class="p">)</span><span class="o">^</span><span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">l_1</span> <span class="n">s_1</span> <span class="o">+</span> <span class="n">l_2</span> <span class="n">s_2</span> <span class="o">-</span> <span class="n">l_4</span> <span class="n">s_4</span><span class="p">)</span><span class="o">^</span><span class="mi">2</span> <span class="o">=</span> <span class="n">l_3</span><span class="o">^</span><span class="mi">2</span> \\
-\<span class="n">Longleftrightarrow</span> \\
-<span class="n">l_1</span><span class="o">^</span><span class="mi">2</span> <span class="o">+</span> <span class="n">l_2</span><span class="o">^</span><span class="mi">2</span> <span class="o">+</span> <span class="n">l_4</span><span class="o">^</span><span class="mi">2</span> <span class="o">+</span> <span class="n">l_0</span><span class="o">^</span><span class="mi">2</span> <span class="o">-</span> <span class="n">l_3</span><span class="o">^</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">2</span><span class="n">l_1l_0c_1</span> <span class="o">-</span> <span class="mi">2</span><span class="n">l_1l_4c_1c_4</span> <span class="o">+</span> <span class="mi">2</span><span class="n">l_0l_4c_4</span> <span class="o">-</span> <span class="mi">2</span><span class="n">l_1l_4s_1s_4</span> <span class="o">+</span> <span class="mi">2</span><span class="n">c_2l_2</span><span class="p">(</span><span class="n">l_1c_1</span> <span class="o">-</span> <span class="n">l_0</span> <span class="o">-</span> <span class="n">l_4c_4</span><span class="p">)</span> <span class="o">+</span> <span class="mi">2</span><span class="n">s_2l_2</span><span class="p">(</span><span class="n">l_1s_1</span> <span class="o">-</span> <span class="n">l_4s_4</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span> \\
-</pre></div>
-</div>
+<p>En additionnant les deux équations au carré, nous obtenons une équation sans <span class="math notranslate nohighlight">\(\theta_3\)</span> :</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}(l_1 c_1 + l_2 c_2 - l_0 - l_4 c_4)^2 + (l_1 s_1 + l_2 s_2 - l_4 s_4)^2 = l_3^2 \\
+\Longleftrightarrow \\
+l_1^2 + l_2^2 + l_4^2 + l_0^2 - l_3^2 - 2l_1l_0c_1 - 2l_1l_4c_1c_4 + 2l_0l_4c_4 - 2l_1l_4s_1s_4 + 2c_2l_2(l_1c_1 - l_0 - l_4c_4) + 2s_2l_2(l_1s_1 - l_4s_4) = 0 \\\end{split}\]</div>
 <p>Nous fixons :</p>
 <div class="math notranslate nohighlight">
 \[ \begin{align}\begin{aligned}\begin{split}  M = l_1^2 + l_2^2 + l_4^2 + l_0^2 - l_3^2 - 2l_1l_0c_1 - 2l_1l_4c_1c_4 + 2l_0l_4c_4 - 2l_1l_4s_1s_4\\

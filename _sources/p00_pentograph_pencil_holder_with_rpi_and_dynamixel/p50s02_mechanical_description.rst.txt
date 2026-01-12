@@ -15,11 +15,14 @@ Modèle géométrique
 ==================
 
 Nous avons :
+
 .. math:: 
    \overrightarrow{A_1A_2} + \overrightarrow{A_2A_3} + \overrightarrow{A_3A_4} = \overrightarrow{A_1A_4} + \overrightarrow{A_4A_5}
 
 En projetant sur l'axe :math:`\overrightarrow{x}` et :math:`\overrightarrow{y}`, nous obtenons :
+
 .. math::
+
    \begin{aligned}
       \begin{cases}
          l_1 c_1 + l_2 c_2 + l_3 c_3 = l_0 + l_4 c_4 \\
@@ -31,10 +34,13 @@ En projetant sur l'axe :math:`\overrightarrow{x}` et :math:`\overrightarrow{y}`,
          l_1 s_1 + l_2 s_2 - l_4 s_4 = - + l_3 s_3
       \end{cases}
    \end{aligned}
+
 Nous avons donc deux équation pour deux inconnues : :math:`\theta_2` et :math:`\theta_3`. :math:`\theta_1` et :math:`\theta_4` sont les variables d'entrées du mécanisme. 
 
 En additionnant les deux équations au carré, nous obtenons une équation sans :math:`\theta_3` :
+
 .. math::
+
    (l_1 c_1 + l_2 c_2 - l_0 - l_4 c_4)^2 + (l_1 s_1 + l_2 s_2 - l_4 s_4)^2 = l_3^2 \\
    \Longleftrightarrow \\
    l_1^2 + l_2^2 + l_4^2 + l_0^2 - l_3^2 - 2l_1l_0c_1 - 2l_1l_4c_1c_4 + 2l_0l_4c_4 - 2l_1l_4s_1s_4 + 2c_2l_2(l_1c_1 - l_0 - l_4c_4) + 2s_2l_2(l_1s_1 - l_4s_4) = 0 \\
