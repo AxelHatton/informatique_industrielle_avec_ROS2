@@ -194,7 +194,7 @@ Un link fixe qui servira de référentiel.
 
    <link name="world"/>
 
-De links qui seront les parts de votre système
+De links_ qui seront les parts de votre système
 
 
 .. code-block:: bash
@@ -212,7 +212,7 @@ De links qui seront les parts de votre système
 
    Dans un fichier URDF les modèles 3D sont référencés par des balises ``<mesh>``. Le filename sera le chemin relatif au package et non relatif à la position du fichier urdf
 
-De joints qui vont lier les links entre eux. Il existe différents types de joints
+De joints qui vont lier les links_ entre eux. Il existe différents types de joints_
 
 .. code-block:: bash
 
@@ -448,4 +448,5 @@ Copier le code suivant dans le fichier panto.ros2_control.urdf
     </robot>
 
 
-
+.. _joints: https://wiki.ros.org/urdf/XML/joint
+.. _links: https://wiki.ros.org/urdf/XML/link
