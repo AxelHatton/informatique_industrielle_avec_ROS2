@@ -40,22 +40,31 @@ En additionnant les deux équations au carré, nous obtenons une équation sans 
    l_1^2 + l_2^2 + l_4^2 + l_0^2 - l_3^2 - 2l_1l_0c_1 - 2l_1l_4c_1c_4 + 2l_0l_4c_4 - 2l_1l_4s_1s_4 + 2c_2l_2(l_1c_1 - l_0 - l_4c_4) + 2s_2l_2(l_1s_1 - l_4s_4) = 0 \\
 
 Nous fixons :
+
 .. math::
+
    M = l_1^2 + l_2^2 + l_4^2 + l_0^2 - l_3^2 - 2l_1l_0c_1 - 2l_1l_4c_1c_4 + 2l_0l_4c_4 - 2l_1l_4s_1s_4\\
    L = 2l_2(l_1c_1 - l_0 - l_4c_4) \\
    K = 2l_2(l_1s_1 - l_4s_4)\\
+
  Nous obtenons donc l'équation suivante, qui ne dépend que de :math:`\theta_2` :
+
  .. math::
+
    M + c_2L + s_2K = 0\\
 
 Nous pouvons remplacer c2 et s2 par leur expression en fonction de tan(:math:`\frac{\theta_2}{2}`) :
+
 .. math::
+
    t = tan(\frac{\theta_2}{2})\\
    c_2 = \frac{1 - t^2}{1+t^2}\\
    s_2 = \frac{2t}{1+t^2}\\
 
 Nous obtenons donc :
+
 .. math::
+
    \begin{aligned}
       L(1-t^2) + 2Kt = - M (1 + t^2)\\
    \quad \Longleftrightarrow \quad
@@ -63,15 +72,21 @@ Nous obtenons donc :
    \end{aligned}
 
 Nous avons une équation de polynomiale de degré 2, nous pouvons donc calculer t :
+
 .. math::
+
    t = \frac{-2K \pm \sqrt{(2K)^2-4(M-L)(M+L)} - 2K}{2(M - L)}\\
 
 Ainsi :
+
 .. math::
+
    \theta_2 = 2arctan(t)
 
 Avec :math:`\theta_2` et connaissant :math:`\theta_1`, nous pouvons caluler la position X3 et Y3 du point :math:`A_3` :
+
 .. math::
+
    X3 = l_1c_1 + l_2c_2\\
    Y3 = l_1s_2 + l_2s_2
 
