@@ -99,6 +99,7 @@ Copier les fichiers collada dans le répertoire panto_description/meshes/
 Ouvrir le fichier CMakeLists.txt et remplacer par
 
 ```
+
 cmake_minimum_required(VERSION 3.8)
 project(panto_description)
 
@@ -109,6 +110,7 @@ install(
    DESTINATION share/${PROJECT_NAME}
 )
 ament_package()
+
 ```
 
 =========================
