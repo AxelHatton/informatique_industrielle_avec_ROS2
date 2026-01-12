@@ -59,7 +59,7 @@ Tout d'abord créer le package du pantographe.
 on devrait obtenir une arborescence de ce type
 
 .. code-blocks:: bash
-
+   
    panto_description/
    |__CMakeLists.txt
    |__package.xml
@@ -72,16 +72,17 @@ Création des dossiers standards
 Créer les dossiers standards launch, meshes et urdf
 
 .. code-block:: bash
-
+   
    cd panto_description
 
 .. code-block:: bash
+   
    mkdir urdf meshes launch ros2_control config rviz gazebo
 
 Vous devriez obtenir l'arborescence suivante
 
 .. code-blocks:: bash
-
+   
    panto_description/
    |__CMakeLists.txt
    |__package.xml
@@ -99,7 +100,7 @@ Copier les fichiers collada dans le répertoire panto_description/meshes/
 Ouvrir le fichier CMakeLists.txt et remplacer par
 
 .. code-blocks:: bash
-
+   
    cmake_minimum_required(VERSION 3.8)
    project(panto_description)
    
@@ -118,11 +119,11 @@ Création du fichier URDF
 Créer un fichier urdf dans le répertoire panto_description/urdf
 
 .. code-blocks:: bash
-
+   
    cd urdf
 
 .. code-blocks:: bash
-
+   
    touch panto.urdf
 
 Dans un fichier URDF les modèles 3D sont référencés par des balises ``<mesh>``.
@@ -130,7 +131,7 @@ Dans un fichier URDF les modèles 3D sont référencés par des balises ``<mesh>
 Copier le code urdf suivant dans le fichier panto.urdf
 
 .. code-blocks:: bash
-
+   
 
 
 
