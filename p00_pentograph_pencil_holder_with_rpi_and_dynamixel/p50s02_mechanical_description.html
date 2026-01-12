@@ -24,6 +24,7 @@
       <script src="../_static/copybutton.js?v=30646c52"></script>
       <script src="../_static/translations.js?v=e6b791cb"></script>
       <script src="../_static/design-tabs.js?v=f930bc37"></script>
+      <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Recherche" href="../search.html" />
@@ -62,7 +63,10 @@
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="p50s00_index.html">Pantographe de dessin robotisé avec Raspberry Pi et ROS2</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="p50s01_material_description.html">Description du matériel de la plateforme pantographe</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Description mécanique de la plateforme pantographe</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Description mécanique de la plateforme pantographe</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#modele-geometrique">Modèle géométrique</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="p50s03_urdf.html">Génération de la description URDF du pantographe</a></li>
 <li class="toctree-l2"><a class="reference internal" href="p50s04_dynamixel.html">Fonctionnement des Dynamixels</a></li>
 <li class="toctree-l2"><a class="reference internal" href="p50s00_index.html#description-du-projet">Description du projet</a></li>
@@ -101,6 +105,79 @@
 <figure class="align-center">
 <img alt="../_images/schema_cinematique.svg" src="../_images/schema_cinematique.svg" />
 </figure>
+<section id="modele-geometrique">
+<h2>Modèle géométrique<a class="headerlink" href="#modele-geometrique" title="Lien vers cette rubrique"></a></h2>
+<p>Nous avons :
+.. math:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>\<span class="n">overrightarrow</span><span class="p">{</span><span class="n">A_1A_2</span><span class="p">}</span> <span class="o">+</span> \<span class="n">overrightarrow</span><span class="p">{</span><span class="n">A_2A_3</span><span class="p">}</span> <span class="o">+</span> \<span class="n">overrightarrow</span><span class="p">{</span><span class="n">A_3A_4</span><span class="p">}</span> <span class="o">=</span> \<span class="n">overrightarrow</span><span class="p">{</span><span class="n">A_1A_4</span><span class="p">}</span> <span class="o">+</span> \<span class="n">overrightarrow</span><span class="p">{</span><span class="n">A_4A_5</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>En projetant sur l’axe <span class="math notranslate nohighlight">\(\overrightarrow{x}\)</span> et <span class="math notranslate nohighlight">\(\overrightarrow{y}\)</span>, nous obtenons :
+.. math:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>\<span class="n">begin</span><span class="p">{</span><span class="n">aligned</span><span class="p">}</span>
+   \<span class="n">begin</span><span class="p">{</span><span class="n">cases</span><span class="p">}</span>
+      <span class="n">l_1</span> <span class="n">c_1</span> <span class="o">+</span> <span class="n">l_2</span> <span class="n">c_2</span> <span class="o">+</span> <span class="n">l_3</span> <span class="n">c_3</span> <span class="o">=</span> <span class="n">l_0</span> <span class="o">+</span> <span class="n">l_4</span> <span class="n">c_4</span> \\
+      <span class="n">l_1</span> <span class="n">s_1</span> <span class="o">+</span> <span class="n">l_2</span> <span class="n">s_2</span> <span class="o">+</span> <span class="n">l_3</span> <span class="n">s_3</span> <span class="o">=</span> <span class="n">l_4</span> <span class="n">s_4</span>
+   \<span class="n">end</span><span class="p">{</span><span class="n">cases</span><span class="p">}</span>
+   \<span class="n">quad</span> \<span class="n">Longleftrightarrow</span> \<span class="n">quad</span>
+   \<span class="n">begin</span><span class="p">{</span><span class="n">cases</span><span class="p">}</span>
+      <span class="n">l_1</span> <span class="n">c_1</span> <span class="o">+</span> <span class="n">l_2</span> <span class="n">c_2</span> <span class="o">-</span> <span class="n">l_0</span> <span class="o">-</span> <span class="n">l_4</span> <span class="n">c_4</span> <span class="o">=</span> <span class="o">-</span><span class="n">l_3</span> <span class="n">c_3</span>  \\
+      <span class="n">l_1</span> <span class="n">s_1</span> <span class="o">+</span> <span class="n">l_2</span> <span class="n">s_2</span> <span class="o">-</span> <span class="n">l_4</span> <span class="n">s_4</span> <span class="o">=</span> <span class="o">-</span> <span class="o">+</span> <span class="n">l_3</span> <span class="n">s_3</span>
+   \<span class="n">end</span><span class="p">{</span><span class="n">cases</span><span class="p">}</span>
+\<span class="n">end</span><span class="p">{</span><span class="n">aligned</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Nous avons donc deux équation pour deux inconnues : <span class="math notranslate nohighlight">\(\theta_2\)</span> et <span class="math notranslate nohighlight">\(\theta_3\)</span>. <span class="math notranslate nohighlight">\(\theta_1\)</span> et <span class="math notranslate nohighlight">\(\theta_4\)</span> sont les variables d’entrées du mécanisme.</p>
+<p>En additionnant les deux équations au carré, nous obtenons une équation sans <span class="math notranslate nohighlight">\(\theta_3\)</span> :
+.. math:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">l_1</span> <span class="n">c_1</span> <span class="o">+</span> <span class="n">l_2</span> <span class="n">c_2</span> <span class="o">-</span> <span class="n">l_0</span> <span class="o">-</span> <span class="n">l_4</span> <span class="n">c_4</span><span class="p">)</span><span class="o">^</span><span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">l_1</span> <span class="n">s_1</span> <span class="o">+</span> <span class="n">l_2</span> <span class="n">s_2</span> <span class="o">-</span> <span class="n">l_4</span> <span class="n">s_4</span><span class="p">)</span><span class="o">^</span><span class="mi">2</span> <span class="o">=</span> <span class="n">l_3</span><span class="o">^</span><span class="mi">2</span> \\
+\<span class="n">Longleftrightarrow</span> \\
+<span class="n">l_1</span><span class="o">^</span><span class="mi">2</span> <span class="o">+</span> <span class="n">l_2</span><span class="o">^</span><span class="mi">2</span> <span class="o">+</span> <span class="n">l_4</span><span class="o">^</span><span class="mi">2</span> <span class="o">+</span> <span class="n">l_0</span><span class="o">^</span><span class="mi">2</span> <span class="o">-</span> <span class="n">l_3</span><span class="o">^</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">2</span><span class="n">l_1l_0c_1</span> <span class="o">-</span> <span class="mi">2</span><span class="n">l_1l_4c_1c_4</span> <span class="o">+</span> <span class="mi">2</span><span class="n">l_0l_4c_4</span> <span class="o">-</span> <span class="mi">2</span><span class="n">l_1l_4s_1s_4</span> <span class="o">+</span> <span class="mi">2</span><span class="n">c_2l_2</span><span class="p">(</span><span class="n">l_1c_1</span> <span class="o">-</span> <span class="n">l_0</span> <span class="o">-</span> <span class="n">l_4c_4</span><span class="p">)</span> <span class="o">+</span> <span class="mi">2</span><span class="n">s_2l_2</span><span class="p">(</span><span class="n">l_1s_1</span> <span class="o">-</span> <span class="n">l_4s_4</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span> \\
+</pre></div>
+</div>
+<p>Nous fixons :
+.. math:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>  <span class="n">M</span> <span class="o">=</span> <span class="n">l_1</span><span class="o">^</span><span class="mi">2</span> <span class="o">+</span> <span class="n">l_2</span><span class="o">^</span><span class="mi">2</span> <span class="o">+</span> <span class="n">l_4</span><span class="o">^</span><span class="mi">2</span> <span class="o">+</span> <span class="n">l_0</span><span class="o">^</span><span class="mi">2</span> <span class="o">-</span> <span class="n">l_3</span><span class="o">^</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">2</span><span class="n">l_1l_0c_1</span> <span class="o">-</span> <span class="mi">2</span><span class="n">l_1l_4c_1c_4</span> <span class="o">+</span> <span class="mi">2</span><span class="n">l_0l_4c_4</span> <span class="o">-</span> <span class="mi">2</span><span class="n">l_1l_4s_1s_4</span>\\
+  <span class="n">L</span> <span class="o">=</span> <span class="mi">2</span><span class="n">l_2</span><span class="p">(</span><span class="n">l_1c_1</span> <span class="o">-</span> <span class="n">l_0</span> <span class="o">-</span> <span class="n">l_4c_4</span><span class="p">)</span> \\
+  <span class="n">K</span> <span class="o">=</span> <span class="mi">2</span><span class="n">l_2</span><span class="p">(</span><span class="n">l_1s_1</span> <span class="o">-</span> <span class="n">l_4s_4</span><span class="p">)</span>\\
+<span class="n">Nous</span> <span class="n">obtenons</span> <span class="n">donc</span> <span class="n">l</span><span class="s1">&#39;équation suivante, qui ne dépend que de :math:`</span><span class="se">\t</span><span class="s1">heta_2` :</span>
+<span class="o">..</span> <span class="n">math</span><span class="p">::</span>
+  <span class="n">M</span> <span class="o">+</span> <span class="n">c_2L</span> <span class="o">+</span> <span class="n">s_2K</span> <span class="o">=</span> <span class="mi">0</span>\\
+</pre></div>
+</div>
+<p>Nous pouvons remplacer c2 et s2 par leur expression en fonction de tan(<span class="math notranslate nohighlight">\(\frac{\theta_2}{2}\)</span>) :
+.. math:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">t</span> <span class="o">=</span> <span class="n">tan</span><span class="p">(</span>\<span class="n">frac</span><span class="p">{</span>\<span class="n">theta_2</span><span class="p">}{</span><span class="mi">2</span><span class="p">})</span>\\
+<span class="n">c_2</span> <span class="o">=</span> \<span class="n">frac</span><span class="p">{</span><span class="mi">1</span> <span class="o">-</span> <span class="n">t</span><span class="o">^</span><span class="mi">2</span><span class="p">}{</span><span class="mi">1</span><span class="o">+</span><span class="n">t</span><span class="o">^</span><span class="mi">2</span><span class="p">}</span>\\
+<span class="n">s_2</span> <span class="o">=</span> \<span class="n">frac</span><span class="p">{</span><span class="mi">2</span><span class="n">t</span><span class="p">}{</span><span class="mi">1</span><span class="o">+</span><span class="n">t</span><span class="o">^</span><span class="mi">2</span><span class="p">}</span>\\
+</pre></div>
+</div>
+<p>Nous obtenons donc :
+.. math:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>\<span class="n">begin</span><span class="p">{</span><span class="n">aligned</span><span class="p">}</span>
+   <span class="n">L</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">t</span><span class="o">^</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="mi">2</span><span class="n">Kt</span> <span class="o">=</span> <span class="o">-</span> <span class="n">M</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">t</span><span class="o">^</span><span class="mi">2</span><span class="p">)</span>\\
+\<span class="n">quad</span> \<span class="n">Longleftrightarrow</span> \<span class="n">quad</span>
+   <span class="n">t</span><span class="o">^</span><span class="mi">2</span><span class="p">(</span><span class="n">M</span><span class="o">-</span><span class="n">L</span><span class="p">)</span><span class="o">+</span><span class="mi">2</span><span class="n">Kt</span> <span class="o">+</span> <span class="n">L</span> <span class="o">+</span> <span class="n">M</span><span class="p">;</span>
+\<span class="n">end</span><span class="p">{</span><span class="n">aligned</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Nous avons une équation de polynomiale de degré 2, nous pouvons donc calculer t :
+.. math:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">t</span> <span class="o">=</span> \<span class="n">frac</span><span class="p">{</span><span class="o">-</span><span class="mi">2</span><span class="n">K</span> \<span class="n">pm</span> \<span class="n">sqrt</span><span class="p">{(</span><span class="mi">2</span><span class="n">K</span><span class="p">)</span><span class="o">^</span><span class="mi">2</span><span class="o">-</span><span class="mi">4</span><span class="p">(</span><span class="n">M</span><span class="o">-</span><span class="n">L</span><span class="p">)(</span><span class="n">M</span><span class="o">+</span><span class="n">L</span><span class="p">)}</span> <span class="o">-</span> <span class="mi">2</span><span class="n">K</span><span class="p">}{</span><span class="mi">2</span><span class="p">(</span><span class="n">M</span> <span class="o">-</span> <span class="n">L</span><span class="p">)}</span>\\
+</pre></div>
+</div>
+<p>Ainsi :
+.. math:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>\<span class="n">theta_2</span> <span class="o">=</span> <span class="mi">2</span><span class="n">arctan</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Avec <span class="math notranslate nohighlight">\(\theta_2\)</span> et connaissant <span class="math notranslate nohighlight">\(\theta_1\)</span>, nous pouvons caluler la position X3 et Y3 du point <span class="math notranslate nohighlight">\(A_3\)</span> :
+.. math:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">X3</span> <span class="o">=</span> <span class="n">l_1c_1</span> <span class="o">+</span> <span class="n">l_2c_2</span>\\
+<span class="n">Y3</span> <span class="o">=</span> <span class="n">l_1s_2</span> <span class="o">+</span> <span class="n">l_2s_2</span>
+</pre></div>
+</div>
+</section>
 </section>
 
 
