@@ -57,8 +57,6 @@ Tout d'abord créer le package du pantographe.
    ros2 pkg create panto_description --build-type ament_cmake
 
 on devrait obtenir une arborescence de ce type
-
-.. code-block:: txt
    
    panto_description/
    |__CMakeLists.txt
@@ -79,8 +77,6 @@ Créer les dossiers standards launch, meshes et urdf
    mkdir urdf meshes launch ros2_control config rviz gazebo
 
 Vous devriez obtenir l'arborescence suivante
-
-.. code-block:: txt
    
    panto_description/
    |__CMakeLists.txt
@@ -97,8 +93,6 @@ Vous devriez obtenir l'arborescence suivante
 Copier les fichiers collada dans le répertoire panto_description/meshes/
 
 Ouvrir le fichier CMakeLists.txt et remplacer par
-
-.. code_blocks:: txt
 
    cmake_minimum_required(VERSION 3.8)
    project(panto_description)
