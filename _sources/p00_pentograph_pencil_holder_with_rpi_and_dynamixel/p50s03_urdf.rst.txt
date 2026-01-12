@@ -132,6 +132,92 @@ Copier le code urdf suivant dans le fichier panto.urdf
 
 .. code-block:: bash
    
+   <?xml version="1.0"?>
+   <robot name="panto" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
+        <!-- Link pour fixer la base -->
+        <link name="world"/>
 
+        <link name="base_link">
+            <visual>
+                <geometry>
+                    <mesh filename="package://panto_description/meshes/base.dae" scale="1 1 1"/>
+                </geometry>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+            </visual>
+        </link>
 
+        <joint name="base2world" type="fixed">
+            <parent link="world"/>
+            <child link="base_link"/>
+        </joint>
+
+        <link name="link1">
+            <visual>
+                <geometry>
+                    <mesh filename="package://panto_description/meshes/link1.dae" scale="1 1 1"/>
+                </geometry>
+                <origin xyz="0.08 0 -0.07" rpy="0 0 0" />
+            </visual>
+        </link>
+
+        <joint name="base_link_link1_joint" type="revolute">
+            <parent link="base_link"/>
+            <child link="link1"/>
+            <origin xyz="-0.08 0 0.07" rpy="0 0 0"/>
+            <axis xyz="0 1 0"/>
+            <limit effort="10" lower="-1.57" upper="1.57" velocity="1.0"/>
+        </joint>
+
+        <link name="link2">
+            <visual>
+                <geometry>
+                    <mesh filename="package://panto_description/meshes/link2.dae" scale="1 1 1"/>
+                </geometry>
+                <origin xyz="0.08 0 0.01" rpy="0 0 0" />
+            </visual>
+        </link>
+
+        <joint name="link1_link2_joint" type="revolute">
+            <parent link="link1"/>
+            <child link="link2"/>
+            <origin xyz="0 0 -0.08" rpy="0 0 0"/>
+            <axis xyz="0 1 0"/>
+            <limit effort="10" lower="-1.57" upper="1.57" velocity="1.0"/>
+        </joint>
+
+        <link name="link4">
+            <visual>
+                <geometry>
+                    <mesh filename="package://panto_description/meshes/link4.dae" scale="1 1 1"/>
+                </geometry>
+                <origin xyz="-0.058 0 -0.07" rpy="0 0 0" />
+            </visual>
+        </link>
+
+        <joint name="base_link_link4_joint" type="revolute">
+            <parent link="base_link"/>
+            <child link="link4"/>
+            <origin xyz="0.058 0 0.070" rpy="0 0 0"/>
+            <axis xyz="0 1 0"/>
+            <limit effort="10" lower="-1.57" upper="1.57" velocity="1.0"/>
+        </joint>
+
+        <link name="link3">
+            <visual>
+                <geometry>
+                    <mesh filename="package://panto_description/meshes/link3.dae" scale="1 1 1"/>
+                </geometry>
+                <origin xyz="-0.0902347 0 0.00212437" rpy="0 0 0" />
+            </visual>
+        </link>
+
+        <joint name="link4_link3_joint" type="revolute">
+            <parent link="link4"/>
+            <child link="link3"/>
+            <origin xyz="0.0322347 0 -0.07212437" rpy="0 0 0"/>
+            <axis xyz="0 1 0"/>
+            <limit effort="10" lower="-1.57" upper="1.57" velocity="1.0"/>
+        </joint>
+
+    </robot>

@@ -211,7 +211,95 @@ ament_package<span class="o">()</span>
 </div>
 <p>Dans un fichier URDF les modèles 3D sont référencés par des balises <code class="docutils literal notranslate"><span class="pre">&lt;mesh&gt;</span></code>.</p>
 <p>Copier le code urdf suivant dans le fichier panto.urdf</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>&lt;?xml<span class="w"> </span><span class="nv">version</span><span class="o">=</span><span class="s2">&quot;1.0&quot;</span>?&gt;
+&lt;robot<span class="w"> </span><span class="nv">name</span><span class="o">=</span><span class="s2">&quot;panto&quot;</span><span class="w"> </span>xmlns:xacro<span class="o">=</span><span class="s2">&quot;http://www.ros.org/wiki/xacro&quot;</span>&gt;
+
+<span class="w">     </span>&lt;!--<span class="w"> </span>Link<span class="w"> </span>pour<span class="w"> </span>fixer<span class="w"> </span>la<span class="w"> </span>base<span class="w"> </span>--&gt;
+<span class="w">     </span>&lt;link<span class="w"> </span><span class="nv">name</span><span class="o">=</span><span class="s2">&quot;world&quot;</span>/&gt;
+
+<span class="w">     </span>&lt;link<span class="w"> </span><span class="nv">name</span><span class="o">=</span><span class="s2">&quot;base_link&quot;</span>&gt;
+<span class="w">         </span>&lt;visual&gt;
+<span class="w">             </span>&lt;geometry&gt;
+<span class="w">                 </span>&lt;mesh<span class="w"> </span><span class="nv">filename</span><span class="o">=</span><span class="s2">&quot;package://panto_description/meshes/base.dae&quot;</span><span class="w"> </span><span class="nv">scale</span><span class="o">=</span><span class="s2">&quot;1 1 1&quot;</span>/&gt;
+<span class="w">             </span>&lt;/geometry&gt;
+<span class="w">             </span>&lt;origin<span class="w"> </span><span class="nv">xyz</span><span class="o">=</span><span class="s2">&quot;0 0 0&quot;</span><span class="w"> </span><span class="nv">rpy</span><span class="o">=</span><span class="s2">&quot;0 0 0&quot;</span><span class="w"> </span>/&gt;
+<span class="w">         </span>&lt;/visual&gt;
+<span class="w">     </span>&lt;/link&gt;
+
+<span class="w">     </span>&lt;joint<span class="w"> </span><span class="nv">name</span><span class="o">=</span><span class="s2">&quot;base2world&quot;</span><span class="w"> </span><span class="nv">type</span><span class="o">=</span><span class="s2">&quot;fixed&quot;</span>&gt;
+<span class="w">         </span>&lt;parent<span class="w"> </span><span class="nv">link</span><span class="o">=</span><span class="s2">&quot;world&quot;</span>/&gt;
+<span class="w">         </span>&lt;child<span class="w"> </span><span class="nv">link</span><span class="o">=</span><span class="s2">&quot;base_link&quot;</span>/&gt;
+<span class="w">     </span>&lt;/joint&gt;
+
+<span class="w">     </span>&lt;link<span class="w"> </span><span class="nv">name</span><span class="o">=</span><span class="s2">&quot;link1&quot;</span>&gt;
+<span class="w">         </span>&lt;visual&gt;
+<span class="w">             </span>&lt;geometry&gt;
+<span class="w">                 </span>&lt;mesh<span class="w"> </span><span class="nv">filename</span><span class="o">=</span><span class="s2">&quot;package://panto_description/meshes/link1.dae&quot;</span><span class="w"> </span><span class="nv">scale</span><span class="o">=</span><span class="s2">&quot;1 1 1&quot;</span>/&gt;
+<span class="w">             </span>&lt;/geometry&gt;
+<span class="w">             </span>&lt;origin<span class="w"> </span><span class="nv">xyz</span><span class="o">=</span><span class="s2">&quot;0.08 0 -0.07&quot;</span><span class="w"> </span><span class="nv">rpy</span><span class="o">=</span><span class="s2">&quot;0 0 0&quot;</span><span class="w"> </span>/&gt;
+<span class="w">         </span>&lt;/visual&gt;
+<span class="w">     </span>&lt;/link&gt;
+
+<span class="w">     </span>&lt;joint<span class="w"> </span><span class="nv">name</span><span class="o">=</span><span class="s2">&quot;base_link_link1_joint&quot;</span><span class="w"> </span><span class="nv">type</span><span class="o">=</span><span class="s2">&quot;revolute&quot;</span>&gt;
+<span class="w">         </span>&lt;parent<span class="w"> </span><span class="nv">link</span><span class="o">=</span><span class="s2">&quot;base_link&quot;</span>/&gt;
+<span class="w">         </span>&lt;child<span class="w"> </span><span class="nv">link</span><span class="o">=</span><span class="s2">&quot;link1&quot;</span>/&gt;
+<span class="w">         </span>&lt;origin<span class="w"> </span><span class="nv">xyz</span><span class="o">=</span><span class="s2">&quot;-0.08 0 0.07&quot;</span><span class="w"> </span><span class="nv">rpy</span><span class="o">=</span><span class="s2">&quot;0 0 0&quot;</span>/&gt;
+<span class="w">         </span>&lt;axis<span class="w"> </span><span class="nv">xyz</span><span class="o">=</span><span class="s2">&quot;0 1 0&quot;</span>/&gt;
+<span class="w">         </span>&lt;limit<span class="w"> </span><span class="nv">effort</span><span class="o">=</span><span class="s2">&quot;10&quot;</span><span class="w"> </span><span class="nv">lower</span><span class="o">=</span><span class="s2">&quot;-1.57&quot;</span><span class="w"> </span><span class="nv">upper</span><span class="o">=</span><span class="s2">&quot;1.57&quot;</span><span class="w"> </span><span class="nv">velocity</span><span class="o">=</span><span class="s2">&quot;1.0&quot;</span>/&gt;
+<span class="w">     </span>&lt;/joint&gt;
+
+<span class="w">     </span>&lt;link<span class="w"> </span><span class="nv">name</span><span class="o">=</span><span class="s2">&quot;link2&quot;</span>&gt;
+<span class="w">         </span>&lt;visual&gt;
+<span class="w">             </span>&lt;geometry&gt;
+<span class="w">                 </span>&lt;mesh<span class="w"> </span><span class="nv">filename</span><span class="o">=</span><span class="s2">&quot;package://panto_description/meshes/link2.dae&quot;</span><span class="w"> </span><span class="nv">scale</span><span class="o">=</span><span class="s2">&quot;1 1 1&quot;</span>/&gt;
+<span class="w">             </span>&lt;/geometry&gt;
+<span class="w">             </span>&lt;origin<span class="w"> </span><span class="nv">xyz</span><span class="o">=</span><span class="s2">&quot;0.08 0 0.01&quot;</span><span class="w"> </span><span class="nv">rpy</span><span class="o">=</span><span class="s2">&quot;0 0 0&quot;</span><span class="w"> </span>/&gt;
+<span class="w">         </span>&lt;/visual&gt;
+<span class="w">     </span>&lt;/link&gt;
+
+<span class="w">     </span>&lt;joint<span class="w"> </span><span class="nv">name</span><span class="o">=</span><span class="s2">&quot;link1_link2_joint&quot;</span><span class="w"> </span><span class="nv">type</span><span class="o">=</span><span class="s2">&quot;revolute&quot;</span>&gt;
+<span class="w">         </span>&lt;parent<span class="w"> </span><span class="nv">link</span><span class="o">=</span><span class="s2">&quot;link1&quot;</span>/&gt;
+<span class="w">         </span>&lt;child<span class="w"> </span><span class="nv">link</span><span class="o">=</span><span class="s2">&quot;link2&quot;</span>/&gt;
+<span class="w">         </span>&lt;origin<span class="w"> </span><span class="nv">xyz</span><span class="o">=</span><span class="s2">&quot;0 0 -0.08&quot;</span><span class="w"> </span><span class="nv">rpy</span><span class="o">=</span><span class="s2">&quot;0 0 0&quot;</span>/&gt;
+<span class="w">         </span>&lt;axis<span class="w"> </span><span class="nv">xyz</span><span class="o">=</span><span class="s2">&quot;0 1 0&quot;</span>/&gt;
+<span class="w">         </span>&lt;limit<span class="w"> </span><span class="nv">effort</span><span class="o">=</span><span class="s2">&quot;10&quot;</span><span class="w"> </span><span class="nv">lower</span><span class="o">=</span><span class="s2">&quot;-1.57&quot;</span><span class="w"> </span><span class="nv">upper</span><span class="o">=</span><span class="s2">&quot;1.57&quot;</span><span class="w"> </span><span class="nv">velocity</span><span class="o">=</span><span class="s2">&quot;1.0&quot;</span>/&gt;
+<span class="w">     </span>&lt;/joint&gt;
+
+<span class="w">     </span>&lt;link<span class="w"> </span><span class="nv">name</span><span class="o">=</span><span class="s2">&quot;link4&quot;</span>&gt;
+<span class="w">         </span>&lt;visual&gt;
+<span class="w">             </span>&lt;geometry&gt;
+<span class="w">                 </span>&lt;mesh<span class="w"> </span><span class="nv">filename</span><span class="o">=</span><span class="s2">&quot;package://panto_description/meshes/link4.dae&quot;</span><span class="w"> </span><span class="nv">scale</span><span class="o">=</span><span class="s2">&quot;1 1 1&quot;</span>/&gt;
+<span class="w">             </span>&lt;/geometry&gt;
+<span class="w">             </span>&lt;origin<span class="w"> </span><span class="nv">xyz</span><span class="o">=</span><span class="s2">&quot;-0.058 0 -0.07&quot;</span><span class="w"> </span><span class="nv">rpy</span><span class="o">=</span><span class="s2">&quot;0 0 0&quot;</span><span class="w"> </span>/&gt;
+<span class="w">         </span>&lt;/visual&gt;
+<span class="w">     </span>&lt;/link&gt;
+
+<span class="w">     </span>&lt;joint<span class="w"> </span><span class="nv">name</span><span class="o">=</span><span class="s2">&quot;base_link_link4_joint&quot;</span><span class="w"> </span><span class="nv">type</span><span class="o">=</span><span class="s2">&quot;revolute&quot;</span>&gt;
+<span class="w">         </span>&lt;parent<span class="w"> </span><span class="nv">link</span><span class="o">=</span><span class="s2">&quot;base_link&quot;</span>/&gt;
+<span class="w">         </span>&lt;child<span class="w"> </span><span class="nv">link</span><span class="o">=</span><span class="s2">&quot;link4&quot;</span>/&gt;
+<span class="w">         </span>&lt;origin<span class="w"> </span><span class="nv">xyz</span><span class="o">=</span><span class="s2">&quot;0.058 0 0.070&quot;</span><span class="w"> </span><span class="nv">rpy</span><span class="o">=</span><span class="s2">&quot;0 0 0&quot;</span>/&gt;
+<span class="w">         </span>&lt;axis<span class="w"> </span><span class="nv">xyz</span><span class="o">=</span><span class="s2">&quot;0 1 0&quot;</span>/&gt;
+<span class="w">         </span>&lt;limit<span class="w"> </span><span class="nv">effort</span><span class="o">=</span><span class="s2">&quot;10&quot;</span><span class="w"> </span><span class="nv">lower</span><span class="o">=</span><span class="s2">&quot;-1.57&quot;</span><span class="w"> </span><span class="nv">upper</span><span class="o">=</span><span class="s2">&quot;1.57&quot;</span><span class="w"> </span><span class="nv">velocity</span><span class="o">=</span><span class="s2">&quot;1.0&quot;</span>/&gt;
+<span class="w">     </span>&lt;/joint&gt;
+
+<span class="w">     </span>&lt;link<span class="w"> </span><span class="nv">name</span><span class="o">=</span><span class="s2">&quot;link3&quot;</span>&gt;
+<span class="w">         </span>&lt;visual&gt;
+<span class="w">             </span>&lt;geometry&gt;
+<span class="w">                 </span>&lt;mesh<span class="w"> </span><span class="nv">filename</span><span class="o">=</span><span class="s2">&quot;package://panto_description/meshes/link3.dae&quot;</span><span class="w"> </span><span class="nv">scale</span><span class="o">=</span><span class="s2">&quot;1 1 1&quot;</span>/&gt;
+<span class="w">             </span>&lt;/geometry&gt;
+<span class="w">             </span>&lt;origin<span class="w"> </span><span class="nv">xyz</span><span class="o">=</span><span class="s2">&quot;-0.0902347 0 0.00212437&quot;</span><span class="w"> </span><span class="nv">rpy</span><span class="o">=</span><span class="s2">&quot;0 0 0&quot;</span><span class="w"> </span>/&gt;
+<span class="w">         </span>&lt;/visual&gt;
+<span class="w">     </span>&lt;/link&gt;
+
+<span class="w">     </span>&lt;joint<span class="w"> </span><span class="nv">name</span><span class="o">=</span><span class="s2">&quot;link4_link3_joint&quot;</span><span class="w"> </span><span class="nv">type</span><span class="o">=</span><span class="s2">&quot;revolute&quot;</span>&gt;
+<span class="w">         </span>&lt;parent<span class="w"> </span><span class="nv">link</span><span class="o">=</span><span class="s2">&quot;link4&quot;</span>/&gt;
+<span class="w">         </span>&lt;child<span class="w"> </span><span class="nv">link</span><span class="o">=</span><span class="s2">&quot;link3&quot;</span>/&gt;
+<span class="w">         </span>&lt;origin<span class="w"> </span><span class="nv">xyz</span><span class="o">=</span><span class="s2">&quot;0.0322347 0 -0.07212437&quot;</span><span class="w"> </span><span class="nv">rpy</span><span class="o">=</span><span class="s2">&quot;0 0 0&quot;</span>/&gt;
+<span class="w">         </span>&lt;axis<span class="w"> </span><span class="nv">xyz</span><span class="o">=</span><span class="s2">&quot;0 1 0&quot;</span>/&gt;
+<span class="w">         </span>&lt;limit<span class="w"> </span><span class="nv">effort</span><span class="o">=</span><span class="s2">&quot;10&quot;</span><span class="w"> </span><span class="nv">lower</span><span class="o">=</span><span class="s2">&quot;-1.57&quot;</span><span class="w"> </span><span class="nv">upper</span><span class="o">=</span><span class="s2">&quot;1.57&quot;</span><span class="w"> </span><span class="nv">velocity</span><span class="o">=</span><span class="s2">&quot;1.0&quot;</span>/&gt;
+<span class="w">     </span>&lt;/joint&gt;
+
+<span class="w"> </span>&lt;/robot&gt;
 </pre></div>
 </div>
 </section>
