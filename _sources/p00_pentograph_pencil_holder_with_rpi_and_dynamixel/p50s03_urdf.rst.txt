@@ -291,3 +291,35 @@ Copier le code urdf suivant dans le fichier panto.urdf
         </joint>
 
     </robot>
+
+==============================
+Affichage de l'URDF dans RViz
+==============================
+
+Déplacer vous dans le répertoire contenant le fichier urdf
+
+.. code-block:: bash
+
+   cd panto_description/urdf/
+
+Obtener le chemin absolu de ce répertoire en entrant la commande :
+
+.. code-block!! bash
+
+   pwd
+
+Lancer l'affichage de l'URDF en entrant la commande :
+
+.. code-block:: bash
+
+   ros2 launch urdf_tutorial display.launch.py model:=/<chemin absolu>/panto.urdf
+
+Vous devez obtenir ceci :
+
+.. figure:: resources/img/affichage_urdf.png
+   :align: center
+
+.. note::
+
+   N'hésitez pas à lancer régulièrement l'affichage de l'urdf durant sa construction afin de bien configurer les joints entre les links
+

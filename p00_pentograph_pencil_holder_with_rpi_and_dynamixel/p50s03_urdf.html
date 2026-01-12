@@ -8,7 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Génération de la description URDF du pantographe &mdash; Documentation Cours d&#39;Informatique Industrielle avec ROS2 1.0.0</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
       <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
       <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
@@ -69,6 +69,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#creation-du-package">Création du package</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#creation-des-dossiers-standards">Création des dossiers standards</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#creation-du-fichier-urdf">Création du fichier URDF</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#affichage-de-l-urdf-dans-rviz">Affichage de l’URDF dans RViz</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="p50s04_dynamixel.html">Fonctionnement des Dynamixels</a></li>
@@ -355,6 +356,26 @@ Un en-tête</p>
 
 &lt;/robot&gt;
 </pre></div>
+</div>
+</section>
+<section id="affichage-de-l-urdf-dans-rviz">
+<h2>Affichage de l’URDF dans RViz<a class="headerlink" href="#affichage-de-l-urdf-dans-rviz" title="Lien vers cette rubrique"></a></h2>
+<p>Déplacer vous dans le répertoire contenant le fichier urdf</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>panto_description/urdf/
+</pre></div>
+</div>
+<p>Obtener le chemin absolu de ce répertoire en entrant la commande :</p>
+<p>Lancer l’affichage de l’URDF en entrant la commande :</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ros2<span class="w"> </span>launch<span class="w"> </span>urdf_tutorial<span class="w"> </span>display.launch.py<span class="w"> </span>model:<span class="o">=</span>/&lt;chemin<span class="w"> </span>absolu&gt;/panto.urdf
+</pre></div>
+</div>
+<p>Vous devez obtenir ceci :</p>
+<figure class="align-center">
+<img alt="../_images/affichage_urdf.png" src="../_images/affichage_urdf.png" />
+</figure>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>N’hésitez pas à lancer régulièrement l’affichage de l’urdf durant sa construction afin de bien configurer les joints entre les links</p>
 </div>
 </section>
 </section>
