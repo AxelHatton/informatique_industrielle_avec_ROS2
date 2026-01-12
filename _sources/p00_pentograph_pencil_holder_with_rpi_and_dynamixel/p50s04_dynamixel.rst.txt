@@ -155,6 +155,8 @@ Dans un autre terminal on peut communiquer avec les moteurs en utilisant les com
    # récupérer la position du moteur 2
    ros2 service call /get_position dynamixel_sdk_custom_interfaces/srv/GetPosition "id: 2"
 
+On obtient alors ce résultat
+
 .. figure:: resources/img/maquette.gif
    :align: center
 
