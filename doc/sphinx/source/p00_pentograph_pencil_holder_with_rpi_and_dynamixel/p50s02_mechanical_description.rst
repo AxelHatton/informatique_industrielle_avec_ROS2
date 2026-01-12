@@ -41,17 +41,25 @@ En additionnant les deux équations au carré, nous obtenons une équation sans 
 
 .. math::
 
-   (l_1 c_1 + l_2 c_2 - l_0 - l_4 c_4)^2 + (l_1 s_1 + l_2 s_2 - l_4 s_4)^2 = l_3^2 \\
-   \Longleftrightarrow \\
-   l_1^2 + l_2^2 + l_4^2 + l_0^2 - l_3^2 - 2l_1l_0c_1 - 2l_1l_4c_1c_4 + 2l_0l_4c_4 - 2l_1l_4s_1s_4 + 2c_2l_2(l_1c_1 - l_0 - l_4c_4) + 2s_2l_2(l_1s_1 - l_4s_4) = 0 \\
+   \begin{aligned}
+   (l_1 c_1 + l_2 c_2 - l_0 - l_4 c_4)^2 + (l_1 s_1 + l_2 s_2 - l_4 s_4)^2 &= l_3^2 \\
+   \Longleftrightarrow\quad
+   l_1^2 + l_2^2 + l_4^2 + l_0^2 - l_3^2
+   - 2l_1l_0c_1 - 2l_1l_4c_1c_4 + 2l_0l_4c_4 - 2l_1l_4s_1s_4 \\
+   \qquad + 2c_2l_2(l_1c_1 - l_0 - l_4c_4) + 2s_2l_2(l_1s_1 - l_4s_4) &= 0
+   \end{aligned}
 
 Nous fixons :
 
 .. math::
 
-   M = l_1^2 + l_2^2 + l_4^2 + l_0^2 - l_3^2 - 2l_1l_0c_1 - 2l_1l_4c_1c_4 + 2l_0l_4c_4 - 2l_1l_4s_1s_4\\
-   L = 2l_2(l_1c_1 - l_0 - l_4c_4) \\
-   K = 2l_2(l_1s_1 - l_4s_4)\\
+   \begin{aligned}
+   M &= l_1^2 + l_2^2 + l_4^2 + l_0^2 - l_3^2
+        - 2l_1l_0c_1 - 2l_1l_4c_1c_4 + 2l_0l_4c_4 - 2l_1l_4s_1s_4 \\
+   L &= 2l_2(l_1c_1 - l_0 - l_4c_4) \\
+   K &= 2l_2(l_1s_1 - l_4s_4)
+   \end{aligned}
+
 
 Nous obtenons donc l'équation suivante, qui ne dépend que de :math:`\theta_2` :
 
