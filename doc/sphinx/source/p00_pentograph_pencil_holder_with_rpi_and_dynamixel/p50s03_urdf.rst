@@ -76,7 +76,7 @@ Créer les dossiers standards launch, meshes et urdf
    cd panto_description
 
 .. code-block:: bash
-   mkdir urdf meshes launch
+   mkdir urdf meshes launch ros2_control config rviz gazebo
 
 Vous devriez obtenir l'arborescence suivante
 
@@ -89,11 +89,48 @@ Vous devriez obtenir l'arborescence suivante
    |__launch/
    |__urdf/
    |__meshes/
+   |__ros2_control/
+   |__config/
+   |__rviz/
+   |__gazebo/
 
 Copier les fichiers collada dans le répertoire panto_description/meshes/
+
+Ouvrir le fichier CMakeLists.txt et remplacer par
+
+```
+cmake_minimum_required(VERSION 3.8)
+project(panto_description)
+
+find_package(ament_cmake REQUIRED)
+
+install(
+   DIRECTORY urdf meshes launch ros2_control config rviz gazebo
+   DESTINATION share/${PROJECT_NAME}
+)
+ament_package()
+```
 
 =========================
 Création du fichier URDF
 =========================
 
+Créer un fichier urdf dans le répertoire panto_description/urdf
+
+.. code-blocks:: bash
+
+   cd urdf
+
+.. code-blocks:: bash
+
+   touch panto.urdf
+
 Dans un fichier URDF les modèles 3D sont référencés par des balises ``<mesh>``.
+
+Copier le code urdf suivant dans le fichier panto.urdf
+
+.. code-blocks:: bash
+
+
+
+
