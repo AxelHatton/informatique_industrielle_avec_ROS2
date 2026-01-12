@@ -70,6 +70,8 @@
 <li class="toctree-l3"><a class="reference internal" href="#creation-des-dossiers-standards">Création des dossiers standards</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#creation-du-fichier-urdf">Création du fichier URDF</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#affichage-de-l-urdf-dans-rviz">Affichage de l’URDF dans RViz</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#creation-fichier-launch">Création fichier launch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#creation-fichier-ros2-control">Création fichier ros2_control</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="p50s04_dynamixel.html">Fonctionnement des Dynamixels</a></li>
@@ -199,6 +201,31 @@ install<span class="o">(</span>
 <span class="w">   </span>DESTINATION<span class="w"> </span>share/<span class="si">${</span><span class="nv">PROJECT_NAME</span><span class="si">}</span>
 <span class="o">)</span>
 ament_package<span class="o">()</span>
+</pre></div>
+</div>
+<p>Modifier le fichier package.xml pour qu’il devienne</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>&lt;?xml<span class="w"> </span><span class="nv">version</span><span class="o">=</span><span class="s2">&quot;1.0&quot;</span>?&gt;
+&lt;?xml-model<span class="w"> </span><span class="nv">href</span><span class="o">=</span><span class="s2">&quot;http://download.ros.org/schema/package_format3.xsd&quot;</span><span class="w"> </span><span class="nv">schematypens</span><span class="o">=</span><span class="s2">&quot;http://www.w3.org/2001/XMLSchema&quot;</span>?&gt;
+&lt;package<span class="w"> </span><span class="nv">format</span><span class="o">=</span><span class="s2">&quot;3&quot;</span>&gt;
+<span class="w">    </span>&lt;name&gt;panto_description&lt;/name&gt;
+<span class="w">    </span>&lt;version&gt;0.0.0&lt;/version&gt;
+<span class="w">    </span>&lt;description&gt;TODO:<span class="w"> </span>Package<span class="w"> </span>description&lt;/description&gt;
+<span class="w">    </span>&lt;maintainer<span class="w"> </span><span class="nv">email</span><span class="o">=</span><span class="s2">&quot;maxime@todo.todo&quot;</span>&gt;maxime&lt;/maintainer&gt;
+<span class="w">    </span>&lt;license&gt;TODO:<span class="w"> </span>License<span class="w"> </span>declaration&lt;/license&gt;
+
+<span class="w">    </span>&lt;buildtool_depend&gt;ament_cmake&lt;/buildtool_depend&gt;
+
+<span class="w">    </span>&lt;exec_depend&gt;robot_state_publisher&lt;/exec_depend&gt;
+<span class="w">    </span>&lt;exec_depend&gt;joint_state_publisher_gui&lt;/exec_depend&gt;
+<span class="w">    </span>&lt;exec_depend&gt;rviz2&lt;/exec_depend&gt;
+
+<span class="w">    </span>&lt;test_depend&gt;ament_lint_auto&lt;/test_depend&gt;
+<span class="w">    </span>&lt;test_depend&gt;ament_lint_common&lt;/test_depend&gt;
+
+<span class="w">    </span>&lt;export&gt;
+<span class="w">        </span>&lt;build_type&gt;ament_cmake&lt;/build_type&gt;
+<span class="w">    </span>&lt;/export&gt;
+&lt;/package&gt;
 </pre></div>
 </div>
 <p>On va ensuite installer un package permettant la visualisation rapide du fichier urdf pour aider à sa construction.</p>
@@ -376,6 +403,114 @@ Un en-tête</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>N’hésitez pas à lancer régulièrement l’affichage de l’urdf durant sa construction afin de bien configurer les joints entre les links</p>
+</div>
+</section>
+<section id="creation-fichier-launch">
+<h2>Création fichier launch<a class="headerlink" href="#creation-fichier-launch" title="Lien vers cette rubrique"></a></h2>
+<p>Déplacer vous dans launch</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>panto_description/launch
+</pre></div>
+</div>
+<p>Créer un fichier display.launch.xml</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>touch<span class="w"> </span>display.launch.xml
+</pre></div>
+</div>
+<p>Modifier le fichier display.launch.xml pour qu’il soit</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>&lt;launch&gt;
+<span class="w">    </span>&lt;<span class="nb">let</span><span class="w"> </span><span class="nv">name</span><span class="o">=</span><span class="s2">&quot;urdf_path&quot;</span><span class="w"> </span><span class="nv">value</span><span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span>find-pkg-share<span class="w"> </span>panto_description<span class="k">)</span><span class="s2">/urdf/panto.urdf&quot;</span>/&gt;
+<span class="w">    </span>&lt;<span class="nb">let</span><span class="w"> </span><span class="nv">name</span><span class="o">=</span><span class="s2">&quot;rviz_config_path&quot;</span><span class="w"> </span><span class="nv">value</span><span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span>find-pkg-share<span class="w"> </span>panto_description<span class="k">)</span><span class="s2">/rviz/panto.rviz&quot;</span>/&gt;
+<span class="w">    </span>&lt;node<span class="w"> </span><span class="nv">pkg</span><span class="o">=</span><span class="s2">&quot;robot_state_publisher&quot;</span><span class="w"> </span><span class="nv">exec</span><span class="o">=</span><span class="s2">&quot;robot_state_publisher&quot;</span>&gt;
+<span class="w">    </span>&lt;param<span class="w"> </span><span class="nv">name</span><span class="o">=</span><span class="s2">&quot;robot_description&quot;</span><span class="w"> </span><span class="nv">value</span><span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span><span class="nb">command</span><span class="w"> </span><span class="s1">&#39;xacro $(var urdf_path)&#39;</span><span class="k">)</span><span class="s2">&quot;</span>/&gt;
+<span class="w">    </span>&lt;/node&gt;
+<span class="w">    </span>&lt;node<span class="w"> </span><span class="nv">pkg</span><span class="o">=</span><span class="s2">&quot;joint_state_publisher_gui&quot;</span><span class="w"> </span><span class="nv">exec</span><span class="o">=</span><span class="s2">&quot;joint_state_publisher_gui&quot;</span>/&gt;
+<span class="w">    </span>&lt;node<span class="w"> </span><span class="nv">pkg</span><span class="o">=</span><span class="s2">&quot;rviz2&quot;</span><span class="w"> </span><span class="nv">exec</span><span class="o">=</span><span class="s2">&quot;rviz2&quot;</span><span class="w"> </span><span class="nv">output</span><span class="o">=</span><span class="s2">&quot;screen&quot;</span><span class="w"> </span><span class="nv">args</span><span class="o">=</span><span class="s2">&quot;-d </span><span class="k">$(</span>var<span class="w"> </span>rviz_config_path<span class="k">)</span><span class="s2">&quot;</span>/&gt;
+&lt;/launch&gt;
+</pre></div>
+</div>
+<p>Compiler et sourcer le package dans votre workspace</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>colcon<span class="w"> </span>build
+</pre></div>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span><span class="w"> </span>install/setup.bash
+</pre></div>
+</div>
+<p>Pour lancer le fichier launch utiliser la commande</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ros2<span class="w"> </span>launch<span class="w"> </span>panto_description<span class="w"> </span>display.launch.xml
+</pre></div>
+</div>
+</section>
+<section id="creation-fichier-ros2-control">
+<h2>Création fichier ros2_control<a class="headerlink" href="#creation-fichier-ros2-control" title="Lien vers cette rubrique"></a></h2>
+<p>Le fichier ros2_control sert d’interfaçage hardware/software. Afin de le créer placer vous dans le répertoire ros2_control</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>panto_description/ros2_control
+</pre></div>
+</div>
+<p>Créer un fichier panto.ros2_control.urdf</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>touch<span class="w"> </span>panto.ros2_control.urdf
+</pre></div>
+</div>
+<p>Copier le code suivant dans le fichier panto.ros2_control.urdf</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>&lt;?xml<span class="w"> </span><span class="nv">version</span><span class="o">=</span><span class="s2">&quot;1.0&quot;</span>?&gt;
+&lt;robot<span class="w"> </span><span class="nv">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;panto&quot;</span><span class="w"> </span>xmlns:xacro<span class="o">=</span><span class="s2">&quot;http://www.ros.org/wiki/xacro&quot;</span>&gt;
+
+<span class="w">    </span>&lt;ros2_control<span class="w"> </span><span class="nv">name</span><span class="o">=</span><span class="s2">&quot;panto&quot;</span><span class="w"> </span><span class="nv">type</span><span class="o">=</span><span class="s2">&quot;system&quot;</span>&gt;
+
+<span class="w">        </span>&lt;hardware&gt;
+<span class="w">            </span>&lt;plugin&gt;mock_components/GenericSystem&lt;/plugin&gt;
+<span class="w">            </span>&lt;!--<span class="w"> </span>&lt;plugin&gt;scara_hardware/ScaraRobot&lt;/plugin&gt;<span class="w"> </span>--&gt;
+<span class="w">            </span>&lt;!--<span class="w"> </span>&lt;plugin&gt;gazebo_ros2_control/GazeboSystem&lt;/plugin&gt;<span class="w"> </span>--&gt;
+<span class="w">        </span>&lt;/hardware&gt;
+
+<span class="w">        </span>&lt;joint<span class="w"> </span><span class="nv">name</span><span class="o">=</span><span class="s2">&quot;base_link_link1_joint&quot;</span>&gt;
+<span class="w">            </span>&lt;command_interface<span class="w"> </span><span class="nv">name</span><span class="o">=</span><span class="s2">&quot;position&quot;</span><span class="w"> </span>/&gt;
+<span class="w">            </span>&lt;state_interface<span class="w"> </span><span class="nv">name</span><span class="o">=</span><span class="s2">&quot;position&quot;</span>&gt;
+<span class="w">                </span>&lt;param<span class="w"> </span><span class="nv">name</span><span class="o">=</span><span class="s2">&quot;initial_value&quot;</span>&gt;0.0&lt;/param&gt;
+<span class="w">                </span>&lt;param<span class="w"> </span><span class="nv">name</span><span class="o">=</span><span class="s2">&quot;min&quot;</span>&gt;-1.57&lt;/param&gt;
+<span class="w">                </span>&lt;param<span class="w"> </span><span class="nv">name</span><span class="o">=</span><span class="s2">&quot;max&quot;</span>&gt;1.57&lt;/param&gt;
+<span class="w">            </span>&lt;/state_interface&gt;
+<span class="w">            </span>&lt;state_interface<span class="w"> </span><span class="nv">name</span><span class="o">=</span><span class="s2">&quot;velocity&quot;</span>&gt;
+<span class="w">                </span>&lt;param<span class="w"> </span><span class="nv">name</span><span class="o">=</span><span class="s2">&quot;initial_value&quot;</span>&gt;0.0&lt;/param&gt;
+<span class="w">            </span>&lt;/state_interface&gt;
+<span class="w">        </span>&lt;/joint&gt;
+<span class="w">        </span>&lt;joint<span class="w"> </span><span class="nv">name</span><span class="o">=</span><span class="s2">&quot;link1_link2_joint&quot;</span>&gt;
+<span class="w">            </span>&lt;command_interface<span class="w"> </span><span class="nv">name</span><span class="o">=</span><span class="s2">&quot;position&quot;</span>/&gt;
+<span class="w">            </span>&lt;state_interface<span class="w"> </span><span class="nv">name</span><span class="o">=</span><span class="s2">&quot;position&quot;</span>&gt;
+<span class="w">                </span>&lt;param<span class="w"> </span><span class="nv">name</span><span class="o">=</span><span class="s2">&quot;initial_value&quot;</span>&gt;0.0&lt;/param&gt;
+<span class="w">                </span>&lt;param<span class="w"> </span><span class="nv">name</span><span class="o">=</span><span class="s2">&quot;min&quot;</span>&gt;-1.57&lt;/param&gt;
+<span class="w">                </span>&lt;param<span class="w"> </span><span class="nv">name</span><span class="o">=</span><span class="s2">&quot;max&quot;</span>&gt;1.57&lt;/param&gt;
+<span class="w">            </span>&lt;/state_interface&gt;
+<span class="w">            </span>&lt;state_interface<span class="w"> </span><span class="nv">name</span><span class="o">=</span><span class="s2">&quot;velocity&quot;</span>&gt;
+<span class="w">                </span>&lt;param<span class="w"> </span><span class="nv">name</span><span class="o">=</span><span class="s2">&quot;initial_value&quot;</span>&gt;0.0&lt;/param&gt;
+<span class="w">            </span>&lt;/state_interface&gt;
+<span class="w">        </span>&lt;/joint&gt;
+<span class="w">        </span>&lt;joint<span class="w"> </span><span class="nv">name</span><span class="o">=</span><span class="s2">&quot;base_link_link4_joint&quot;</span>&gt;
+<span class="w">            </span>&lt;command_interface<span class="w"> </span><span class="nv">name</span><span class="o">=</span><span class="s2">&quot;position&quot;</span>/&gt;
+<span class="w">            </span>&lt;state_interface<span class="w"> </span><span class="nv">name</span><span class="o">=</span><span class="s2">&quot;position&quot;</span>&gt;
+<span class="w">                </span>&lt;param<span class="w"> </span><span class="nv">name</span><span class="o">=</span><span class="s2">&quot;initial_value&quot;</span>&gt;0.0&lt;/param&gt;
+<span class="w">                </span>&lt;param<span class="w"> </span><span class="nv">name</span><span class="o">=</span><span class="s2">&quot;min&quot;</span>&gt;-1.57&lt;/param&gt;
+<span class="w">                </span>&lt;param<span class="w"> </span><span class="nv">name</span><span class="o">=</span><span class="s2">&quot;max&quot;</span>&gt;1.57&lt;/param&gt;
+<span class="w">            </span>&lt;/state_interface&gt;
+<span class="w">            </span>&lt;state_interface<span class="w"> </span><span class="nv">name</span><span class="o">=</span><span class="s2">&quot;velocity&quot;</span>&gt;
+<span class="w">                </span>&lt;param<span class="w"> </span><span class="nv">name</span><span class="o">=</span><span class="s2">&quot;initial_value&quot;</span>&gt;0.0&lt;/param&gt;
+<span class="w">            </span>&lt;/state_interface&gt;
+<span class="w">        </span>&lt;/joint&gt;
+
+<span class="w">        </span>&lt;joint<span class="w"> </span><span class="nv">name</span><span class="o">=</span><span class="s2">&quot;link4_link3_joint&quot;</span>&gt;
+<span class="w">            </span>&lt;command_interface<span class="w"> </span><span class="nv">name</span><span class="o">=</span><span class="s2">&quot;position&quot;</span>/&gt;
+<span class="w">            </span>&lt;state_interface<span class="w"> </span><span class="nv">name</span><span class="o">=</span><span class="s2">&quot;position&quot;</span>&gt;
+<span class="w">                </span>&lt;param<span class="w"> </span><span class="nv">name</span><span class="o">=</span><span class="s2">&quot;initial_value&quot;</span>&gt;0.0&lt;/param&gt;
+<span class="w">                </span>&lt;param<span class="w"> </span><span class="nv">name</span><span class="o">=</span><span class="s2">&quot;min&quot;</span>&gt;-1.57&lt;/param&gt;
+<span class="w">                </span>&lt;param<span class="w"> </span><span class="nv">name</span><span class="o">=</span><span class="s2">&quot;max&quot;</span>&gt;1.57&lt;/param&gt;
+<span class="w">            </span>&lt;/state_interface&gt;
+<span class="w">            </span>&lt;state_interface<span class="w"> </span><span class="nv">name</span><span class="o">=</span><span class="s2">&quot;velocity&quot;</span>&gt;
+<span class="w">                </span>&lt;param<span class="w"> </span><span class="nv">name</span><span class="o">=</span><span class="s2">&quot;initial_value&quot;</span>&gt;0.0&lt;/param&gt;
+<span class="w">            </span>&lt;/state_interface&gt;
+<span class="w">        </span>&lt;/joint&gt;
+
+<span class="w">    </span>&lt;/ros2_control&gt;
+
+&lt;/robot&gt;
+</pre></div>
 </div>
 </section>
 </section>

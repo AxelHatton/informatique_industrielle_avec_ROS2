@@ -112,6 +112,33 @@ Ouvrir le fichier CMakeLists.txt et remplacer par
    )
    ament_package()
 
+Modifier le fichier package.xml pour qu'il devienne
+
+.. code-block:: bash
+
+    <?xml version="1.0"?>
+    <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+    <package format="3">
+        <name>panto_description</name>
+        <version>0.0.0</version>
+        <description>TODO: Package description</description>
+        <maintainer email="maxime@todo.todo">maxime</maintainer>
+        <license>TODO: License declaration</license>
+
+        <buildtool_depend>ament_cmake</buildtool_depend>
+
+        <exec_depend>robot_state_publisher</exec_depend>
+        <exec_depend>joint_state_publisher_gui</exec_depend>
+        <exec_depend>rviz2</exec_depend>
+
+        <test_depend>ament_lint_auto</test_depend>
+        <test_depend>ament_lint_common</test_depend>
+
+        <export>
+            <build_type>ament_cmake</build_type>
+        </export>
+    </package>
+
 On va ensuite installer un package permettant la visualisation rapide du fichier urdf pour aider à sa construction.
 
 Déplacez-vous à la racine de la machine
@@ -322,4 +349,131 @@ Vous devez obtenir ceci :
 .. note::
 
    N'hésitez pas à lancer régulièrement l'affichage de l'urdf durant sa construction afin de bien configurer les joints entre les links
+
+============================
+Création fichier launch
+============================
+
+Déplacer vous dans launch
+
+.. code-block:: bash
+
+   cd panto_description/launch
+
+Créer un fichier display.launch.xml
+
+.. code-block:: bash
+
+   touch display.launch.xml
+
+Modifier le fichier display.launch.xml pour qu'il soit
+
+.. code-block:: bash
+
+    <launch>
+        <let name="urdf_path" value="$(find-pkg-share panto_description)/urdf/panto.urdf"/>
+        <let name="rviz_config_path" value="$(find-pkg-share panto_description)/rviz/panto.rviz"/>
+        <node pkg="robot_state_publisher" exec="robot_state_publisher">
+        <param name="robot_description" value="$(command 'xacro $(var urdf_path)')"/>
+        </node>
+        <node pkg="joint_state_publisher_gui" exec="joint_state_publisher_gui"/>
+        <node pkg="rviz2" exec="rviz2" output="screen" args="-d $(var rviz_config_path)"/>
+    </launch>
+
+Compiler et sourcer le package dans votre workspace
+
+.. code-block:: bash
+
+   colcon build
+
+.. code-block:: bash
+
+   source install/setup.bash
+
+Pour lancer le fichier launch utiliser la commande
+
+.. code-block:: bash
+
+   ros2 launch panto_description display.launch.xml
+
+============================
+Création fichier ros2_control
+============================
+
+Le fichier ros2_control sert d'interfaçage hardware/software. Afin de le créer placer vous dans le répertoire ros2_control
+
+.. code-block:: bash
+
+   cd panto_description/ros2_control
+
+Créer un fichier panto.ros2_control.urdf
+
+.. code-block:: bash
+
+   touch panto.ros2_control.urdf
+
+Copier le code suivant dans le fichier panto.ros2_control.urdf
+
+.. code-block:: bash
+
+    <?xml version="1.0"?>
+    <robot name = "panto" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+        <ros2_control name="panto" type="system">
+
+            <hardware>
+                <plugin>mock_components/GenericSystem</plugin>
+                <!-- <plugin>scara_hardware/ScaraRobot</plugin> -->
+                <!-- <plugin>gazebo_ros2_control/GazeboSystem</plugin> -->
+            </hardware>
+
+            <joint name="base_link_link1_joint">
+                <command_interface name="position" />
+                <state_interface name="position">
+                    <param name="initial_value">0.0</param>
+                    <param name="min">-1.57</param>
+                    <param name="max">1.57</param>
+                </state_interface>
+                <state_interface name="velocity"> 
+                    <param name="initial_value">0.0</param> 
+                </state_interface>
+            </joint>
+            <joint name="link1_link2_joint">
+                <command_interface name="position"/>
+                <state_interface name="position">
+                    <param name="initial_value">0.0</param>
+                    <param name="min">-1.57</param>
+                    <param name="max">1.57</param>
+                </state_interface>
+                <state_interface name="velocity"> 
+                    <param name="initial_value">0.0</param> 
+                </state_interface>
+            </joint>
+            <joint name="base_link_link4_joint">
+                <command_interface name="position"/>
+                <state_interface name="position">
+                    <param name="initial_value">0.0</param>
+                    <param name="min">-1.57</param>
+                    <param name="max">1.57</param>
+                </state_interface>
+                <state_interface name="velocity"> 
+                    <param name="initial_value">0.0</param> 
+                </state_interface>
+            </joint>
+
+            <joint name="link4_link3_joint">
+                <command_interface name="position"/>
+                <state_interface name="position">
+                    <param name="initial_value">0.0</param>
+                    <param name="min">-1.57</param>
+                    <param name="max">1.57</param>
+                </state_interface>
+                <state_interface name="velocity"> 
+                    <param name="initial_value">0.0</param> 
+                </state_interface>
+            </joint>
+
+        </ros2_control>
+
+    </robot>
 
