@@ -176,13 +176,32 @@ Il va donc falloir convertir notre modèle 3D au format step en un ensemble de 5
 <span class="p">|</span>__launch/
 <span class="p">|</span>__urdf/
 <span class="p">|</span>__meshes/
+<span class="p">|</span>__ros2_control/
+<span class="p">|</span>__config/
+<span class="p">|</span>__rviz/
+<span class="p">|</span>__gazebo/
 </pre></div>
 </div>
 <p>Copier les fichiers collada dans le répertoire panto_description/meshes/</p>
+<p>Ouvrir le fichier CMakeLists.txt et remplacer par</p>
+<p><a href="#id1"><span class="problematic" id="id2">``</span></a>`
+cmake_minimum_required(VERSION 3.8)
+project(panto_description)</p>
+<p>find_package(ament_cmake REQUIRED)</p>
+<dl class="simple">
+<dt>install(</dt><dd><p>DIRECTORY urdf meshes launch ros2_control config rviz gazebo
+DESTINATION share/${PROJECT_NAME}</p>
+</dd>
+</dl>
+<p>)
+ament_package()
+<a href="#id3"><span class="problematic" id="id4">``</span></a><a href="#id5"><span class="problematic" id="id6">`</span></a></p>
 </section>
 <section id="creation-du-fichier-urdf">
 <h2>Création du fichier URDF<a class="headerlink" href="#creation-du-fichier-urdf" title="Lien vers cette rubrique"></a></h2>
+<p>Créer un fichier urdf dans le répertoire panto_description/urdf</p>
 <p>Dans un fichier URDF les modèles 3D sont référencés par des balises <code class="docutils literal notranslate"><span class="pre">&lt;mesh&gt;</span></code>.</p>
+<p>Copier le code urdf suivant dans le fichier panto.urdf</p>
 </section>
 </section>
 
