@@ -112,6 +112,29 @@ Ouvrir le fichier CMakeLists.txt et remplacer par
    )
    ament_package()
 
+On va ensuite installer un package permettant la visualisation rapide du fichier urdf pour aider à sa construction.
+
+Déplacez-vous à la racine de la machine
+
+.. code-block:: bash
+
+   cd ~
+
+Installer le package ros-$ROS_DISTRO-urdf-tutorial
+
+.. code-block:: bash
+   sudo apt install ros-$ROS_DISTRO-urdf-tutorial
+
+.. note ::
+
+   Si la commande précédente ne fonctionne pas remplacer $ROS_DISTRO par votre distribution (Humble, Jazzy, ...)
+
+Sourcer la distribution ros
+
+.. code-block:: bash
+
+   source /opt/ros/$ROS_DISTRIB/setup.bash
+
 =========================
 Création du fichier URDF
 =========================
@@ -126,7 +149,54 @@ Créer un fichier urdf dans le répertoire panto_description/urdf
    
    touch panto.urdf
 
-Dans un fichier URDF les modèles 3D sont référencés par des balises ``<mesh>``.
+Le fichier urdf va se structurer de la manière suivante
+Un en-tête
+
+.. code-block:: bash
+
+    <?xml version="1.0"?>
+    <robot name="panto" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+.. note::
+
+   Pour modifier le nom du robot modifier la variable robot name (ligne 2)
+
+Un link fixe qui servira de référentiel.
+
+.. code-block:: bash
+
+   <link name="world"/>
+
+De links qui seront les parts de votre système
+
+
+.. code-block:: bash
+
+        <link name="base_link">
+            <visual>
+                <geometry>
+                    <mesh filename="package://panto_description/meshes/base.dae" scale="1 1 1"/>
+                </geometry>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+            </visual>
+        </link>
+
+.. note::
+
+   Dans un fichier URDF les modèles 3D sont référencés par des balises ``<mesh>``. Le filename sera le chemin relatif au package et non relatif à la position du fichier urdf
+
+De joints qui vont lier les links entre eux. Il existe différents types de joints
+
+.. code-block:: bash
+
+        <joint name="base2world" type="fixed">
+            <parent link="world"/>
+            <child link="base_link"/>
+        </joint>
+
+.. note::
+
+   Un fichier urdf n'admet pas de boucle cinématique. Il faut alors créer 2 branches ouvertes que nous lieront par contrainte géométrique plus tard.
 
 Copier le code urdf suivant dans le fichier panto.urdf
 
