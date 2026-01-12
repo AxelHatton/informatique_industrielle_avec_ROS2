@@ -37,6 +37,7 @@ Une fois les moteurs et l'U2D2 branchés, il faut préparer les fichiers nécess
    git clone -b $ROS_DISTRO https://github.com/ROBOTIS-GIT/DynamixelSDK
 
 .. note::
+
    Si jamais il y a un problème avec la commande précédente, il faut peut être remplacer "$ROS_DISTRO" par votre version de ROS2 qui est installé (jazzy, humble, ...)
 
 
@@ -72,7 +73,7 @@ Une fois les moteurs et l'U2D2 branchés, il faut préparer les fichiers nécess
 
    sudo chmod 666/dev/ttyUSB<n°USB>
 
-..note::
+.. note::
 
    Pour trouver votre n°USB regardez le résultat de la commande ls/dev/tty*. Si plusieurs ttyUSB existent débrancher le port USB à identifier et relancer ls/dev/tty* pour voir la différence
 
