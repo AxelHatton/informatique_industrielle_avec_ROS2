@@ -135,48 +135,33 @@
 <span class="n">l_1</span><span class="o">^</span><span class="mi">2</span> <span class="o">+</span> <span class="n">l_2</span><span class="o">^</span><span class="mi">2</span> <span class="o">+</span> <span class="n">l_4</span><span class="o">^</span><span class="mi">2</span> <span class="o">+</span> <span class="n">l_0</span><span class="o">^</span><span class="mi">2</span> <span class="o">-</span> <span class="n">l_3</span><span class="o">^</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">2</span><span class="n">l_1l_0c_1</span> <span class="o">-</span> <span class="mi">2</span><span class="n">l_1l_4c_1c_4</span> <span class="o">+</span> <span class="mi">2</span><span class="n">l_0l_4c_4</span> <span class="o">-</span> <span class="mi">2</span><span class="n">l_1l_4s_1s_4</span> <span class="o">+</span> <span class="mi">2</span><span class="n">c_2l_2</span><span class="p">(</span><span class="n">l_1c_1</span> <span class="o">-</span> <span class="n">l_0</span> <span class="o">-</span> <span class="n">l_4c_4</span><span class="p">)</span> <span class="o">+</span> <span class="mi">2</span><span class="n">s_2l_2</span><span class="p">(</span><span class="n">l_1s_1</span> <span class="o">-</span> <span class="n">l_4s_4</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span> \\
 </pre></div>
 </div>
-<p>Nous fixons :
-.. math:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>  <span class="n">M</span> <span class="o">=</span> <span class="n">l_1</span><span class="o">^</span><span class="mi">2</span> <span class="o">+</span> <span class="n">l_2</span><span class="o">^</span><span class="mi">2</span> <span class="o">+</span> <span class="n">l_4</span><span class="o">^</span><span class="mi">2</span> <span class="o">+</span> <span class="n">l_0</span><span class="o">^</span><span class="mi">2</span> <span class="o">-</span> <span class="n">l_3</span><span class="o">^</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">2</span><span class="n">l_1l_0c_1</span> <span class="o">-</span> <span class="mi">2</span><span class="n">l_1l_4c_1c_4</span> <span class="o">+</span> <span class="mi">2</span><span class="n">l_0l_4c_4</span> <span class="o">-</span> <span class="mi">2</span><span class="n">l_1l_4s_1s_4</span>\\
-  <span class="n">L</span> <span class="o">=</span> <span class="mi">2</span><span class="n">l_2</span><span class="p">(</span><span class="n">l_1c_1</span> <span class="o">-</span> <span class="n">l_0</span> <span class="o">-</span> <span class="n">l_4c_4</span><span class="p">)</span> \\
-  <span class="n">K</span> <span class="o">=</span> <span class="mi">2</span><span class="n">l_2</span><span class="p">(</span><span class="n">l_1s_1</span> <span class="o">-</span> <span class="n">l_4s_4</span><span class="p">)</span>\\
-<span class="n">Nous</span> <span class="n">obtenons</span> <span class="n">donc</span> <span class="n">l</span><span class="s1">&#39;équation suivante, qui ne dépend que de :math:`</span><span class="se">\t</span><span class="s1">heta_2` :</span>
-<span class="o">..</span> <span class="n">math</span><span class="p">::</span>
-  <span class="n">M</span> <span class="o">+</span> <span class="n">c_2L</span> <span class="o">+</span> <span class="n">s_2K</span> <span class="o">=</span> <span class="mi">0</span>\\
-</pre></div>
-</div>
-<p>Nous pouvons remplacer c2 et s2 par leur expression en fonction de tan(<span class="math notranslate nohighlight">\(\frac{\theta_2}{2}\)</span>) :
-.. math:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">t</span> <span class="o">=</span> <span class="n">tan</span><span class="p">(</span>\<span class="n">frac</span><span class="p">{</span>\<span class="n">theta_2</span><span class="p">}{</span><span class="mi">2</span><span class="p">})</span>\\
-<span class="n">c_2</span> <span class="o">=</span> \<span class="n">frac</span><span class="p">{</span><span class="mi">1</span> <span class="o">-</span> <span class="n">t</span><span class="o">^</span><span class="mi">2</span><span class="p">}{</span><span class="mi">1</span><span class="o">+</span><span class="n">t</span><span class="o">^</span><span class="mi">2</span><span class="p">}</span>\\
-<span class="n">s_2</span> <span class="o">=</span> \<span class="n">frac</span><span class="p">{</span><span class="mi">2</span><span class="n">t</span><span class="p">}{</span><span class="mi">1</span><span class="o">+</span><span class="n">t</span><span class="o">^</span><span class="mi">2</span><span class="p">}</span>\\
-</pre></div>
-</div>
-<p>Nous obtenons donc :
-.. math:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>\<span class="n">begin</span><span class="p">{</span><span class="n">aligned</span><span class="p">}</span>
-   <span class="n">L</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">t</span><span class="o">^</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="mi">2</span><span class="n">Kt</span> <span class="o">=</span> <span class="o">-</span> <span class="n">M</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">t</span><span class="o">^</span><span class="mi">2</span><span class="p">)</span>\\
-\<span class="n">quad</span> \<span class="n">Longleftrightarrow</span> \<span class="n">quad</span>
-   <span class="n">t</span><span class="o">^</span><span class="mi">2</span><span class="p">(</span><span class="n">M</span><span class="o">-</span><span class="n">L</span><span class="p">)</span><span class="o">+</span><span class="mi">2</span><span class="n">Kt</span> <span class="o">+</span> <span class="n">L</span> <span class="o">+</span> <span class="n">M</span><span class="p">;</span>
-\<span class="n">end</span><span class="p">{</span><span class="n">aligned</span><span class="p">}</span>
-</pre></div>
-</div>
-<p>Nous avons une équation de polynomiale de degré 2, nous pouvons donc calculer t :
-.. math:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">t</span> <span class="o">=</span> \<span class="n">frac</span><span class="p">{</span><span class="o">-</span><span class="mi">2</span><span class="n">K</span> \<span class="n">pm</span> \<span class="n">sqrt</span><span class="p">{(</span><span class="mi">2</span><span class="n">K</span><span class="p">)</span><span class="o">^</span><span class="mi">2</span><span class="o">-</span><span class="mi">4</span><span class="p">(</span><span class="n">M</span><span class="o">-</span><span class="n">L</span><span class="p">)(</span><span class="n">M</span><span class="o">+</span><span class="n">L</span><span class="p">)}</span> <span class="o">-</span> <span class="mi">2</span><span class="n">K</span><span class="p">}{</span><span class="mi">2</span><span class="p">(</span><span class="n">M</span> <span class="o">-</span> <span class="n">L</span><span class="p">)}</span>\\
-</pre></div>
-</div>
-<p>Ainsi :
-.. math:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>\<span class="n">theta_2</span> <span class="o">=</span> <span class="mi">2</span><span class="n">arctan</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>Avec <span class="math notranslate nohighlight">\(\theta_2\)</span> et connaissant <span class="math notranslate nohighlight">\(\theta_1\)</span>, nous pouvons caluler la position X3 et Y3 du point <span class="math notranslate nohighlight">\(A_3\)</span> :
-.. math:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">X3</span> <span class="o">=</span> <span class="n">l_1c_1</span> <span class="o">+</span> <span class="n">l_2c_2</span>\\
-<span class="n">Y3</span> <span class="o">=</span> <span class="n">l_1s_2</span> <span class="o">+</span> <span class="n">l_2s_2</span>
-</pre></div>
-</div>
+<p>Nous fixons :</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}\begin{split}  M = l_1^2 + l_2^2 + l_4^2 + l_0^2 - l_3^2 - 2l_1l_0c_1 - 2l_1l_4c_1c_4 + 2l_0l_4c_4 - 2l_1l_4s_1s_4\\
+  L = 2l_2(l_1c_1 - l_0 - l_4c_4) \\
+  K = 2l_2(l_1s_1 - l_4s_4)\\\end{split}\\Nous obtenons donc l'équation suivante, qui ne dépend que de :math:`\theta_2` :\\.. math::\\\begin{split}  M + c_2L + s_2K = 0\\\end{split}\end{aligned}\end{align} \]</div>
+<p>Nous pouvons remplacer c2 et s2 par leur expression en fonction de tan(<span class="math notranslate nohighlight">\(\frac{\theta_2}{2}\)</span>) :</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}t = tan(\frac{\theta_2}{2})\\
+c_2 = \frac{1 - t^2}{1+t^2}\\
+s_2 = \frac{2t}{1+t^2}\\\end{split}\]</div>
+<p>Nous obtenons donc :</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+   L(1-t^2) + 2Kt = - M (1 + t^2)\\
+\quad \Longleftrightarrow \quad
+   t^2(M-L)+2Kt + L + M;
+\end{aligned}\end{split}\]</div>
+<p>Nous avons une équation de polynomiale de degré 2, nous pouvons donc calculer t :</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}t = \frac{-2K \pm \sqrt{(2K)^2-4(M-L)(M+L)} - 2K}{2(M - L)}\\\end{split}\]</div>
+<p>Ainsi :</p>
+<div class="math notranslate nohighlight">
+\[\theta_2 = 2arctan(t)\]</div>
+<p>Avec <span class="math notranslate nohighlight">\(\theta_2\)</span> et connaissant <span class="math notranslate nohighlight">\(\theta_1\)</span>, nous pouvons caluler la position X3 et Y3 du point <span class="math notranslate nohighlight">\(A_3\)</span> :</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}X3 = l_1c_1 + l_2c_2\\
+Y3 = l_1s_2 + l_2s_2\end{split}\]</div>
 </section>
 </section>
 
