@@ -66,15 +66,15 @@ Une fois les moteurs et l'U2D2 branchés, il faut préparer les fichiers nécess
 
 .. code-block:: bash
 
+   whoami
+
+.. code-block:: bash
+
    sudo chmod 666/dev/ttyUSB<n°USB>
 
 ..note::
 
    Pour trouver votre n°USB regardez le résultat de la commande ls/dev/tty*. Si plusieurs ttyUSB existent débrancher le port USB à identifier et relancer ls/dev/tty* pour voir la différence
-
-.. code-block:: bash
-
-   whoami
 
 .. note:: 
 
