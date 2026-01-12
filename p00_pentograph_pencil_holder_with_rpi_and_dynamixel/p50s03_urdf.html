@@ -155,6 +155,12 @@ Il va donc falloir convertir notre modèle 3D au format step en un ensemble de 5
 </pre></div>
 </div>
 <p>on devrait obtenir une arborescence de ce type</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>panto_description/
+<span class="p">|</span>__CMakeLists.txt
+<span class="p">|</span>__package.xml
+<span class="p">|</span>__src/
+</pre></div>
+</div>
 </section>
 <section id="creation-des-dossiers-standards">
 <h2>Création des dossiers standards<a class="headerlink" href="#creation-des-dossiers-standards" title="Lien vers cette rubrique"></a></h2>
@@ -166,14 +172,48 @@ Il va donc falloir convertir notre modèle 3D au format step en un ensemble de 5
 </pre></div>
 </div>
 <p>Vous devriez obtenir l’arborescence suivante</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>panto_description/
+<span class="p">|</span>__CMakeLists.txt
+<span class="p">|</span>__package.xml
+<span class="p">|</span>__src/
+<span class="p">|</span>__launch/
+<span class="p">|</span>__urdf/
+<span class="p">|</span>__meshes/
+<span class="p">|</span>__ros2_control/
+<span class="p">|</span>__config/
+<span class="p">|</span>__rviz/
+<span class="p">|</span>__gazebo/
+</pre></div>
+</div>
 <p>Copier les fichiers collada dans le répertoire panto_description/meshes/</p>
 <p>Ouvrir le fichier CMakeLists.txt et remplacer par</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cmake_minimum_required<span class="o">(</span>VERSION<span class="w"> </span><span class="m">3</span>.8<span class="o">)</span>
+project<span class="o">(</span>panto_description<span class="o">)</span>
+
+find_package<span class="o">(</span>ament_cmake<span class="w"> </span>REQUIRED<span class="o">)</span>
+
+install<span class="o">(</span>
+<span class="w">   </span>DIRECTORY<span class="w"> </span>urdf<span class="w"> </span>meshes<span class="w"> </span>launch<span class="w"> </span>ros2_control<span class="w"> </span>config<span class="w"> </span>rviz<span class="w"> </span>gazebo
+<span class="w">   </span>DESTINATION<span class="w"> </span>share/<span class="si">${</span><span class="nv">PROJECT_NAME</span><span class="si">}</span>
+<span class="o">)</span>
+ament_package<span class="o">()</span>
+</pre></div>
+</div>
 </section>
 <section id="creation-du-fichier-urdf">
 <h2>Création du fichier URDF<a class="headerlink" href="#creation-du-fichier-urdf" title="Lien vers cette rubrique"></a></h2>
 <p>Créer un fichier urdf dans le répertoire panto_description/urdf</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>urdf
+</pre></div>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>touch<span class="w"> </span>panto.urdf
+</pre></div>
+</div>
 <p>Dans un fichier URDF les modèles 3D sont référencés par des balises <code class="docutils literal notranslate"><span class="pre">&lt;mesh&gt;</span></code>.</p>
 <p>Copier le code urdf suivant dans le fichier panto.urdf</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
 </section>
 </section>
 

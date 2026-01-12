@@ -58,7 +58,7 @@ Tout d'abord créer le package du pantographe.
 
 on devrait obtenir une arborescence de ce type
 
-.. code-blocks:: bash
+.. code-block:: bash
    
    panto_description/
    |__CMakeLists.txt
@@ -81,7 +81,7 @@ Créer les dossiers standards launch, meshes et urdf
 
 Vous devriez obtenir l'arborescence suivante
 
-.. code-blocks:: bash
+.. code-block:: bash
    
    panto_description/
    |__CMakeLists.txt
@@ -99,7 +99,7 @@ Copier les fichiers collada dans le répertoire panto_description/meshes/
 
 Ouvrir le fichier CMakeLists.txt et remplacer par
 
-.. code-blocks:: bash
+.. code-block:: bash
    
    cmake_minimum_required(VERSION 3.8)
    project(panto_description)
@@ -118,11 +118,11 @@ Création du fichier URDF
 
 Créer un fichier urdf dans le répertoire panto_description/urdf
 
-.. code-blocks:: bash
+.. code-block:: bash
    
    cd urdf
 
-.. code-blocks:: bash
+.. code-block:: bash
    
    touch panto.urdf
 
@@ -130,7 +130,7 @@ Dans un fichier URDF les modèles 3D sont référencés par des balises ``<mesh>
 
 Copier le code urdf suivant dans le fichier panto.urdf
 
-.. code-blocks:: bash
+.. code-block:: bash
    
 
 
