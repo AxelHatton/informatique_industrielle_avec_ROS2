@@ -58,7 +58,7 @@ Tout d'abord créer le package du pantographe.
 
 on devrait obtenir une arborescence de ce type
 
-.. code-blocks::
+.. code-blocks:: bash
 
    panto_description/
    |__CMakeLists.txt
@@ -80,7 +80,7 @@ Créer les dossiers standards launch, meshes et urdf
 
 Vous devriez obtenir l'arborescence suivante
 
-.. code-blocks::
+.. code-blocks:: bash
 
    panto_description/
    |__CMakeLists.txt
@@ -98,7 +98,7 @@ Copier les fichiers collada dans le répertoire panto_description/meshes/
 
 Ouvrir le fichier CMakeLists.txt et remplacer par
 
-.. code-blocks::
+.. code-blocks:: bash
 
    cmake_minimum_required(VERSION 3.8)
    project(panto_description)
