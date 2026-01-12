@@ -159,6 +159,7 @@ On obtient alors ce résultat
 
 .. figure:: resources/img/maquette.gif
    :align: center
+   :width: 80%
 
 
 .. _logiciel: https://emanual.robotis.com/docs/en/software/dynamixel/dynamixel_wizard2/
