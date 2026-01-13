@@ -323,7 +323,7 @@ Copier le code urdf suivant dans le fichier panto.urdf
 Affichage de l'URDF dans RViz
 ==============================
 
-Déplacer vous dans le répertoire contenant le fichier urdf
+Déplacez-vous dans le répertoire contenant le fichier urdf
 
 .. code-block:: bash
 
@@ -354,7 +354,7 @@ Vous devez obtenir ceci :
 Création fichier launch
 ============================
 
-Déplacer vous dans launch
+Déplacez-vous dans launch
 
 .. code-block:: bash
 
@@ -446,6 +446,511 @@ Copier le code suivant dans le fichier panto.ros2_control.urdf
         </ros2_control>
     
     </robot>
+
+========================================================================================
+Création d'un fichier Xacro combinant la description urdf et la description ros2_control
+========================================================================================
+
+Déplacez-vous dans le répertoire config
+
+.. code-block:: bash
+
+   cd ros2_ws/src/panto_description/config
+
+Creer un fichier xacro
+
+.. code-block:: bash
+
+   touch panto.config.xacro
+
+Copier coller ce code à l'intérieur de panto.config.xacro
+
+.. code-block:: bash
+
+   <?xml version="1.0"?>
+   <!-- Pantographe -->
+   <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="panto">
+   
+       <!-- Import panto urdf file -->
+       <xacro:include filename="$(find panto_description)/urdf/panto.urdf" />
+   
+       <!-- Import panto ros2_control description -->
+       <xacro:include filename="$(find panto_description)/ros2_control/panto.ros2_control.urdf" />
+   
+   </robot>
+
+Ce fichier xacro permet de réunir la description urdf et ros2_control au sein d'un même fichier.
+
+
+=========================================
+Création d'une configuration ros2_control
+=========================================
+
+Déplacez-vous dans le répertoire config
+
+.. code-block:: bash
+
+   cd ros2_ws/src/panto_description/config
+
+
+Créer un fichier panto_controllers.yaml
+
+.. code-block:: bash
+
+   touch panto_controllers.yaml
+
+Ce fichier permettra d'associer à chaque liaison un controller spécifique de ros2_control. Ici, nous allons utiliser deux controller généralement utilisés qui sont joint_state_broadcaster et forward_command_controller. Le premier sert à obtenir la position, la vitesse et l'effort dans chaque liaison. Le deuxième est un controller de position d'une liaison.
+
+Voici le code à écrire dans ce fichier dans le cas du pantographe.
+
+.. code-block:: bash
+
+   controller_manager:
+     ros__parameters:
+       update_rate: 100  # Hz
+       
+       joint_state_broadcaster:
+         type: joint_state_broadcaster/JointStateBroadcaster
+       
+       panto_position_controller:
+         type: forward_command_controller/ForwardCommandController
+   
+   panto_position_controller:
+     ros__parameters:
+       interface_name: position
+       joints:
+         - base_link_link1_joint
+         - link1_link2_joint
+         - base_link_link4_joint
+         - link4_link3_joint
+
+
+==============================================
+Création d'un fichier launch pour ros2_control
+==============================================
+
+Tout d'abord créer un fichier de configuration de rviz.
+
+Déplacez-vous dans le répertoire rviz.
+
+.. code-block:: bash
+
+   cd panto_description/rviz
+
+Créer un fichier panto.rviz
+
+.. code-block:: bash
+
+   touch panto.rviz
+
+Copier collé ce code à l'intérieur. Il permet de configurer la vue dans rviz et de déclarer les links qui seront présents.
+
+.. code-block:: bash
+
+   Panels:
+     - Class: rviz_common/Displays
+       Help Height: 78
+       Name: Displays
+       Property Tree Widget:
+         Expanded:
+           - /Global Options1
+           - /Status1
+           - /RobotModel1
+         Splitter Ratio: 0.5
+       Tree Height: 549
+     - Class: rviz_common/Selection
+       Name: Selection
+     - Class: rviz_common/Tool Properties
+       Expanded:
+         - /2D Goal Pose1
+         - /Publish Point1
+       Name: Tool Properties
+       Splitter Ratio: 0.5886790156364441
+     - Class: rviz_common/Views
+       Expanded:
+         - /Current View1
+       Name: Views
+       Splitter Ratio: 0.5
+     - Class: rviz_common/Time
+       Experimental: false
+       Name: Time
+       SyncMode: 0
+       SyncSource: ""
+   Visualization Manager:
+     Class: ""
+     Displays:
+       - Alpha: 0.5
+         Cell Size: 1
+         Class: rviz_default_plugins/Grid
+         Color: 160; 160; 164
+         Enabled: true
+         Line Style:
+           Line Width: 0.029999999329447746
+           Value: Lines
+         Name: Grid
+         Normal Cell Count: 0
+         Offset:
+           X: 0
+           Y: 0
+           Z: 0
+         Plane: XY
+         Plane Cell Count: 10
+         Reference Frame: <Fixed Frame>
+         Value: true
+       - Alpha: 1
+         Class: rviz_default_plugins/RobotModel
+         Collision Enabled: false
+         Description File: ""
+         Description Source: Topic
+         Description Topic:
+           Depth: 5
+           Durability Policy: Volatile
+           History Policy: Keep Last
+           Reliability Policy: Reliable
+           Value: /robot_description
+         Enabled: true
+         Links:
+           All Links Enabled: true
+           Expand Joint Details: false
+           Expand Link Details: false
+           Expand Tree: false
+           Link Tree Style: Links in Alphabetic Order
+           base_link:
+             Alpha: 1
+             Show Axes: false
+             Show Trail: false
+             Value: true
+           link1:
+             Alpha: 1
+             Show Axes: false
+             Show Trail: false
+             Value: true
+           link2:
+             Alpha: 1
+             Show Axes: false
+             Show Trail: false
+             Value: true
+           link3:
+             Alpha: 1
+             Show Axes: false
+             Show Trail: false
+             Value: true
+           link4:
+             Alpha: 1
+             Show Axes: false
+             Show Trail: false
+             Value: true
+           world:
+             Alpha: 1
+             Show Axes: false
+             Show Trail: false
+         Mass Properties:
+           Inertia: false
+           Mass: false
+         Name: RobotModel
+         TF Prefix: ""
+         Update Interval: 0
+         Value: true
+         Visual Enabled: true
+     Enabled: true
+     Global Options:
+       Background Color: 48; 48; 48
+       Fixed Frame: world
+       Frame Rate: 30
+     Name: root
+     Tools:
+       - Class: rviz_default_plugins/Interact
+         Hide Inactive Objects: true
+       - Class: rviz_default_plugins/MoveCamera
+       - Class: rviz_default_plugins/Select
+       - Class: rviz_default_plugins/FocusCamera
+       - Class: rviz_default_plugins/Measure
+         Line color: 128; 128; 0
+       - Class: rviz_default_plugins/SetInitialPose
+         Covariance x: 0.25
+         Covariance y: 0.25
+         Covariance yaw: 0.06853891909122467
+         Topic:
+           Depth: 5
+           Durability Policy: Volatile
+           History Policy: Keep Last
+           Reliability Policy: Reliable
+           Value: /initialpose
+       - Class: rviz_default_plugins/SetGoal
+         Topic:
+           Depth: 5
+           Durability Policy: Volatile
+           History Policy: Keep Last
+           Reliability Policy: Reliable
+           Value: /goal_pose
+       - Class: rviz_default_plugins/PublishPoint
+         Single click: true
+         Topic:
+           Depth: 5
+           Durability Policy: Volatile
+           History Policy: Keep Last
+           Reliability Policy: Reliable
+           Value: /clicked_point
+     Transformation:
+       Current:
+         Class: rviz_default_plugins/TF
+     Value: true
+     Views:
+       Current:
+         Class: rviz_default_plugins/Orbit
+         Distance: 2.7850098609924316
+         Enable Stereo Rendering:
+           Stereo Eye Separation: 0.05999999865889549
+           Stereo Focal Distance: 1
+           Swap Stereo Eyes: false
+           Value: false
+         Focal Point:
+           X: 0
+           Y: 0
+           Z: 0
+         Focal Shape Fixed Size: true
+         Focal Shape Size: 0.05000000074505806
+         Invert Z Axis: false
+         Name: Current View
+         Near Clip Distance: 0.009999999776482582
+         Pitch: 0.41539815068244934
+         Target Frame: <Fixed Frame>
+         Value: Orbit (rviz)
+         Yaw: 0.825397789478302
+       Saved: ~
+   Window Geometry:
+     Displays:
+       collapsed: false
+     Height: 846
+     Hide Left Dock: false
+     Hide Right Dock: false
+     QMainWindow State: 000000ff00000000fd000000040000000000000156000002b0fc0200000008fb0000001200530065006c0065006300740069006f006e00000001e10000009b0000005c00fffffffb0000001e0054006f006f006c002000500072006f007000650072007400690065007302000001ed000001df00000185000000a3fb000000120056006900650077007300200054006f006f02000001df000002110000018500000122fb000000200054006f006f006c002000500072006f0070006500720074006900650073003203000002880000011d000002210000017afb000000100044006900730070006c006100790073010000003d000002b0000000c900fffffffb0000002000730065006c0065006300740069006f006e00200062007500660066006500720200000138000000aa0000023a00000294fb00000014005700690064006500530074006500720065006f02000000e6000000d2000003ee0000030bfb0000000c004b0069006e0065006300740200000186000001060000030c00000261000000010000010f000002b0fc0200000003fb0000001e0054006f006f006c002000500072006f00700065007200740069006500730100000041000000780000000000000000fb0000000a00560069006500770073010000003d000002b0000000a400fffffffb0000001200530065006c0065006300740069006f006e010000025a000000b200000000000000000000000200000490000000a9fc0100000001fb0000000a00560069006500770073030000004e00000080000002e10000019700000003000004b00000003efc0100000002fb0000000800540069006d00650100000000000004b0000002fb00fffffffb0000000800540069006d006501000000000000045000000000000000000000023f000002b000000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+     Selection:
+       collapsed: false
+     Time:
+       collapsed: false
+     Tool Properties:
+       collapsed: false
+     Views:
+       collapsed: false
+     Width: 1200
+     X: 2082
+     Y: 117
+
+
+Ensuite, nous allons créer un nouveau package nommé panto_bringup. Donc déplacer le répertoire src.
+
+.. code-block:: bash
+
+   cd ros2_ws/src
+
+Créer un package panto_bringup
+
+.. code-block:: bash
+   
+   ros2 pkg create panto_bringup --build-type ament_cmake
+
+On devrait obtenir une arborescence de ce type
+
+.. code-block:: bash
+   
+   panto_bringup/
+   |__include/
+   |__CMakeLists.txt
+   |__package.xml
+   |__src/
+
+Vous pouvez supprimez les répertoires include et src, et créer 2 nouveaux répertoire nommé config et launch
+
+.. code-block:: bash
+
+   rm -r include src
+
+.. code-block:: bash
+
+   mkdir config launch
+
+Modifier le fichier CMakeLists.txt dans ce même package pour qu'il devienne :
+
+.. code-block:: bash
+
+   cmake_minimum_required(VERSION 3.8)
+   project(panto_bringup)
+   
+   if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+     add_compile_options(-Wall -Wextra -Wpedantic)
+   endif()
+   
+   # find dependencies
+   find_package(ament_cmake REQUIRED)
+   
+   install(
+     DIRECTORY config launch
+     DESTINATION share/${PROJECT_NAME}
+   )
+   
+   ament_package()
+
+Dans le répertoire launch, créer un fichier panto.launch.py
+
+.. code-block:: bash
+
+   cd panto_bringup/launch
+
+.. code-block:: bash
+
+   touch panto.launch.py
+
+Copier coller le code suivant dans le fichier panto.launch.py. Il permettra de lancer successivement les différents noeuds nécessaire pour afficher le robot et importer les infertaces hardware.
+
+.. code-block:: bash
+
+   from launch import LaunchDescription
+   from launch.actions import TimerAction
+   from launch.substitutions import Command, FindExecutable, PathJoinSubstitution
+   from launch_ros.actions import Node
+   from launch_ros.substitutions import FindPackageShare
+   
+   
+   def generate_launch_description():
+   
+       # =======================
+       # Robot description (xacro)
+       # =======================
+       robot_description_content = Command(
+           [
+               PathJoinSubstitution([FindExecutable(name='xacro')]),
+               ' ',
+               PathJoinSubstitution([
+                   FindPackageShare('panto_description'),
+                   'config',
+                   'panto.config.xacro'
+               ]),
+           ]
+       )
+   
+       robot_description = {'robot_description': robot_description_content}
+   
+       # =======================
+       # Controllers config
+       # =======================
+       robot_controllers = PathJoinSubstitution([
+           FindPackageShare('panto_description'),
+           'config',
+           'panto_controllers.yaml'
+       ])
+   
+       # =======================
+       # RViz config
+       # =======================
+       rviz_config_file = PathJoinSubstitution([
+           FindPackageShare('panto_description'),
+           'rviz',
+           'panto.rviz'
+       ])
+   
+       # =======================
+       # Nodes
+       # =======================
+   
+       # robot_state_publisher
+       robot_state_publisher_node = Node(
+           package='robot_state_publisher',
+           executable='robot_state_publisher',
+           output='screen',
+           parameters=[robot_description],
+       )
+   
+       # ros2_control
+       ros2_control_node = Node(
+           package='controller_manager',
+           executable='ros2_control_node',
+           output='screen',
+           parameters=[robot_description, robot_controllers],
+       )
+   
+       # RViz
+       rviz_node = Node(
+           package='rviz2',
+           executable='rviz2',
+           name='rviz2',
+           output='log',
+           arguments=['-d', rviz_config_file],
+       )
+   
+       # Joint state broadcaster
+       joint_state_broadcaster_spawner = Node(
+           package='controller_manager',
+           executable='spawner',
+           arguments=['joint_state_broadcaster'],
+           output='screen',
+       )
+   
+       # Position controller
+       position_controller_spawner = Node(
+           package='controller_manager',
+           executable='spawner',
+           arguments=['panto_position_controller'],
+           output='screen',
+       )
+   
+       # =======================
+       # Launch order
+       # =======================
+       return LaunchDescription([
+   
+           # 1. URDF → TF
+           robot_state_publisher_node,
+   
+           # 2. ros2_control
+           ros2_control_node,
+   
+           # 3. RViz
+           rviz_node,
+   
+           # 4. Spawners (avec délais pour laisser ros2_control démarrer)
+           TimerAction(
+               period=3.0,
+               actions=[joint_state_broadcaster_spawner],
+           ),
+   
+           TimerAction(
+               period=5.0,
+               actions=[position_controller_spawner],
+           ),
+       ])
+
+
+Build tous les packages
+
+.. code-block:: bash
+
+   colcon build
+
+Sourcer le terminal avec les nouveaux packages
+
+.. code-block:: bash
+
+   source install/setup.bash
+
+Lancer le pantographe avec les controller ros2_control
+
+.. code-block:: bash
+
+   ros2 launch panto_bringup panto.launch.py
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 .. _joints: https://wiki.ros.org/urdf/XML/joint
