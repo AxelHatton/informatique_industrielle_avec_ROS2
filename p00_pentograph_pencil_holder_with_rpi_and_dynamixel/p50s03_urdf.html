@@ -1141,7 +1141,7 @@ def<span class="w"> </span>main<span class="o">()</span>:
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ros2<span class="w"> </span>run<span class="w"> </span>cmd_slider_pub<span class="w"> </span>cmd_slider_pub
 </pre></div>
 </div>
-<p>Vérifier le noeud publie sur le topic /panto_position_controller/commands</p>
+<p>Vérifier que le noeud publie sur le topic /panto_position_controller/commands</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ros2<span class="w"> </span>launch<span class="w"> </span>panto_bringup<span class="w"> </span>panto.launch.py
 </pre></div>
 </div>
@@ -1149,6 +1149,29 @@ def<span class="w"> </span>main<span class="o">()</span>:
 </pre></div>
 </div>
 <p>Vous devez ainsi voir ceci :</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>layout:
+<span class="w">  </span>dim:<span class="w"> </span><span class="o">[]</span>
+<span class="w">  </span>data_offset:<span class="w"> </span><span class="m">0</span>
+data:
+-<span class="w"> </span><span class="m">0</span>.65
+-<span class="w"> </span>-0.41
+-<span class="w"> </span><span class="m">0</span>.0
+-<span class="w"> </span><span class="m">0</span>.0
+---
+layout:
+<span class="w">  </span>dim:<span class="w"> </span><span class="o">[]</span>
+<span class="w">  </span>data_offset:<span class="w"> </span><span class="m">0</span>
+data:
+-<span class="w"> </span><span class="m">0</span>.65
+-<span class="w"> </span>-0.43
+-<span class="w"> </span><span class="m">0</span>.0
+-<span class="w"> </span><span class="m">0</span>.0
+---
+</pre></div>
+</div>
+<figure class="align-center">
+<img alt="../_images/cmd_slider_pub.png" src="../_images/cmd_slider_pub.png" />
+</figure>
 </section>
 <section id="creation-d-un-noeud-python-assurant-2-ddl-pour-les-liaisons-accrochees-au-bati-et-2-liaisons-passives">
 <h2>Création d’un noeud python assurant 2 ddl pour les liaisons accrochées au bâti et 2 liaisons passives<a class="headerlink" href="#creation-d-un-noeud-python-assurant-2-ddl-pour-les-liaisons-accrochees-au-bati-et-2-liaisons-passives" title="Lien vers cette rubrique"></a></h2>
