@@ -939,11 +939,423 @@ Lancer le pantographe avec les controller ros2_control
 
    ros2 launch panto_bringup panto.launch.py
 
+Nous obtenons normalement le lancement de rviz avec la maquette du pantographe avec les 8 interfaces et les 2 controllers de ros2_control.
+
+.. figure:: resources/img/ros2_control_launch2.png
+   :align: center
+
+Vous pouvez vérifier la présence des interfaces avec la commande :
+
+.. code-block:: bash
+
+   ros2 control list_hardware_interfaces
+
+Vous devez voir ceci :
+
+.. code-block:: bash
+
+   command interfaces
+   	base_link_link1_joint/position [available] [claimed]
+   	base_link_link4_joint/position [available] [claimed]
+   	link1_link2_joint/position [available] [claimed]
+   	link4_link3_joint/position [available] [claimed]
+   state interfaces
+   	base_link_link1_joint/position
+   	base_link_link4_joint/position
+   	link1_link2_joint/position
+   	link4_link3_joint/position
+
+Il y a donc 4 interfaces de commandes (coommand interfaces), et 4 interfaces de récupération de donnéesc(state interfaces).
+
+Pour vérifier la présence des controllers, il faut entrer la commande suivante :
+
+.. code-block:: bash
+
+   ros2 control list_controllers
+
+Vous devez voir ceci :
+
+.. code-block:: bash
+
+   panto_position_controller forward_command_controller/ForwardCommandController  active
+   joint_state_broadcaster   joint_state_broadcaster/JointStateBroadcaster        active
+
+panto_position_controller permet de contrôler la position angulaire des liaisons pivots. joint_state_broadcaster permet de récupérer la position et la vitesse et l'effort dans chaque liaison.
+
+Maintenant, si vous entrez cette commande : 
+
+.. code-block:: bash
+
+   ros2 topic list
+
+Vous devriez voir ceci :
+
+.. code-block:: bash
+
+   /clicked_point
+   /controller_manager/activity
+   /controller_manager/introspection_data/full
+   /controller_manager/introspection_data/names
+   /controller_manager/introspection_data/values
+   /controller_manager/statistics/full
+   /controller_manager/statistics/names
+   /controller_manager/statistics/values
+   /diagnostics
+   /dynamic_joint_states
+   /goal_pose
+   /initialpose
+   /joint_state_broadcaster/transition_event
+   /joint_states
+   /panto_position_controller/commands
+   /panto_position_controller/transition_event
+   /parameter_events
+   /robot_description
+   /rosout
+   /tf
+   /tf_static
+
+C'est la liste des topics actives. Celles qui nous intéresse est /panto_position_controller/commands. Maintenant, utiliser cette commande pour vérifier quel type de message accepte ce topic.
+
+.. code-block:: bash
+
+   ros2 topic info /panto_position_controller/commands
+
+Vous obtenez ceci :
+
+.. code-block:: bash
+
+   Type: std_msgs/msg/Float64MultiArray
+   Publisher count: 0
+   Subscription count: 1
+
+C'est le type de message qu'attend le topic. Maintenant, essayer de rentrer cette commande pour envoyer un message sur ce topic. Si tout se passe bien le pantographe est censé bouger.
+
+.. code-block:: bash
+
+   ros2 topic pub --once /panto_position_controller/commands std_msgs/msg/Float64MultiArray "{data: [0.5,-1.5,0.3,0.5]}"
+
+=====================================================
+Création d'un noeud python de commande du pantographe
+=====================================================
+
+L'objectif est de créer un noeud python se présentant sous la forme de 4 sliders permettant de controller chacune une liaison pivot à travers le topic /panto_position_controller/commands.
+
+Déplacez vous dans le répertoire src du votre workspace.
+
+.. code-block:: bash
+
+   cd ros2_ws/src
+
+Creer un package python avec rclpy et std_msgs en dépendances.
+
+.. code-block:: bash
+
+   ros2 pkg create cmd_slider_pub --build-type ament_python --dependencies rclpy std_msgs
+
+Nous obtenons l'arborescence suivante :
+
+.. code-block:: bash
+
+   cmd_slider_pub/
+   ├── package.xml
+   ├── setup.py
+   ├── setup.cfg
+   ├── cmd_slider_pub/
+   │   ├── __init__.py
+
+Créer le fichier du noeud 
+
+.. code-block:: bash
+
+   cd cmd_slider_pub/cmd_slider_pub
+   
+.. code-block:: bash
+
+   touch cmd_slider_pub.py
+
+Ouvrez le fichier dans vscode.
+
+.. code-block:: bash
+
+   code cmd_slider_pub.py
+
+Copier coller ce code à l'intérieur :
+
+.. code-block:: bash
+
+   #!/usr/bin/env python3
+   
+   import rclpy
+   from rclpy.node import Node
+   from std_msgs.msg import Float64MultiArray
+   import tkinter as tk
+   
+   
+   class CmdSliderPub(Node):
+   
+       def __init__(self):
+           super().__init__('cmd_slider_pub')
+   
+           self.publisher_ = self.create_publisher(
+               Float64MultiArray,
+               '/panto_position_controller/commands',
+               10
+           )
+   
+           self.joint_values = [0.0, 0.0, 0.0, 0.0]
+   
+           self.timer = self.create_timer(0.1, self.publish_joint_positions)
+   
+           self.init_gui()
+   
+       def init_gui(self):
+           self.root = tk.Tk()
+           self.root.title("Panto Position Command Sliders")
+   
+           for i in range(4):
+               tk.Label(self.root, text=f"Joint {i+1}").pack()
+   
+               tk.Scale(
+                   self.root,
+                   from_=-3.14,
+                   to=3.14,
+                   resolution=0.01,
+                   orient=tk.HORIZONTAL,
+                   length=400,
+                   command=lambda val, idx=i: self.update_joint(idx, val)
+               ).pack()
+   
+           self.root.protocol("WM_DELETE_WINDOW", self.on_close)
+   
+       def update_joint(self, index, value):
+           self.joint_values[index] = float(value)
+           self.publish_joint_positions()
+   
+       def publish_joint_positions(self):
+           msg = Float64MultiArray()
+           msg.data = self.joint_values
+           self.publisher_.publish(msg)
+   
+       def on_close(self):
+           self.get_logger().info("Shutting down cmd_slider_pub")
+           self.root.destroy()
+           rclpy.shutdown()
+   
+       def run(self):
+           while rclpy.ok():
+               self.root.update_idletasks()
+               self.root.update()
+   
+   
+   def main():
+       rclpy.init()
+       node = CmdSliderPub()
+       node.run()
+   
+   
+   if __name__ == '__main__':
+       main()
 
 
+Modifier ensuite le fichier setup.py pour rajouter le nouveau fichier en tant qu'éxécutable du package.
+
+.. code-block:: bash
+
+   entry_points={
+       'console_scripts': [
+           'cmd_slider_pub = cmd_slider_pub.cmd_slider_pub:main',
+       ],
+   },
+
+Vérifier que les dépendances rclpy et std_msgs sont bien présente dans le fichier package.xml. Vous devez voir ceci à l'intérieur du fichier :
+
+.. code-block:: bash
+
+   <exec_depend>rclpy</exec_depend>
+   <exec_depend>std_msgs</exec_depend>
+
+Rendez ensuite le fichier du noeud exécutable :
+
+.. code-block:: bash
+
+   chmod +x cmd_slider_pub/cmd_slider_pub.py
+
+Compiler le package
+
+.. code-block:: bash
+
+   cd ~/ros2_ws
+
+.. code-block:: bash
+
+   colcon build --packages-select cmd_slider_pub
+
+Sourcer le workspace :
+
+.. code-block:: bash
+
+   source install/setup.bash
+
+Lancer le noeud :
+
+.. code-block:: bash
+
+   ros2 run cmd_slider_pub cmd_slider_pub
+
+Vérifier le noeud publie sur le topic /panto_position_controller/commands
+
+.. code-block:: bash
+
+   ros2 launch panto_bringup panto.launch.py
+
+.. code-block:: bash
+
+   ros2 topic echo /panto_position_controller/commands
+
+Vous devez ainsi voir ceci :
+
+=====================================================================================================
+Création d'un noeud python assurant 2 ddl pour les liaisons accrochées au bâti et 2 liaisons passives
+=====================================================================================================
+
+L'objectif est de créer un noeud python ayant 2 liaison pivot en degré de liberté et les 2 autres liaisons pivot seront passives et seront piloté de manière à assurer la contrainte géométrique de fermeture des branches ouvertes du pantographe au sommet.
+
+Déplacez vous dans le répertoire où se trouve le précédent noeud python cmd_slider_pub.py.
+
+.. code-block:: bash
+
+   cd ros2_ws/src/cmd_slider_pub/cmd_slider_pub
+
+Créer un nouveau fichier python.
+
+.. code-block:: bash
+
+   touch cmd_ferm_geom.py
+
+Ouvrez ce fichier avec vscode
+
+.. code-block:: bash
+
+   code cmd_ferm_geom.py
+
+Ce noeud nécessite le modèle géométrique inverse pour son bon fonctionnement. Malheureusement, nous n'avons pas eu le temps d'avoir un code satisfaisant pour ce noeud. Pour l'instant, nous pouvons proposer un noeud où les 2 liaisons pivots non reliées au bâti sont passives, c'est-à-dire qu'elles sont pilotées en fonction des commandes des 2 autres liaisons pivots. Pour l'instant, la relation de pilotage entre les liaisons actives et passives est fausse. Le code suivant permettra juste de démontrer que la mise en place de liaison passive et active est possible.
+
+.. code-block:: bash
+
+   #!/usr/bin/env python3
+   
+   import rclpy
+   from rclpy.node import Node
+   from std_msgs.msg import Float64MultiArray
+   import tkinter as tk
+   import math
+   
+   
+   class CmdFermGeom(Node):
+   
+       def __init__(self):
+           super().__init__('cmd_ferm_geom')
+   
+           self.publisher_ = self.create_publisher(
+               Float64MultiArray,
+               '/panto_position_controller/commands',
+               10
+           )
+   
+           # Angles moteurs
+           self.theta1 = 0.0  # base_link_link1_joint
+           self.theta4 = 0.0  # base_link_link4_joint
+   
+           self.init_gui()
+           self.timer = self.create_timer(0.05, self.publish_commands)
+   
+       # =========================
+       # GUI
+       # =========================
+       def init_gui(self):
+           self.root = tk.Tk()
+           self.root.title("Pentographe – fermeture géométrique simplifiée")
+   
+           tk.Label(self.root, text="θ1 (base → link1)").pack()
+           self.slider1 = tk.Scale(
+               self.root, from_=-1.57, to=1.57,
+               resolution=0.01, orient=tk.HORIZONTAL,
+               length=400, command=self.update_theta1
+           )
+           self.slider1.pack()
+   
+           tk.Label(self.root, text="θ4 (base → link4)").pack()
+           self.slider4 = tk.Scale(
+               self.root, from_=-1.57, to=1.57,
+               resolution=0.01, orient=tk.HORIZONTAL,
+               length=400, command=self.update_theta4
+           )
+           self.slider4.pack()
+   
+           self.root.protocol("WM_DELETE_WINDOW", self.on_close)
+   
+       def update_theta1(self, value):
+           self.theta1 = float(value)
+   
+       def update_theta4(self, value):
+           self.theta4 = float(value)
+   
+       # =========================
+       # Fermeture simplifiée
+       # =========================
+       def compute_passive_joints(self):
+           theta2 = math.pi - self.theta1
+           theta3 = math.pi - self.theta4
+           return theta2, theta3
+   
+       # =========================
+       # Publication
+       # =========================
+       def publish_commands(self):
+           theta2, theta3 = self.compute_passive_joints()
+   
+           msg = Float64MultiArray()
+           msg.data = [
+               self.theta1,
+               self.theta4,
+               theta2,
+               theta3
+           ]
+   
+           self.publisher_.publish(msg)
+   
+       def on_close(self):
+           self.root.destroy()
+           rclpy.shutdown()
+   
+       def run(self):
+           while rclpy.ok():
+               rclpy.spin_once(self, timeout_sec=0.0)
+               self.root.update_idletasks()
+               self.root.update()
+   
+   
+   
+   def main():
+       rclpy.init()
+       node = CmdFermGeom()
+       node.run()
+   
+   
+   if __name__ == '__main__':
+       main()
 
 
+N'oubliez de rajouter ce fichier dans les entry_points dans le fichier setup.py avant de compiler et sourcer.
 
+.. code-block:: bash
+
+   entry_points={
+       'console_scripts': [
+           'cmd_slider_pub = cmd_slider_pub.cmd_slider_pub:main',
+           'cmd_ferm_geom = cmd_slider_pub.cmd_ferm_geom:main',
+       ],
+   }
 
 
 
