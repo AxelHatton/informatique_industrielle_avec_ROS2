@@ -72,6 +72,9 @@
 <li class="toctree-l3"><a class="reference internal" href="#affichage-de-l-urdf-dans-rviz">Affichage de l’URDF dans RViz</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#creation-fichier-launch">Création fichier launch</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#creation-fichier-ros2-control">Création fichier ros2_control</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#creation-d-un-fichier-xacro-combinant-la-description-urdf-et-la-description-ros2-control">Création d’un fichier Xacro combinant la description urdf et la description ros2_control</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#creation-d-une-configuration-ros2-control">Création d’une configuration ros2_control</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#creation-d-un-fichier-launch-pour-ros2-control">Création d’un fichier launch pour ros2_control</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="p50s04_dynamixel.html">Fonctionnement des Dynamixels</a></li>
@@ -387,7 +390,7 @@ Un en-tête</p>
 </section>
 <section id="affichage-de-l-urdf-dans-rviz">
 <h2>Affichage de l’URDF dans RViz<a class="headerlink" href="#affichage-de-l-urdf-dans-rviz" title="Lien vers cette rubrique"></a></h2>
-<p>Déplacer vous dans le répertoire contenant le fichier urdf</p>
+<p>Déplacez-vous dans le répertoire contenant le fichier urdf</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>panto_description/urdf/
 </pre></div>
 </div>
@@ -407,7 +410,7 @@ Un en-tête</p>
 </section>
 <section id="creation-fichier-launch">
 <h2>Création fichier launch<a class="headerlink" href="#creation-fichier-launch" title="Lien vers cette rubrique"></a></h2>
-<p>Déplacer vous dans launch</p>
+<p>Déplacez-vous dans launch</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>panto_description/launch
 </pre></div>
 </div>
@@ -480,6 +483,447 @@ Un en-tête</p>
 <span class="w">    </span>&lt;/ros2_control&gt;
 
 &lt;/robot&gt;
+</pre></div>
+</div>
+</section>
+<section id="creation-d-un-fichier-xacro-combinant-la-description-urdf-et-la-description-ros2-control">
+<h2>Création d’un fichier Xacro combinant la description urdf et la description ros2_control<a class="headerlink" href="#creation-d-un-fichier-xacro-combinant-la-description-urdf-et-la-description-ros2-control" title="Lien vers cette rubrique"></a></h2>
+<p>Déplacez-vous dans le répertoire config</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>ros2_ws/src/panto_description/config
+</pre></div>
+</div>
+<p>Creer un fichier xacro</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>touch<span class="w"> </span>panto.config.xacro
+</pre></div>
+</div>
+<p>Copier coller ce code à l’intérieur de panto.config.xacro</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>&lt;?xml<span class="w"> </span><span class="nv">version</span><span class="o">=</span><span class="s2">&quot;1.0&quot;</span>?&gt;
+&lt;!--<span class="w"> </span>Pantographe<span class="w"> </span>--&gt;
+&lt;robot<span class="w"> </span>xmlns:xacro<span class="o">=</span><span class="s2">&quot;http://www.ros.org/wiki/xacro&quot;</span><span class="w"> </span><span class="nv">name</span><span class="o">=</span><span class="s2">&quot;panto&quot;</span>&gt;
+
+<span class="w">    </span>&lt;!--<span class="w"> </span>Import<span class="w"> </span>panto<span class="w"> </span>urdf<span class="w"> </span>file<span class="w"> </span>--&gt;
+<span class="w">    </span>&lt;xacro:include<span class="w"> </span><span class="nv">filename</span><span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span>find<span class="w"> </span>panto_description<span class="k">)</span><span class="s2">/urdf/panto.urdf&quot;</span><span class="w"> </span>/&gt;
+
+<span class="w">    </span>&lt;!--<span class="w"> </span>Import<span class="w"> </span>panto<span class="w"> </span>ros2_control<span class="w"> </span>description<span class="w"> </span>--&gt;
+<span class="w">    </span>&lt;xacro:include<span class="w"> </span><span class="nv">filename</span><span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span>find<span class="w"> </span>panto_description<span class="k">)</span><span class="s2">/ros2_control/panto.ros2_control.urdf&quot;</span><span class="w"> </span>/&gt;
+
+&lt;/robot&gt;
+</pre></div>
+</div>
+<p>Ce fichier xacro permet de réunir la description urdf et ros2_control au sein d’un même fichier.</p>
+</section>
+<section id="creation-d-une-configuration-ros2-control">
+<h2>Création d’une configuration ros2_control<a class="headerlink" href="#creation-d-une-configuration-ros2-control" title="Lien vers cette rubrique"></a></h2>
+<p>Déplacez-vous dans le répertoire config</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>ros2_ws/src/panto_description/config
+</pre></div>
+</div>
+<p>Créer un fichier panto_controllers.yaml</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>touch<span class="w"> </span>panto_controllers.yaml
+</pre></div>
+</div>
+<p>Ce fichier permettra d’associer à chaque liaison un controller spécifique de ros2_control. Ici, nous allons utiliser deux controller généralement utilisés qui sont joint_state_broadcaster et forward_command_controller. Le premier sert à obtenir la position, la vitesse et l’effort dans chaque liaison. Le deuxième est un controller de position d’une liaison.</p>
+<p>Voici le code à écrire dans ce fichier dans le cas du pantographe.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>controller_manager:
+<span class="w">  </span>ros__parameters:
+<span class="w">    </span>update_rate:<span class="w"> </span><span class="m">100</span><span class="w">  </span><span class="c1"># Hz</span>
+
+<span class="w">    </span>joint_state_broadcaster:
+<span class="w">      </span>type:<span class="w"> </span>joint_state_broadcaster/JointStateBroadcaster
+
+<span class="w">    </span>panto_position_controller:
+<span class="w">      </span>type:<span class="w"> </span>forward_command_controller/ForwardCommandController
+
+panto_position_controller:
+<span class="w">  </span>ros__parameters:
+<span class="w">    </span>interface_name:<span class="w"> </span>position
+<span class="w">    </span>joints:
+<span class="w">      </span>-<span class="w"> </span>base_link_link1_joint
+<span class="w">      </span>-<span class="w"> </span>link1_link2_joint
+<span class="w">      </span>-<span class="w"> </span>base_link_link4_joint
+<span class="w">      </span>-<span class="w"> </span>link4_link3_joint
+</pre></div>
+</div>
+</section>
+<section id="creation-d-un-fichier-launch-pour-ros2-control">
+<h2>Création d’un fichier launch pour ros2_control<a class="headerlink" href="#creation-d-un-fichier-launch-pour-ros2-control" title="Lien vers cette rubrique"></a></h2>
+<p>Tout d’abord créer un fichier de configuration de rviz.</p>
+<p>Déplacez-vous dans le répertoire rviz.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>panto_description/rviz
+</pre></div>
+</div>
+<p>Créer un fichier panto.rviz</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>touch<span class="w"> </span>panto.rviz
+</pre></div>
+</div>
+<p>Copier collé ce code à l’intérieur. Il permet de configurer la vue dans rviz et de déclarer les links qui seront présents.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>Panels:
+<span class="w">  </span>-<span class="w"> </span>Class:<span class="w"> </span>rviz_common/Displays
+<span class="w">    </span>Help<span class="w"> </span>Height:<span class="w"> </span><span class="m">78</span>
+<span class="w">    </span>Name:<span class="w"> </span>Displays
+<span class="w">    </span>Property<span class="w"> </span>Tree<span class="w"> </span>Widget:
+<span class="w">      </span>Expanded:
+<span class="w">        </span>-<span class="w"> </span>/Global<span class="w"> </span>Options1
+<span class="w">        </span>-<span class="w"> </span>/Status1
+<span class="w">        </span>-<span class="w"> </span>/RobotModel1
+<span class="w">      </span>Splitter<span class="w"> </span>Ratio:<span class="w"> </span><span class="m">0</span>.5
+<span class="w">    </span>Tree<span class="w"> </span>Height:<span class="w"> </span><span class="m">549</span>
+<span class="w">  </span>-<span class="w"> </span>Class:<span class="w"> </span>rviz_common/Selection
+<span class="w">    </span>Name:<span class="w"> </span>Selection
+<span class="w">  </span>-<span class="w"> </span>Class:<span class="w"> </span>rviz_common/Tool<span class="w"> </span>Properties
+<span class="w">    </span>Expanded:
+<span class="w">      </span>-<span class="w"> </span>/2D<span class="w"> </span>Goal<span class="w"> </span>Pose1
+<span class="w">      </span>-<span class="w"> </span>/Publish<span class="w"> </span>Point1
+<span class="w">    </span>Name:<span class="w"> </span>Tool<span class="w"> </span>Properties
+<span class="w">    </span>Splitter<span class="w"> </span>Ratio:<span class="w"> </span><span class="m">0</span>.5886790156364441
+<span class="w">  </span>-<span class="w"> </span>Class:<span class="w"> </span>rviz_common/Views
+<span class="w">    </span>Expanded:
+<span class="w">      </span>-<span class="w"> </span>/Current<span class="w"> </span>View1
+<span class="w">    </span>Name:<span class="w"> </span>Views
+<span class="w">    </span>Splitter<span class="w"> </span>Ratio:<span class="w"> </span><span class="m">0</span>.5
+<span class="w">  </span>-<span class="w"> </span>Class:<span class="w"> </span>rviz_common/Time
+<span class="w">    </span>Experimental:<span class="w"> </span><span class="nb">false</span>
+<span class="w">    </span>Name:<span class="w"> </span>Time
+<span class="w">    </span>SyncMode:<span class="w"> </span><span class="m">0</span>
+<span class="w">    </span>SyncSource:<span class="w"> </span><span class="s2">&quot;&quot;</span>
+Visualization<span class="w"> </span>Manager:
+<span class="w">  </span>Class:<span class="w"> </span><span class="s2">&quot;&quot;</span>
+<span class="w">  </span>Displays:
+<span class="w">    </span>-<span class="w"> </span>Alpha:<span class="w"> </span><span class="m">0</span>.5
+<span class="w">      </span>Cell<span class="w"> </span>Size:<span class="w"> </span><span class="m">1</span>
+<span class="w">      </span>Class:<span class="w"> </span>rviz_default_plugins/Grid
+<span class="w">      </span>Color:<span class="w"> </span><span class="m">160</span><span class="p">;</span><span class="w"> </span><span class="m">160</span><span class="p">;</span><span class="w"> </span><span class="m">164</span>
+<span class="w">      </span>Enabled:<span class="w"> </span><span class="nb">true</span>
+<span class="w">      </span>Line<span class="w"> </span>Style:
+<span class="w">        </span>Line<span class="w"> </span>Width:<span class="w"> </span><span class="m">0</span>.029999999329447746
+<span class="w">        </span>Value:<span class="w"> </span>Lines
+<span class="w">      </span>Name:<span class="w"> </span>Grid
+<span class="w">      </span>Normal<span class="w"> </span>Cell<span class="w"> </span>Count:<span class="w"> </span><span class="m">0</span>
+<span class="w">      </span>Offset:
+<span class="w">        </span>X:<span class="w"> </span><span class="m">0</span>
+<span class="w">        </span>Y:<span class="w"> </span><span class="m">0</span>
+<span class="w">        </span>Z:<span class="w"> </span><span class="m">0</span>
+<span class="w">      </span>Plane:<span class="w"> </span>XY
+<span class="w">      </span>Plane<span class="w"> </span>Cell<span class="w"> </span>Count:<span class="w"> </span><span class="m">10</span>
+<span class="w">      </span>Reference<span class="w"> </span>Frame:<span class="w"> </span>&lt;Fixed<span class="w"> </span>Frame&gt;
+<span class="w">      </span>Value:<span class="w"> </span><span class="nb">true</span>
+<span class="w">    </span>-<span class="w"> </span>Alpha:<span class="w"> </span><span class="m">1</span>
+<span class="w">      </span>Class:<span class="w"> </span>rviz_default_plugins/RobotModel
+<span class="w">      </span>Collision<span class="w"> </span>Enabled:<span class="w"> </span><span class="nb">false</span>
+<span class="w">      </span>Description<span class="w"> </span>File:<span class="w"> </span><span class="s2">&quot;&quot;</span>
+<span class="w">      </span>Description<span class="w"> </span>Source:<span class="w"> </span>Topic
+<span class="w">      </span>Description<span class="w"> </span>Topic:
+<span class="w">        </span>Depth:<span class="w"> </span><span class="m">5</span>
+<span class="w">        </span>Durability<span class="w"> </span>Policy:<span class="w"> </span>Volatile
+<span class="w">        </span>History<span class="w"> </span>Policy:<span class="w"> </span>Keep<span class="w"> </span>Last
+<span class="w">        </span>Reliability<span class="w"> </span>Policy:<span class="w"> </span>Reliable
+<span class="w">        </span>Value:<span class="w"> </span>/robot_description
+<span class="w">      </span>Enabled:<span class="w"> </span><span class="nb">true</span>
+<span class="w">      </span>Links:
+<span class="w">        </span>All<span class="w"> </span>Links<span class="w"> </span>Enabled:<span class="w"> </span><span class="nb">true</span>
+<span class="w">        </span>Expand<span class="w"> </span>Joint<span class="w"> </span>Details:<span class="w"> </span><span class="nb">false</span>
+<span class="w">        </span>Expand<span class="w"> </span>Link<span class="w"> </span>Details:<span class="w"> </span><span class="nb">false</span>
+<span class="w">        </span>Expand<span class="w"> </span>Tree:<span class="w"> </span><span class="nb">false</span>
+<span class="w">        </span>Link<span class="w"> </span>Tree<span class="w"> </span>Style:<span class="w"> </span>Links<span class="w"> </span><span class="k">in</span><span class="w"> </span>Alphabetic<span class="w"> </span>Order
+<span class="w">        </span>base_link:
+<span class="w">          </span>Alpha:<span class="w"> </span><span class="m">1</span>
+<span class="w">          </span>Show<span class="w"> </span>Axes:<span class="w"> </span><span class="nb">false</span>
+<span class="w">          </span>Show<span class="w"> </span>Trail:<span class="w"> </span><span class="nb">false</span>
+<span class="w">          </span>Value:<span class="w"> </span><span class="nb">true</span>
+<span class="w">        </span>link1:
+<span class="w">          </span>Alpha:<span class="w"> </span><span class="m">1</span>
+<span class="w">          </span>Show<span class="w"> </span>Axes:<span class="w"> </span><span class="nb">false</span>
+<span class="w">          </span>Show<span class="w"> </span>Trail:<span class="w"> </span><span class="nb">false</span>
+<span class="w">          </span>Value:<span class="w"> </span><span class="nb">true</span>
+<span class="w">        </span>link2:
+<span class="w">          </span>Alpha:<span class="w"> </span><span class="m">1</span>
+<span class="w">          </span>Show<span class="w"> </span>Axes:<span class="w"> </span><span class="nb">false</span>
+<span class="w">          </span>Show<span class="w"> </span>Trail:<span class="w"> </span><span class="nb">false</span>
+<span class="w">          </span>Value:<span class="w"> </span><span class="nb">true</span>
+<span class="w">        </span>link3:
+<span class="w">          </span>Alpha:<span class="w"> </span><span class="m">1</span>
+<span class="w">          </span>Show<span class="w"> </span>Axes:<span class="w"> </span><span class="nb">false</span>
+<span class="w">          </span>Show<span class="w"> </span>Trail:<span class="w"> </span><span class="nb">false</span>
+<span class="w">          </span>Value:<span class="w"> </span><span class="nb">true</span>
+<span class="w">        </span>link4:
+<span class="w">          </span>Alpha:<span class="w"> </span><span class="m">1</span>
+<span class="w">          </span>Show<span class="w"> </span>Axes:<span class="w"> </span><span class="nb">false</span>
+<span class="w">          </span>Show<span class="w"> </span>Trail:<span class="w"> </span><span class="nb">false</span>
+<span class="w">          </span>Value:<span class="w"> </span><span class="nb">true</span>
+<span class="w">        </span>world:
+<span class="w">          </span>Alpha:<span class="w"> </span><span class="m">1</span>
+<span class="w">          </span>Show<span class="w"> </span>Axes:<span class="w"> </span><span class="nb">false</span>
+<span class="w">          </span>Show<span class="w"> </span>Trail:<span class="w"> </span><span class="nb">false</span>
+<span class="w">      </span>Mass<span class="w"> </span>Properties:
+<span class="w">        </span>Inertia:<span class="w"> </span><span class="nb">false</span>
+<span class="w">        </span>Mass:<span class="w"> </span><span class="nb">false</span>
+<span class="w">      </span>Name:<span class="w"> </span>RobotModel
+<span class="w">      </span>TF<span class="w"> </span>Prefix:<span class="w"> </span><span class="s2">&quot;&quot;</span>
+<span class="w">      </span>Update<span class="w"> </span>Interval:<span class="w"> </span><span class="m">0</span>
+<span class="w">      </span>Value:<span class="w"> </span><span class="nb">true</span>
+<span class="w">      </span>Visual<span class="w"> </span>Enabled:<span class="w"> </span><span class="nb">true</span>
+<span class="w">  </span>Enabled:<span class="w"> </span><span class="nb">true</span>
+<span class="w">  </span>Global<span class="w"> </span>Options:
+<span class="w">    </span>Background<span class="w"> </span>Color:<span class="w"> </span><span class="m">48</span><span class="p">;</span><span class="w"> </span><span class="m">48</span><span class="p">;</span><span class="w"> </span><span class="m">48</span>
+<span class="w">    </span>Fixed<span class="w"> </span>Frame:<span class="w"> </span>world
+<span class="w">    </span>Frame<span class="w"> </span>Rate:<span class="w"> </span><span class="m">30</span>
+<span class="w">  </span>Name:<span class="w"> </span>root
+<span class="w">  </span>Tools:
+<span class="w">    </span>-<span class="w"> </span>Class:<span class="w"> </span>rviz_default_plugins/Interact
+<span class="w">      </span>Hide<span class="w"> </span>Inactive<span class="w"> </span>Objects:<span class="w"> </span><span class="nb">true</span>
+<span class="w">    </span>-<span class="w"> </span>Class:<span class="w"> </span>rviz_default_plugins/MoveCamera
+<span class="w">    </span>-<span class="w"> </span>Class:<span class="w"> </span>rviz_default_plugins/Select
+<span class="w">    </span>-<span class="w"> </span>Class:<span class="w"> </span>rviz_default_plugins/FocusCamera
+<span class="w">    </span>-<span class="w"> </span>Class:<span class="w"> </span>rviz_default_plugins/Measure
+<span class="w">      </span>Line<span class="w"> </span>color:<span class="w"> </span><span class="m">128</span><span class="p">;</span><span class="w"> </span><span class="m">128</span><span class="p">;</span><span class="w"> </span><span class="m">0</span>
+<span class="w">    </span>-<span class="w"> </span>Class:<span class="w"> </span>rviz_default_plugins/SetInitialPose
+<span class="w">      </span>Covariance<span class="w"> </span>x:<span class="w"> </span><span class="m">0</span>.25
+<span class="w">      </span>Covariance<span class="w"> </span>y:<span class="w"> </span><span class="m">0</span>.25
+<span class="w">      </span>Covariance<span class="w"> </span>yaw:<span class="w"> </span><span class="m">0</span>.06853891909122467
+<span class="w">      </span>Topic:
+<span class="w">        </span>Depth:<span class="w"> </span><span class="m">5</span>
+<span class="w">        </span>Durability<span class="w"> </span>Policy:<span class="w"> </span>Volatile
+<span class="w">        </span>History<span class="w"> </span>Policy:<span class="w"> </span>Keep<span class="w"> </span>Last
+<span class="w">        </span>Reliability<span class="w"> </span>Policy:<span class="w"> </span>Reliable
+<span class="w">        </span>Value:<span class="w"> </span>/initialpose
+<span class="w">    </span>-<span class="w"> </span>Class:<span class="w"> </span>rviz_default_plugins/SetGoal
+<span class="w">      </span>Topic:
+<span class="w">        </span>Depth:<span class="w"> </span><span class="m">5</span>
+<span class="w">        </span>Durability<span class="w"> </span>Policy:<span class="w"> </span>Volatile
+<span class="w">        </span>History<span class="w"> </span>Policy:<span class="w"> </span>Keep<span class="w"> </span>Last
+<span class="w">        </span>Reliability<span class="w"> </span>Policy:<span class="w"> </span>Reliable
+<span class="w">        </span>Value:<span class="w"> </span>/goal_pose
+<span class="w">    </span>-<span class="w"> </span>Class:<span class="w"> </span>rviz_default_plugins/PublishPoint
+<span class="w">      </span>Single<span class="w"> </span>click:<span class="w"> </span><span class="nb">true</span>
+<span class="w">      </span>Topic:
+<span class="w">        </span>Depth:<span class="w"> </span><span class="m">5</span>
+<span class="w">        </span>Durability<span class="w"> </span>Policy:<span class="w"> </span>Volatile
+<span class="w">        </span>History<span class="w"> </span>Policy:<span class="w"> </span>Keep<span class="w"> </span>Last
+<span class="w">        </span>Reliability<span class="w"> </span>Policy:<span class="w"> </span>Reliable
+<span class="w">        </span>Value:<span class="w"> </span>/clicked_point
+<span class="w">  </span>Transformation:
+<span class="w">    </span>Current:
+<span class="w">      </span>Class:<span class="w"> </span>rviz_default_plugins/TF
+<span class="w">  </span>Value:<span class="w"> </span><span class="nb">true</span>
+<span class="w">  </span>Views:
+<span class="w">    </span>Current:
+<span class="w">      </span>Class:<span class="w"> </span>rviz_default_plugins/Orbit
+<span class="w">      </span>Distance:<span class="w"> </span><span class="m">2</span>.7850098609924316
+<span class="w">      </span>Enable<span class="w"> </span>Stereo<span class="w"> </span>Rendering:
+<span class="w">        </span>Stereo<span class="w"> </span>Eye<span class="w"> </span>Separation:<span class="w"> </span><span class="m">0</span>.05999999865889549
+<span class="w">        </span>Stereo<span class="w"> </span>Focal<span class="w"> </span>Distance:<span class="w"> </span><span class="m">1</span>
+<span class="w">        </span>Swap<span class="w"> </span>Stereo<span class="w"> </span>Eyes:<span class="w"> </span><span class="nb">false</span>
+<span class="w">        </span>Value:<span class="w"> </span><span class="nb">false</span>
+<span class="w">      </span>Focal<span class="w"> </span>Point:
+<span class="w">        </span>X:<span class="w"> </span><span class="m">0</span>
+<span class="w">        </span>Y:<span class="w"> </span><span class="m">0</span>
+<span class="w">        </span>Z:<span class="w"> </span><span class="m">0</span>
+<span class="w">      </span>Focal<span class="w"> </span>Shape<span class="w"> </span>Fixed<span class="w"> </span>Size:<span class="w"> </span><span class="nb">true</span>
+<span class="w">      </span>Focal<span class="w"> </span>Shape<span class="w"> </span>Size:<span class="w"> </span><span class="m">0</span>.05000000074505806
+<span class="w">      </span>Invert<span class="w"> </span>Z<span class="w"> </span>Axis:<span class="w"> </span><span class="nb">false</span>
+<span class="w">      </span>Name:<span class="w"> </span>Current<span class="w"> </span>View
+<span class="w">      </span>Near<span class="w"> </span>Clip<span class="w"> </span>Distance:<span class="w"> </span><span class="m">0</span>.009999999776482582
+<span class="w">      </span>Pitch:<span class="w"> </span><span class="m">0</span>.41539815068244934
+<span class="w">      </span>Target<span class="w"> </span>Frame:<span class="w"> </span>&lt;Fixed<span class="w"> </span>Frame&gt;
+<span class="w">      </span>Value:<span class="w"> </span>Orbit<span class="w"> </span><span class="o">(</span>rviz<span class="o">)</span>
+<span class="w">      </span>Yaw:<span class="w"> </span><span class="m">0</span>.825397789478302
+<span class="w">    </span>Saved:<span class="w"> </span>~
+Window<span class="w"> </span>Geometry:
+<span class="w">  </span>Displays:
+<span class="w">    </span>collapsed:<span class="w"> </span><span class="nb">false</span>
+<span class="w">  </span>Height:<span class="w"> </span><span class="m">846</span>
+<span class="w">  </span>Hide<span class="w"> </span>Left<span class="w"> </span>Dock:<span class="w"> </span><span class="nb">false</span>
+<span class="w">  </span>Hide<span class="w"> </span>Right<span class="w"> </span>Dock:<span class="w"> </span><span class="nb">false</span>
+<span class="w">  </span>QMainWindow<span class="w"> </span>State:<span class="w"> </span>000000ff00000000fd000000040000000000000156000002b0fc0200000008fb0000001200530065006c0065006300740069006f006e00000001e10000009b0000005c00fffffffb0000001e0054006f006f006c002000500072006f007000650072007400690065007302000001ed000001df00000185000000a3fb000000120056006900650077007300200054006f006f02000001df000002110000018500000122fb000000200054006f006f006c002000500072006f0070006500720074006900650073003203000002880000011d000002210000017afb000000100044006900730070006c006100790073010000003d000002b0000000c900fffffffb0000002000730065006c0065006300740069006f006e00200062007500660066006500720200000138000000aa0000023a00000294fb00000014005700690064006500530074006500720065006f02000000e6000000d2000003ee0000030bfb0000000c004b0069006e0065006300740200000186000001060000030c00000261000000010000010f000002b0fc0200000003fb0000001e0054006f006f006c002000500072006f00700065007200740069006500730100000041000000780000000000000000fb0000000a00560069006500770073010000003d000002b0000000a400fffffffb0000001200530065006c0065006300740069006f006e010000025a000000b200000000000000000000000200000490000000a9fc0100000001fb0000000a00560069006500770073030000004e00000080000002e10000019700000003000004b00000003efc0100000002fb0000000800540069006d00650100000000000004b0000002fb00fffffffb0000000800540069006d006501000000000000045000000000000000000000023f000002b000000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+<span class="w">  </span>Selection:
+<span class="w">    </span>collapsed:<span class="w"> </span><span class="nb">false</span>
+<span class="w">  </span>Time:
+<span class="w">    </span>collapsed:<span class="w"> </span><span class="nb">false</span>
+<span class="w">  </span>Tool<span class="w"> </span>Properties:
+<span class="w">    </span>collapsed:<span class="w"> </span><span class="nb">false</span>
+<span class="w">  </span>Views:
+<span class="w">    </span>collapsed:<span class="w"> </span><span class="nb">false</span>
+<span class="w">  </span>Width:<span class="w"> </span><span class="m">1200</span>
+<span class="w">  </span>X:<span class="w"> </span><span class="m">2082</span>
+<span class="w">  </span>Y:<span class="w"> </span><span class="m">117</span>
+</pre></div>
+</div>
+<p>Ensuite, nous allons créer un nouveau package nommé panto_bringup. Donc déplacer le répertoire src.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>ros2_ws/src
+</pre></div>
+</div>
+<p>Créer un package panto_bringup</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ros2<span class="w"> </span>pkg<span class="w"> </span>create<span class="w"> </span>panto_bringup<span class="w"> </span>--build-type<span class="w"> </span>ament_cmake
+</pre></div>
+</div>
+<p>On devrait obtenir une arborescence de ce type</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>panto_bringup/
+<span class="p">|</span>__include/
+<span class="p">|</span>__CMakeLists.txt
+<span class="p">|</span>__package.xml
+<span class="p">|</span>__src/
+</pre></div>
+</div>
+<p>Vous pouvez supprimez les répertoires include et src, et créer 2 nouveaux répertoire nommé config et launch</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rm<span class="w"> </span>-r<span class="w"> </span>include<span class="w"> </span>src
+</pre></div>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mkdir<span class="w"> </span>config<span class="w"> </span>launch
+</pre></div>
+</div>
+<p>Modifier le fichier CMakeLists.txt dans ce même package pour qu’il devienne :</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cmake_minimum_required<span class="o">(</span>VERSION<span class="w"> </span><span class="m">3</span>.8<span class="o">)</span>
+project<span class="o">(</span>panto_bringup<span class="o">)</span>
+
+<span class="k">if</span><span class="o">(</span>CMAKE_COMPILER_IS_GNUCXX<span class="w"> </span>OR<span class="w"> </span>CMAKE_CXX_COMPILER_ID<span class="w"> </span>MATCHES<span class="w"> </span><span class="s2">&quot;Clang&quot;</span><span class="o">)</span>
+<span class="w">  </span>add_compile_options<span class="o">(</span>-Wall<span class="w"> </span>-Wextra<span class="w"> </span>-Wpedantic<span class="o">)</span>
+endif<span class="o">()</span>
+
+<span class="c1"># find dependencies</span>
+find_package<span class="o">(</span>ament_cmake<span class="w"> </span>REQUIRED<span class="o">)</span>
+
+install<span class="o">(</span>
+<span class="w">  </span>DIRECTORY<span class="w"> </span>config<span class="w"> </span>launch
+<span class="w">  </span>DESTINATION<span class="w"> </span>share/<span class="si">${</span><span class="nv">PROJECT_NAME</span><span class="si">}</span>
+<span class="o">)</span>
+
+ament_package<span class="o">()</span>
+</pre></div>
+</div>
+<p>Dans le répertoire launch, créer un fichier panto.launch.py</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>panto_bringup/launch
+</pre></div>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>touch<span class="w"> </span>panto.launch.py
+</pre></div>
+</div>
+<p>Copier coller le code suivant dans le fichier panto.launch.py. Il permettra de lancer successivement les différents noeuds nécessaire pour afficher le robot et importer les infertaces hardware.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>from<span class="w"> </span>launch<span class="w"> </span>import<span class="w"> </span>LaunchDescription
+from<span class="w"> </span>launch.actions<span class="w"> </span>import<span class="w"> </span>TimerAction
+from<span class="w"> </span>launch.substitutions<span class="w"> </span>import<span class="w"> </span>Command,<span class="w"> </span>FindExecutable,<span class="w"> </span>PathJoinSubstitution
+from<span class="w"> </span>launch_ros.actions<span class="w"> </span>import<span class="w"> </span>Node
+from<span class="w"> </span>launch_ros.substitutions<span class="w"> </span>import<span class="w"> </span>FindPackageShare
+
+
+def<span class="w"> </span>generate_launch_description<span class="o">()</span>:
+
+<span class="w">    </span><span class="c1"># =======================</span>
+<span class="w">    </span><span class="c1"># Robot description (xacro)</span>
+<span class="w">    </span><span class="c1"># =======================</span>
+<span class="w">    </span><span class="nv">robot_description_content</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>Command<span class="o">(</span>
+<span class="w">        </span><span class="o">[</span>
+<span class="w">            </span>PathJoinSubstitution<span class="o">([</span>FindExecutable<span class="o">(</span><span class="nv">name</span><span class="o">=</span><span class="s1">&#39;xacro&#39;</span><span class="o">)])</span>,
+<span class="w">            </span><span class="s1">&#39; &#39;</span>,
+<span class="w">            </span>PathJoinSubstitution<span class="o">([</span>
+<span class="w">                </span>FindPackageShare<span class="o">(</span><span class="s1">&#39;panto_description&#39;</span><span class="o">)</span>,
+<span class="w">                </span><span class="s1">&#39;config&#39;</span>,
+<span class="w">                </span><span class="s1">&#39;panto.config.xacro&#39;</span>
+<span class="w">            </span><span class="o">])</span>,
+<span class="w">        </span><span class="o">]</span>
+<span class="w">    </span><span class="o">)</span>
+
+<span class="w">    </span><span class="nv">robot_description</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">{</span><span class="s1">&#39;robot_description&#39;</span>:<span class="w"> </span>robot_description_content<span class="o">}</span>
+
+<span class="w">    </span><span class="c1"># =======================</span>
+<span class="w">    </span><span class="c1"># Controllers config</span>
+<span class="w">    </span><span class="c1"># =======================</span>
+<span class="w">    </span><span class="nv">robot_controllers</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>PathJoinSubstitution<span class="o">([</span>
+<span class="w">        </span>FindPackageShare<span class="o">(</span><span class="s1">&#39;panto_description&#39;</span><span class="o">)</span>,
+<span class="w">        </span><span class="s1">&#39;config&#39;</span>,
+<span class="w">        </span><span class="s1">&#39;panto_controllers.yaml&#39;</span>
+<span class="w">    </span><span class="o">])</span>
+
+<span class="w">    </span><span class="c1"># =======================</span>
+<span class="w">    </span><span class="c1"># RViz config</span>
+<span class="w">    </span><span class="c1"># =======================</span>
+<span class="w">    </span><span class="nv">rviz_config_file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>PathJoinSubstitution<span class="o">([</span>
+<span class="w">        </span>FindPackageShare<span class="o">(</span><span class="s1">&#39;panto_description&#39;</span><span class="o">)</span>,
+<span class="w">        </span><span class="s1">&#39;rviz&#39;</span>,
+<span class="w">        </span><span class="s1">&#39;panto.rviz&#39;</span>
+<span class="w">    </span><span class="o">])</span>
+
+<span class="w">    </span><span class="c1"># =======================</span>
+<span class="w">    </span><span class="c1"># Nodes</span>
+<span class="w">    </span><span class="c1"># =======================</span>
+
+<span class="w">    </span><span class="c1"># robot_state_publisher</span>
+<span class="w">    </span><span class="nv">robot_state_publisher_node</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>Node<span class="o">(</span>
+<span class="w">        </span><span class="nv">package</span><span class="o">=</span><span class="s1">&#39;robot_state_publisher&#39;</span>,
+<span class="w">        </span><span class="nv">executable</span><span class="o">=</span><span class="s1">&#39;robot_state_publisher&#39;</span>,
+<span class="w">        </span><span class="nv">output</span><span class="o">=</span><span class="s1">&#39;screen&#39;</span>,
+<span class="w">        </span><span class="nv">parameters</span><span class="o">=[</span>robot_description<span class="o">]</span>,
+<span class="w">    </span><span class="o">)</span>
+
+<span class="w">    </span><span class="c1"># ros2_control</span>
+<span class="w">    </span><span class="nv">ros2_control_node</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>Node<span class="o">(</span>
+<span class="w">        </span><span class="nv">package</span><span class="o">=</span><span class="s1">&#39;controller_manager&#39;</span>,
+<span class="w">        </span><span class="nv">executable</span><span class="o">=</span><span class="s1">&#39;ros2_control_node&#39;</span>,
+<span class="w">        </span><span class="nv">output</span><span class="o">=</span><span class="s1">&#39;screen&#39;</span>,
+<span class="w">        </span><span class="nv">parameters</span><span class="o">=[</span>robot_description,<span class="w"> </span>robot_controllers<span class="o">]</span>,
+<span class="w">    </span><span class="o">)</span>
+
+<span class="w">    </span><span class="c1"># RViz</span>
+<span class="w">    </span><span class="nv">rviz_node</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>Node<span class="o">(</span>
+<span class="w">        </span><span class="nv">package</span><span class="o">=</span><span class="s1">&#39;rviz2&#39;</span>,
+<span class="w">        </span><span class="nv">executable</span><span class="o">=</span><span class="s1">&#39;rviz2&#39;</span>,
+<span class="w">        </span><span class="nv">name</span><span class="o">=</span><span class="s1">&#39;rviz2&#39;</span>,
+<span class="w">        </span><span class="nv">output</span><span class="o">=</span><span class="s1">&#39;log&#39;</span>,
+<span class="w">        </span><span class="nv">arguments</span><span class="o">=[</span><span class="s1">&#39;-d&#39;</span>,<span class="w"> </span>rviz_config_file<span class="o">]</span>,
+<span class="w">    </span><span class="o">)</span>
+
+<span class="w">    </span><span class="c1"># Joint state broadcaster</span>
+<span class="w">    </span><span class="nv">joint_state_broadcaster_spawner</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>Node<span class="o">(</span>
+<span class="w">        </span><span class="nv">package</span><span class="o">=</span><span class="s1">&#39;controller_manager&#39;</span>,
+<span class="w">        </span><span class="nv">executable</span><span class="o">=</span><span class="s1">&#39;spawner&#39;</span>,
+<span class="w">        </span><span class="nv">arguments</span><span class="o">=[</span><span class="s1">&#39;joint_state_broadcaster&#39;</span><span class="o">]</span>,
+<span class="w">        </span><span class="nv">output</span><span class="o">=</span><span class="s1">&#39;screen&#39;</span>,
+<span class="w">    </span><span class="o">)</span>
+
+<span class="w">    </span><span class="c1"># Position controller</span>
+<span class="w">    </span><span class="nv">position_controller_spawner</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>Node<span class="o">(</span>
+<span class="w">        </span><span class="nv">package</span><span class="o">=</span><span class="s1">&#39;controller_manager&#39;</span>,
+<span class="w">        </span><span class="nv">executable</span><span class="o">=</span><span class="s1">&#39;spawner&#39;</span>,
+<span class="w">        </span><span class="nv">arguments</span><span class="o">=[</span><span class="s1">&#39;panto_position_controller&#39;</span><span class="o">]</span>,
+<span class="w">        </span><span class="nv">output</span><span class="o">=</span><span class="s1">&#39;screen&#39;</span>,
+<span class="w">    </span><span class="o">)</span>
+
+<span class="w">    </span><span class="c1"># =======================</span>
+<span class="w">    </span><span class="c1"># Launch order</span>
+<span class="w">    </span><span class="c1"># =======================</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span>LaunchDescription<span class="o">([</span>
+
+<span class="w">        </span><span class="c1"># 1. URDF → TF</span>
+<span class="w">        </span>robot_state_publisher_node,
+
+<span class="w">        </span><span class="c1"># 2. ros2_control</span>
+<span class="w">        </span>ros2_control_node,
+
+<span class="w">        </span><span class="c1"># 3. RViz</span>
+<span class="w">        </span>rviz_node,
+
+<span class="w">        </span><span class="c1"># 4. Spawners (avec délais pour laisser ros2_control démarrer)</span>
+<span class="w">        </span>TimerAction<span class="o">(</span>
+<span class="w">            </span><span class="nv">period</span><span class="o">=</span><span class="m">3</span>.0,
+<span class="w">            </span><span class="nv">actions</span><span class="o">=[</span>joint_state_broadcaster_spawner<span class="o">]</span>,
+<span class="w">        </span><span class="o">)</span>,
+
+<span class="w">        </span>TimerAction<span class="o">(</span>
+<span class="w">            </span><span class="nv">period</span><span class="o">=</span><span class="m">5</span>.0,
+<span class="w">            </span><span class="nv">actions</span><span class="o">=[</span>position_controller_spawner<span class="o">]</span>,
+<span class="w">        </span><span class="o">)</span>,
+<span class="w">    </span><span class="o">])</span>
+</pre></div>
+</div>
+<p>Build tous les packages</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>colcon<span class="w"> </span>build
+</pre></div>
+</div>
+<p>Sourcer le terminal avec les nouveaux packages</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span><span class="w"> </span>install/setup.bash
+</pre></div>
+</div>
+<p>Lancer le pantographe avec les controller ros2_control</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ros2<span class="w"> </span>launch<span class="w"> </span>panto_bringup<span class="w"> </span>panto.launch.py
 </pre></div>
 </div>
 </section>
