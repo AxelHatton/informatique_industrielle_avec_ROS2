@@ -350,6 +350,8 @@ Vous devez obtenir ceci :
 
    N'hésitez pas à lancer régulièrement l'affichage de l'urdf durant sa construction afin de bien configurer les joints entre les links
 
+   To do : Décrire le process avec creo
+
 ============================
 Création fichier launch
 ============================
