@@ -1202,7 +1202,7 @@ Lancer le noeud :
 
    ros2 run cmd_slider_pub cmd_slider_pub
 
-Vérifier le noeud publie sur le topic /panto_position_controller/commands
+Vérifier que le noeud publie sur le topic /panto_position_controller/commands
 
 .. code-block:: bash
 
@@ -1213,6 +1213,31 @@ Vérifier le noeud publie sur le topic /panto_position_controller/commands
    ros2 topic echo /panto_position_controller/commands
 
 Vous devez ainsi voir ceci :
+
+.. code-block:: bash
+
+   layout:
+     dim: []
+     data_offset: 0
+   data:
+   - 0.65
+   - -0.41
+   - 0.0
+   - 0.0
+   ---
+   layout:
+     dim: []
+     data_offset: 0
+   data:
+   - 0.65
+   - -0.43
+   - 0.0
+   - 0.0
+   ---
+
+
+.. figure:: resources/img/cmd_slider_pub.png
+   :align: center
 
 =====================================================================================================
 Création d'un noeud python assurant 2 ddl pour les liaisons accrochées au bâti et 2 liaisons passives
