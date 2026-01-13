@@ -494,7 +494,7 @@ Un en-tête</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>ros2_ws/src/panto_description/config
 </pre></div>
 </div>
-<p>Creer un fichier xacro</p>
+<p>Créer un fichier xacro</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>touch<span class="w"> </span>panto.config.xacro
 </pre></div>
 </div>
@@ -750,7 +750,7 @@ Window<span class="w"> </span>Geometry:
 <span class="w">  </span>Y:<span class="w"> </span><span class="m">117</span>
 </pre></div>
 </div>
-<p>Ensuite, nous allons créer un nouveau package nommé panto_bringup. Donc déplacer le répertoire src.</p>
+<p>Ensuite, nous allons créer un nouveau package nommé panto_bringup. Donc déplacer-vous dans le répertoire src.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>ros2_ws/src
 </pre></div>
 </div>
@@ -758,7 +758,7 @@ Window<span class="w"> </span>Geometry:
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ros2<span class="w"> </span>pkg<span class="w"> </span>create<span class="w"> </span>panto_bringup<span class="w"> </span>--build-type<span class="w"> </span>ament_cmake
 </pre></div>
 </div>
-<p>On devrait obtenir une arborescence de ce type</p>
+<p>On devrait obtenir une arborescence de ce type :</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>panto_bringup/
 <span class="p">|</span>__include/
 <span class="p">|</span>__CMakeLists.txt
@@ -766,7 +766,7 @@ Window<span class="w"> </span>Geometry:
 <span class="p">|</span>__src/
 </pre></div>
 </div>
-<p>Vous pouvez supprimez les répertoires include et src, et créer 2 nouveaux répertoire nommé config et launch</p>
+<p>Vous pouvez supprimez les répertoires include et src, et créer 2 nouveaux répertoires nommés config et launch</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rm<span class="w"> </span>-r<span class="w"> </span>include<span class="w"> </span>src
 </pre></div>
 </div>

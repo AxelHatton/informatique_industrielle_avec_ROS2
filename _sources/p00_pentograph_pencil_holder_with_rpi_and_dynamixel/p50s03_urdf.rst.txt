@@ -457,7 +457,7 @@ Déplacez-vous dans le répertoire config
 
    cd ros2_ws/src/panto_description/config
 
-Creer un fichier xacro
+Créer un fichier xacro
 
 .. code-block:: bash
 
@@ -738,7 +738,7 @@ Copier collé ce code à l'intérieur. Il permet de configurer la vue dans rviz 
      Y: 117
 
 
-Ensuite, nous allons créer un nouveau package nommé panto_bringup. Donc déplacer le répertoire src.
+Ensuite, nous allons créer un nouveau package nommé panto_bringup. Donc déplacer-vous dans le répertoire src.
 
 .. code-block:: bash
 
@@ -750,7 +750,7 @@ Créer un package panto_bringup
    
    ros2 pkg create panto_bringup --build-type ament_cmake
 
-On devrait obtenir une arborescence de ce type
+On devrait obtenir une arborescence de ce type :
 
 .. code-block:: bash
    
@@ -760,7 +760,7 @@ On devrait obtenir une arborescence de ce type
    |__package.xml
    |__src/
 
-Vous pouvez supprimez les répertoires include et src, et créer 2 nouveaux répertoire nommé config et launch
+Vous pouvez supprimez les répertoires include et src, et créer 2 nouveaux répertoires nommés config et launch
 
 .. code-block:: bash
 
