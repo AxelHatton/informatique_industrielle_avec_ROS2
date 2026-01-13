@@ -75,6 +75,8 @@
 <li class="toctree-l3"><a class="reference internal" href="#creation-d-un-fichier-xacro-combinant-la-description-urdf-et-la-description-ros2-control">Création d’un fichier Xacro combinant la description urdf et la description ros2_control</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#creation-d-une-configuration-ros2-control">Création d’une configuration ros2_control</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#creation-d-un-fichier-launch-pour-ros2-control">Création d’un fichier launch pour ros2_control</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#creation-d-un-noeud-python-de-commande-du-pantographe">Création d’un noeud python de commande du pantographe</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#creation-d-un-noeud-python-assurant-2-ddl-pour-les-liaisons-accrochees-au-bati-et-2-liaisons-passives">Création d’un noeud python assurant 2 ddl pour les liaisons accrochées au bâti et 2 liaisons passives</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="p50s04_dynamixel.html">Fonctionnement des Dynamixels</a></li>
@@ -924,6 +926,357 @@ def<span class="w"> </span>generate_launch_description<span class="o">()</span>:
 </div>
 <p>Lancer le pantographe avec les controller ros2_control</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ros2<span class="w"> </span>launch<span class="w"> </span>panto_bringup<span class="w"> </span>panto.launch.py
+</pre></div>
+</div>
+<p>Nous obtenons normalement le lancement de rviz avec la maquette du pantographe avec les 8 interfaces et les 2 controllers de ros2_control.</p>
+<figure class="align-center">
+<img alt="../_images/ros2_control_launch2.png" src="../_images/ros2_control_launch2.png" />
+</figure>
+<p>Vous pouvez vérifier la présence des interfaces avec la commande :</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ros2<span class="w"> </span>control<span class="w"> </span>list_hardware_interfaces
+</pre></div>
+</div>
+<p>Vous devez voir ceci :</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">command</span><span class="w"> </span>interfaces
+<span class="w">     </span>base_link_link1_joint/position<span class="w"> </span><span class="o">[</span>available<span class="o">]</span><span class="w"> </span><span class="o">[</span>claimed<span class="o">]</span>
+<span class="w">     </span>base_link_link4_joint/position<span class="w"> </span><span class="o">[</span>available<span class="o">]</span><span class="w"> </span><span class="o">[</span>claimed<span class="o">]</span>
+<span class="w">     </span>link1_link2_joint/position<span class="w"> </span><span class="o">[</span>available<span class="o">]</span><span class="w"> </span><span class="o">[</span>claimed<span class="o">]</span>
+<span class="w">     </span>link4_link3_joint/position<span class="w"> </span><span class="o">[</span>available<span class="o">]</span><span class="w"> </span><span class="o">[</span>claimed<span class="o">]</span>
+state<span class="w"> </span>interfaces
+<span class="w">     </span>base_link_link1_joint/position
+<span class="w">     </span>base_link_link4_joint/position
+<span class="w">     </span>link1_link2_joint/position
+<span class="w">     </span>link4_link3_joint/position
+</pre></div>
+</div>
+<p>Il y a donc 4 interfaces de commandes (coommand interfaces), et 4 interfaces de récupération de donnéesc(state interfaces).</p>
+<p>Pour vérifier la présence des controllers, il faut entrer la commande suivante :</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ros2<span class="w"> </span>control<span class="w"> </span>list_controllers
+</pre></div>
+</div>
+<p>Vous devez voir ceci :</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>panto_position_controller<span class="w"> </span>forward_command_controller/ForwardCommandController<span class="w">  </span>active
+joint_state_broadcaster<span class="w">   </span>joint_state_broadcaster/JointStateBroadcaster<span class="w">        </span>active
+</pre></div>
+</div>
+<p>panto_position_controller permet de contrôler la position angulaire des liaisons pivots. joint_state_broadcaster permet de récupérer la position et la vitesse et l’effort dans chaque liaison.</p>
+<p>Maintenant, si vous entrez cette commande :</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ros2<span class="w"> </span>topic<span class="w"> </span>list
+</pre></div>
+</div>
+<p>Vous devriez voir ceci :</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>/clicked_point
+/controller_manager/activity
+/controller_manager/introspection_data/full
+/controller_manager/introspection_data/names
+/controller_manager/introspection_data/values
+/controller_manager/statistics/full
+/controller_manager/statistics/names
+/controller_manager/statistics/values
+/diagnostics
+/dynamic_joint_states
+/goal_pose
+/initialpose
+/joint_state_broadcaster/transition_event
+/joint_states
+/panto_position_controller/commands
+/panto_position_controller/transition_event
+/parameter_events
+/robot_description
+/rosout
+/tf
+/tf_static
+</pre></div>
+</div>
+<p>C’est la liste des topics actives. Celles qui nous intéresse est /panto_position_controller/commands. Maintenant, utiliser cette commande pour vérifier quel type de message accepte ce topic.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ros2<span class="w"> </span>topic<span class="w"> </span>info<span class="w"> </span>/panto_position_controller/commands
+</pre></div>
+</div>
+<p>Vous obtenez ceci :</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>Type:<span class="w"> </span>std_msgs/msg/Float64MultiArray
+Publisher<span class="w"> </span>count:<span class="w"> </span><span class="m">0</span>
+Subscription<span class="w"> </span>count:<span class="w"> </span><span class="m">1</span>
+</pre></div>
+</div>
+<p>C’est le type de message qu’attend le topic. Maintenant, essayer de rentrer cette commande pour envoyer un message sur ce topic. Si tout se passe bien le pantographe est censé bouger.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ros2<span class="w"> </span>topic<span class="w"> </span>pub<span class="w"> </span>--once<span class="w"> </span>/panto_position_controller/commands<span class="w"> </span>std_msgs/msg/Float64MultiArray<span class="w"> </span><span class="s2">&quot;{data: [0.5,-1.5,0.3,0.5]}&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="creation-d-un-noeud-python-de-commande-du-pantographe">
+<h2>Création d’un noeud python de commande du pantographe<a class="headerlink" href="#creation-d-un-noeud-python-de-commande-du-pantographe" title="Lien vers cette rubrique"></a></h2>
+<p>L’objectif est de créer un noeud python se présentant sous la forme de 4 sliders permettant de controller chacune une liaison pivot à travers le topic /panto_position_controller/commands.</p>
+<p>Déplacez vous dans le répertoire src du votre workspace.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>ros2_ws/src
+</pre></div>
+</div>
+<p>Creer un package python avec rclpy et std_msgs en dépendances.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ros2<span class="w"> </span>pkg<span class="w"> </span>create<span class="w"> </span>cmd_slider_pub<span class="w"> </span>--build-type<span class="w"> </span>ament_python<span class="w"> </span>--dependencies<span class="w"> </span>rclpy<span class="w"> </span>std_msgs
+</pre></div>
+</div>
+<p>Nous obtenons l’arborescence suivante :</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cmd_slider_pub/
+├──<span class="w"> </span>package.xml
+├──<span class="w"> </span>setup.py
+├──<span class="w"> </span>setup.cfg
+├──<span class="w"> </span>cmd_slider_pub/
+│<span class="w">   </span>├──<span class="w"> </span>__init__.py
+</pre></div>
+</div>
+<p>Créer le fichier du noeud</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>cmd_slider_pub/cmd_slider_pub
+</pre></div>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>touch<span class="w"> </span>cmd_slider_pub.py
+</pre></div>
+</div>
+<p>Ouvrez le fichier dans vscode.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>code<span class="w"> </span>cmd_slider_pub.py
+</pre></div>
+</div>
+<p>Copier coller ce code à l’intérieur :</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python3</span>
+
+import<span class="w"> </span>rclpy
+from<span class="w"> </span>rclpy.node<span class="w"> </span>import<span class="w"> </span>Node
+from<span class="w"> </span>std_msgs.msg<span class="w"> </span>import<span class="w"> </span>Float64MultiArray
+import<span class="w"> </span>tkinter<span class="w"> </span>as<span class="w"> </span>tk
+
+
+class<span class="w"> </span>CmdSliderPub<span class="o">(</span>Node<span class="o">)</span>:
+
+<span class="w">    </span>def<span class="w"> </span>__init__<span class="o">(</span>self<span class="o">)</span>:
+<span class="w">        </span>super<span class="o">()</span>.__init__<span class="o">(</span><span class="s1">&#39;cmd_slider_pub&#39;</span><span class="o">)</span>
+
+<span class="w">        </span>self.publisher_<span class="w"> </span><span class="o">=</span><span class="w"> </span>self.create_publisher<span class="o">(</span>
+<span class="w">            </span>Float64MultiArray,
+<span class="w">            </span><span class="s1">&#39;/panto_position_controller/commands&#39;</span>,
+<span class="w">            </span><span class="m">10</span>
+<span class="w">        </span><span class="o">)</span>
+
+<span class="w">        </span>self.joint_values<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[</span><span class="m">0</span>.0,<span class="w"> </span><span class="m">0</span>.0,<span class="w"> </span><span class="m">0</span>.0,<span class="w"> </span><span class="m">0</span>.0<span class="o">]</span>
+
+<span class="w">        </span>self.timer<span class="w"> </span><span class="o">=</span><span class="w"> </span>self.create_timer<span class="o">(</span><span class="m">0</span>.1,<span class="w"> </span>self.publish_joint_positions<span class="o">)</span>
+
+<span class="w">        </span>self.init_gui<span class="o">()</span>
+
+<span class="w">    </span>def<span class="w"> </span>init_gui<span class="o">(</span>self<span class="o">)</span>:
+<span class="w">        </span>self.root<span class="w"> </span><span class="o">=</span><span class="w"> </span>tk.Tk<span class="o">()</span>
+<span class="w">        </span>self.root.title<span class="o">(</span><span class="s2">&quot;Panto Position Command Sliders&quot;</span><span class="o">)</span>
+
+<span class="w">        </span><span class="k">for</span><span class="w"> </span>i<span class="w"> </span><span class="k">in</span><span class="w"> </span>range<span class="o">(</span><span class="m">4</span><span class="o">)</span>:
+<span class="w">            </span>tk.Label<span class="o">(</span>self.root,<span class="w"> </span><span class="nv">text</span><span class="o">=</span>f<span class="s2">&quot;Joint {i+1}&quot;</span><span class="o">)</span>.pack<span class="o">()</span>
+
+<span class="w">            </span>tk.Scale<span class="o">(</span>
+<span class="w">                </span>self.root,
+<span class="w">                </span><span class="nv">from_</span><span class="o">=</span>-3.14,
+<span class="w">                </span><span class="nv">to</span><span class="o">=</span><span class="m">3</span>.14,
+<span class="w">                </span><span class="nv">resolution</span><span class="o">=</span><span class="m">0</span>.01,
+<span class="w">                </span><span class="nv">orient</span><span class="o">=</span>tk.HORIZONTAL,
+<span class="w">                </span><span class="nv">length</span><span class="o">=</span><span class="m">400</span>,
+<span class="w">                </span><span class="nv">command</span><span class="o">=</span>lambda<span class="w"> </span>val,<span class="w"> </span><span class="nv">idx</span><span class="o">=</span>i:<span class="w"> </span>self.update_joint<span class="o">(</span>idx,<span class="w"> </span>val<span class="o">)</span>
+<span class="w">            </span><span class="o">)</span>.pack<span class="o">()</span>
+
+<span class="w">        </span>self.root.protocol<span class="o">(</span><span class="s2">&quot;WM_DELETE_WINDOW&quot;</span>,<span class="w"> </span>self.on_close<span class="o">)</span>
+
+<span class="w">    </span>def<span class="w"> </span>update_joint<span class="o">(</span>self,<span class="w"> </span>index,<span class="w"> </span>value<span class="o">)</span>:
+<span class="w">        </span>self.joint_values<span class="o">[</span>index<span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>float<span class="o">(</span>value<span class="o">)</span>
+<span class="w">        </span>self.publish_joint_positions<span class="o">()</span>
+
+<span class="w">    </span>def<span class="w"> </span>publish_joint_positions<span class="o">(</span>self<span class="o">)</span>:
+<span class="w">        </span><span class="nv">msg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>Float64MultiArray<span class="o">()</span>
+<span class="w">        </span>msg.data<span class="w"> </span><span class="o">=</span><span class="w"> </span>self.joint_values
+<span class="w">        </span>self.publisher_.publish<span class="o">(</span>msg<span class="o">)</span>
+
+<span class="w">    </span>def<span class="w"> </span>on_close<span class="o">(</span>self<span class="o">)</span>:
+<span class="w">        </span>self.get_logger<span class="o">()</span>.info<span class="o">(</span><span class="s2">&quot;Shutting down cmd_slider_pub&quot;</span><span class="o">)</span>
+<span class="w">        </span>self.root.destroy<span class="o">()</span>
+<span class="w">        </span>rclpy.shutdown<span class="o">()</span>
+
+<span class="w">    </span>def<span class="w"> </span>run<span class="o">(</span>self<span class="o">)</span>:
+<span class="w">        </span><span class="k">while</span><span class="w"> </span>rclpy.ok<span class="o">()</span>:
+<span class="w">            </span>self.root.update_idletasks<span class="o">()</span>
+<span class="w">            </span>self.root.update<span class="o">()</span>
+
+
+def<span class="w"> </span>main<span class="o">()</span>:
+<span class="w">    </span>rclpy.init<span class="o">()</span>
+<span class="w">    </span><span class="nv">node</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>CmdSliderPub<span class="o">()</span>
+<span class="w">    </span>node.run<span class="o">()</span>
+
+
+<span class="k">if</span><span class="w"> </span><span class="nv">__name__</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s1">&#39;__main__&#39;</span>:
+<span class="w">    </span>main<span class="o">()</span>
+</pre></div>
+</div>
+<p>Modifier ensuite le fichier setup.py pour rajouter le nouveau fichier en tant qu’éxécutable du package.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">entry_points</span><span class="o">={</span>
+<span class="w">    </span><span class="s1">&#39;console_scripts&#39;</span>:<span class="w"> </span><span class="o">[</span>
+<span class="w">        </span><span class="s1">&#39;cmd_slider_pub = cmd_slider_pub.cmd_slider_pub:main&#39;</span>,
+<span class="w">    </span><span class="o">]</span>,
+<span class="o">}</span>,
+</pre></div>
+</div>
+<p>Vérifier que les dépendances rclpy et std_msgs sont bien présente dans le fichier package.xml. Vous devez voir ceci à l’intérieur du fichier :</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>&lt;exec_depend&gt;rclpy&lt;/exec_depend&gt;
+&lt;exec_depend&gt;std_msgs&lt;/exec_depend&gt;
+</pre></div>
+</div>
+<p>Rendez ensuite le fichier du noeud exécutable :</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>chmod<span class="w"> </span>+x<span class="w"> </span>cmd_slider_pub/cmd_slider_pub.py
+</pre></div>
+</div>
+<p>Compiler le package</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>~/ros2_ws
+</pre></div>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>colcon<span class="w"> </span>build<span class="w"> </span>--packages-select<span class="w"> </span>cmd_slider_pub
+</pre></div>
+</div>
+<p>Sourcer le workspace :</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span><span class="w"> </span>install/setup.bash
+</pre></div>
+</div>
+<p>Lancer le noeud :</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ros2<span class="w"> </span>run<span class="w"> </span>cmd_slider_pub<span class="w"> </span>cmd_slider_pub
+</pre></div>
+</div>
+<p>Vérifier le noeud publie sur le topic /panto_position_controller/commands</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ros2<span class="w"> </span>launch<span class="w"> </span>panto_bringup<span class="w"> </span>panto.launch.py
+</pre></div>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ros2<span class="w"> </span>topic<span class="w"> </span><span class="nb">echo</span><span class="w"> </span>/panto_position_controller/commands
+</pre></div>
+</div>
+<p>Vous devez ainsi voir ceci :</p>
+</section>
+<section id="creation-d-un-noeud-python-assurant-2-ddl-pour-les-liaisons-accrochees-au-bati-et-2-liaisons-passives">
+<h2>Création d’un noeud python assurant 2 ddl pour les liaisons accrochées au bâti et 2 liaisons passives<a class="headerlink" href="#creation-d-un-noeud-python-assurant-2-ddl-pour-les-liaisons-accrochees-au-bati-et-2-liaisons-passives" title="Lien vers cette rubrique"></a></h2>
+<p>L’objectif est de créer un noeud python ayant 2 liaison pivot en degré de liberté et les 2 autres liaisons pivot seront passives et seront piloté de manière à assurer la contrainte géométrique de fermeture des branches ouvertes du pantographe au sommet.</p>
+<p>Déplacez vous dans le répertoire où se trouve le précédent noeud python cmd_slider_pub.py.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>ros2_ws/src/cmd_slider_pub/cmd_slider_pub
+</pre></div>
+</div>
+<p>Créer un nouveau fichier python.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>touch<span class="w"> </span>cmd_ferm_geom.py
+</pre></div>
+</div>
+<p>Ouvrez ce fichier avec vscode</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>code<span class="w"> </span>cmd_ferm_geom.py
+</pre></div>
+</div>
+<p>Ce noeud nécessite le modèle géométrique inverse pour son bon fonctionnement. Malheureusement, nous n’avons pas eu le temps d’avoir un code satisfaisant pour ce noeud. Pour l’instant, nous pouvons proposer un noeud où les 2 liaisons pivots non reliées au bâti sont passives, c’est-à-dire qu’elles sont pilotées en fonction des commandes des 2 autres liaisons pivots. Pour l’instant, la relation de pilotage entre les liaisons actives et passives est fausse. Le code suivant permettra juste de démontrer que la mise en place de liaison passive et active est possible.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python3</span>
+
+import<span class="w"> </span>rclpy
+from<span class="w"> </span>rclpy.node<span class="w"> </span>import<span class="w"> </span>Node
+from<span class="w"> </span>std_msgs.msg<span class="w"> </span>import<span class="w"> </span>Float64MultiArray
+import<span class="w"> </span>tkinter<span class="w"> </span>as<span class="w"> </span>tk
+import<span class="w"> </span>math
+
+
+class<span class="w"> </span>CmdFermGeom<span class="o">(</span>Node<span class="o">)</span>:
+
+<span class="w">    </span>def<span class="w"> </span>__init__<span class="o">(</span>self<span class="o">)</span>:
+<span class="w">        </span>super<span class="o">()</span>.__init__<span class="o">(</span><span class="s1">&#39;cmd_ferm_geom&#39;</span><span class="o">)</span>
+
+<span class="w">        </span>self.publisher_<span class="w"> </span><span class="o">=</span><span class="w"> </span>self.create_publisher<span class="o">(</span>
+<span class="w">            </span>Float64MultiArray,
+<span class="w">            </span><span class="s1">&#39;/panto_position_controller/commands&#39;</span>,
+<span class="w">            </span><span class="m">10</span>
+<span class="w">        </span><span class="o">)</span>
+
+<span class="w">        </span><span class="c1"># Angles moteurs</span>
+<span class="w">        </span>self.theta1<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span>.0<span class="w">  </span><span class="c1"># base_link_link1_joint</span>
+<span class="w">        </span>self.theta4<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span>.0<span class="w">  </span><span class="c1"># base_link_link4_joint</span>
+
+<span class="w">        </span>self.init_gui<span class="o">()</span>
+<span class="w">        </span>self.timer<span class="w"> </span><span class="o">=</span><span class="w"> </span>self.create_timer<span class="o">(</span><span class="m">0</span>.05,<span class="w"> </span>self.publish_commands<span class="o">)</span>
+
+<span class="w">    </span><span class="c1"># =========================</span>
+<span class="w">    </span><span class="c1"># GUI</span>
+<span class="w">    </span><span class="c1"># =========================</span>
+<span class="w">    </span>def<span class="w"> </span>init_gui<span class="o">(</span>self<span class="o">)</span>:
+<span class="w">        </span>self.root<span class="w"> </span><span class="o">=</span><span class="w"> </span>tk.Tk<span class="o">()</span>
+<span class="w">        </span>self.root.title<span class="o">(</span><span class="s2">&quot;Pentographe – fermeture géométrique simplifiée&quot;</span><span class="o">)</span>
+
+<span class="w">        </span>tk.Label<span class="o">(</span>self.root,<span class="w"> </span><span class="nv">text</span><span class="o">=</span><span class="s2">&quot;θ1 (base → link1)&quot;</span><span class="o">)</span>.pack<span class="o">()</span>
+<span class="w">        </span>self.slider1<span class="w"> </span><span class="o">=</span><span class="w"> </span>tk.Scale<span class="o">(</span>
+<span class="w">            </span>self.root,<span class="w"> </span><span class="nv">from_</span><span class="o">=</span>-1.57,<span class="w"> </span><span class="nv">to</span><span class="o">=</span><span class="m">1</span>.57,
+<span class="w">            </span><span class="nv">resolution</span><span class="o">=</span><span class="m">0</span>.01,<span class="w"> </span><span class="nv">orient</span><span class="o">=</span>tk.HORIZONTAL,
+<span class="w">            </span><span class="nv">length</span><span class="o">=</span><span class="m">400</span>,<span class="w"> </span><span class="nv">command</span><span class="o">=</span>self.update_theta1
+<span class="w">        </span><span class="o">)</span>
+<span class="w">        </span>self.slider1.pack<span class="o">()</span>
+
+<span class="w">        </span>tk.Label<span class="o">(</span>self.root,<span class="w"> </span><span class="nv">text</span><span class="o">=</span><span class="s2">&quot;θ4 (base → link4)&quot;</span><span class="o">)</span>.pack<span class="o">()</span>
+<span class="w">        </span>self.slider4<span class="w"> </span><span class="o">=</span><span class="w"> </span>tk.Scale<span class="o">(</span>
+<span class="w">            </span>self.root,<span class="w"> </span><span class="nv">from_</span><span class="o">=</span>-1.57,<span class="w"> </span><span class="nv">to</span><span class="o">=</span><span class="m">1</span>.57,
+<span class="w">            </span><span class="nv">resolution</span><span class="o">=</span><span class="m">0</span>.01,<span class="w"> </span><span class="nv">orient</span><span class="o">=</span>tk.HORIZONTAL,
+<span class="w">            </span><span class="nv">length</span><span class="o">=</span><span class="m">400</span>,<span class="w"> </span><span class="nv">command</span><span class="o">=</span>self.update_theta4
+<span class="w">        </span><span class="o">)</span>
+<span class="w">        </span>self.slider4.pack<span class="o">()</span>
+
+<span class="w">        </span>self.root.protocol<span class="o">(</span><span class="s2">&quot;WM_DELETE_WINDOW&quot;</span>,<span class="w"> </span>self.on_close<span class="o">)</span>
+
+<span class="w">    </span>def<span class="w"> </span>update_theta1<span class="o">(</span>self,<span class="w"> </span>value<span class="o">)</span>:
+<span class="w">        </span>self.theta1<span class="w"> </span><span class="o">=</span><span class="w"> </span>float<span class="o">(</span>value<span class="o">)</span>
+
+<span class="w">    </span>def<span class="w"> </span>update_theta4<span class="o">(</span>self,<span class="w"> </span>value<span class="o">)</span>:
+<span class="w">        </span>self.theta4<span class="w"> </span><span class="o">=</span><span class="w"> </span>float<span class="o">(</span>value<span class="o">)</span>
+
+<span class="w">    </span><span class="c1"># =========================</span>
+<span class="w">    </span><span class="c1"># Fermeture simplifiée</span>
+<span class="w">    </span><span class="c1"># =========================</span>
+<span class="w">    </span>def<span class="w"> </span>compute_passive_joints<span class="o">(</span>self<span class="o">)</span>:
+<span class="w">        </span><span class="nv">theta2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>math.pi<span class="w"> </span>-<span class="w"> </span>self.theta1
+<span class="w">        </span><span class="nv">theta3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>math.pi<span class="w"> </span>-<span class="w"> </span>self.theta4
+<span class="w">        </span><span class="k">return</span><span class="w"> </span>theta2,<span class="w"> </span>theta3
+
+<span class="w">    </span><span class="c1"># =========================</span>
+<span class="w">    </span><span class="c1"># Publication</span>
+<span class="w">    </span><span class="c1"># =========================</span>
+<span class="w">    </span>def<span class="w"> </span>publish_commands<span class="o">(</span>self<span class="o">)</span>:
+<span class="w">        </span>theta2,<span class="w"> </span><span class="nv">theta3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>self.compute_passive_joints<span class="o">()</span>
+
+<span class="w">        </span><span class="nv">msg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>Float64MultiArray<span class="o">()</span>
+<span class="w">        </span>msg.data<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[</span>
+<span class="w">            </span>self.theta1,
+<span class="w">            </span>self.theta4,
+<span class="w">            </span>theta2,
+<span class="w">            </span>theta3
+<span class="w">        </span><span class="o">]</span>
+
+<span class="w">        </span>self.publisher_.publish<span class="o">(</span>msg<span class="o">)</span>
+
+<span class="w">    </span>def<span class="w"> </span>on_close<span class="o">(</span>self<span class="o">)</span>:
+<span class="w">        </span>self.root.destroy<span class="o">()</span>
+<span class="w">        </span>rclpy.shutdown<span class="o">()</span>
+
+<span class="w">    </span>def<span class="w"> </span>run<span class="o">(</span>self<span class="o">)</span>:
+<span class="w">        </span><span class="k">while</span><span class="w"> </span>rclpy.ok<span class="o">()</span>:
+<span class="w">            </span>rclpy.spin_once<span class="o">(</span>self,<span class="w"> </span><span class="nv">timeout_sec</span><span class="o">=</span><span class="m">0</span>.0<span class="o">)</span>
+<span class="w">            </span>self.root.update_idletasks<span class="o">()</span>
+<span class="w">            </span>self.root.update<span class="o">()</span>
+
+
+
+def<span class="w"> </span>main<span class="o">()</span>:
+<span class="w">    </span>rclpy.init<span class="o">()</span>
+<span class="w">    </span><span class="nv">node</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>CmdFermGeom<span class="o">()</span>
+<span class="w">    </span>node.run<span class="o">()</span>
+
+
+<span class="k">if</span><span class="w"> </span><span class="nv">__name__</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s1">&#39;__main__&#39;</span>:
+<span class="w">    </span>main<span class="o">()</span>
+</pre></div>
+</div>
+<p>N’oubliez de rajouter ce fichier dans les entry_points dans le fichier setup.py avant de compiler et sourcer.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">entry_points</span><span class="o">={</span>
+<span class="w">    </span><span class="s1">&#39;console_scripts&#39;</span>:<span class="w"> </span><span class="o">[</span>
+<span class="w">        </span><span class="s1">&#39;cmd_slider_pub = cmd_slider_pub.cmd_slider_pub:main&#39;</span>,
+<span class="w">        </span><span class="s1">&#39;cmd_ferm_geom = cmd_slider_pub.cmd_ferm_geom:main&#39;</span>,
+<span class="w">    </span><span class="o">]</span>,
+<span class="o">}</span>
 </pre></div>
 </div>
 </section>
